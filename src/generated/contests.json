@@ -3,7 +3,7 @@
     "id": "leica-street-photo",
     "slug": "leica-street-photo",
     "name": "Leica Street Photo（第15届 · 非 Oskar Barnack）",
-    "official_url": "https://leicastreetphoto.pl/en/",
+    "official_url": "https://leicastreetphoto.pl/en/home-english/",
     "status": "published",
     "open_at": "2025-11-21T00:00:00+01:00",
     "deadline_at": "2026-01-09T19:59:00+01:00",
@@ -554,6 +554,83 @@
     "health": "ok"
   },
   {
+    "id": "hangzhou-street",
+    "slug": "hangzhou-street",
+    "name": "2026第八届杭州街头摄影展",
+    "official_url": "https://ori.hangzhou.com.cn/ornews/content/2026-09/23/content_9314934.htm",
+    "status": "published",
+    "open_at": "2026-05-22T00:00:00+08:00",
+    "deadline_at": "2026-10-07T23:59:00+08:00",
+    "announce_at": null,
+    "edition": "第八届",
+    "geo": {
+      "label": "Hangzhou, China",
+      "country": "CN",
+      "city": "Hangzhou"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "jiepai-shijie",
+    "slug": "jiepai-shijie",
+    "name": "2026第三届「街拍视界」全国街头摄影大展",
+    "official_url": "http://m.1zhengji.com/a/4q2j3e2.html",
+    "status": "published",
+    "open_at": "2026-06-01T00:00:00+08:00",
+    "deadline_at": "2026-10-14T23:59:00+08:00",
+    "announce_at": null,
+    "edition": "第三届",
+    "geo": {
+      "label": "China",
+      "country": "CN"
+    },
+    "online": true,
+    "fee": "free",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.cnphotos.net/photographs/show-2494.html",
+        "label": "投稿精选（一）",
+        "edition": "第三届"
+      },
+      {
+        "url": "https://www.cnphotos.net/photographs/show-2495.html",
+        "label": "投稿精选（二）",
+        "edition": "第三届"
+      },
+      {
+        "url": "https://www.cnphotos.net/photographs/show-2506.html",
+        "label": "投稿精选（三）",
+        "edition": "第三届"
+      }
+    ],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
     "id": "women-street-photographers",
     "slug": "women-street-photographers",
     "name": "Women Street Photographers Annual Exhibition",
@@ -682,76 +759,6 @@
     "health": "ok"
   },
   {
-    "id": "jiepai-shijie",
-    "slug": "jiepai-shijie",
-    "name": "「街拍视界」全国街头摄影大展",
-    "official_url": "https://www.cnphotos.net/exhibit/show-1092.html",
-    "status": "published",
-    "open_at": "2026-06-01T00:00:00+08:00",
-    "deadline_at": "2026-10-31T23:59:00+08:00",
-    "announce_at": null,
-    "edition": "2026",
-    "geo": {
-      "label": "China",
-      "country": "CN"
-    },
-    "online": true,
-    "fee": "free",
-    "street_photo_relevance": "core",
-    "rights_tags": [],
-    "gallery_urls": [
-      {
-        "url": "https://www.cnphotos.net/exhibit/show-1958.html",
-        "label": "展览 show-1958"
-      },
-      {
-        "url": "https://www.cnphotos.net/exhibit/show-1241.html",
-        "label": "展览 show-1241"
-      }
-    ],
-    "gallery_works": [],
-    "source_adapters": [
-      {
-        "id": "manual-seed",
-        "kind": "manual"
-      }
-    ],
-    "last_fetched_at": null,
-    "content_hash": null,
-    "health": "ok"
-  },
-  {
-    "id": "hangzhou-street",
-    "slug": "hangzhou-street",
-    "name": "杭州街头摄影展",
-    "official_url": "https://www.hangzhou.com.cn/",
-    "status": "published",
-    "open_at": "2026-05-01T00:00:00+08:00",
-    "deadline_at": "2026-10-31T23:59:00+08:00",
-    "announce_at": null,
-    "edition": "2026",
-    "geo": {
-      "label": "Hangzhou, China",
-      "country": "CN",
-      "city": "Hangzhou"
-    },
-    "online": false,
-    "fee": "unknown",
-    "street_photo_relevance": "core",
-    "rights_tags": [],
-    "gallery_urls": [],
-    "gallery_works": [],
-    "source_adapters": [
-      {
-        "id": "manual-seed",
-        "kind": "manual"
-      }
-    ],
-    "last_fetched_at": null,
-    "content_hash": null,
-    "health": "ok"
-  },
-  {
     "id": "pispa",
     "slug": "pispa",
     "name": "Paris International Street Photo Awards (PISPA)",
@@ -840,7 +847,7 @@
     "id": "aussie-street",
     "slug": "aussie-street",
     "name": "Australian Street Photography Awards",
-    "official_url": "https://www.aussiestreet.com.au/",
+    "official_url": "https://www.aussiestreet.com.au/aspa2026",
     "status": "published",
     "open_at": "2026-08-01T00:00:00+10:00",
     "deadline_at": "2026-11-30T23:59:00+11:00",
@@ -1153,7 +1160,7 @@
     "id": "siena-ipa-street",
     "slug": "siena-ipa-street",
     "name": "Siena International Photo Awards — Street（综合赛类别）",
-    "official_url": "https://sipacontest.com/",
+    "official_url": "https://www.sienawards.com/en/sipa",
     "status": "published",
     "open_at": null,
     "deadline_at": null,
