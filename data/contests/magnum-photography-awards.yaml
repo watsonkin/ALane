@@ -13,6 +13,7 @@ fee: unknown
 street_photo_relevance: adjacent
 rights_tags: []
 gallery_urls: []
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

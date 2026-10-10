@@ -33,7 +33,7 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="border-t border-border">
         <div className="mx-auto w-full max-w-5xl px-5 py-6 text-xs leading-5 text-muted-foreground sm:px-8">
-          本站只做赛事信息聚合与外链索引，不托管、不镜像参赛作品。权利标签仅供参考，以官方条款为准。部分日期按往年节奏估算，标成需留意的条目请先看官网。
+          本站做赛事索引。获奖缩略图最长边不超过 400 像素，点击直接去源站的单件作品页，不提供高清下载。权利标签仅供参考，以官方条款为准。部分日期按往年节奏估算，标成需留意的条目请先看官网。下架与勘误见关于页。
         </div>
       </footer>
     </>

@@ -60,6 +60,47 @@ export const galleryUrlSchema = z.object({
   edition: z.string().min(1).optional(),
 });
 
+/** Longest edge stored on disk. Display size should stay smaller than this. */
+export const THUMB_MAX_EDGE = 400;
+
+const thumbPathSchema = z
+  .string()
+  .regex(
+    /^thumbs\/[a-z0-9]+(?:-[a-z0-9]+)*\/[a-z0-9][a-z0-9._-]*\.(?:jpg|jpeg|png|webp)$/,
+    "缩略图必须是 thumbs/{contest-id}/ 下的本地文件，不能是外链",
+  );
+
+export const galleryWorkSchema = z
+  .object({
+    source_page_url: httpUrlSchema,
+    thumb_path: thumbPathSchema,
+    title: z.string().min(1).optional(),
+    author_name: z.string().min(1).optional(),
+    author_homepage_url: httpUrlSchema.optional(),
+    source_site_label: z.string().min(1),
+  })
+  .strict();
+
+export function canonicalPage(url: string): string {
+  const parsed = new URL(url);
+  const path = parsed.pathname.replace(/\/+$/, "") || "/";
+  return `${parsed.host.toLowerCase()}${path}`;
+}
+
+/** True when the URL is a winners index, homepage, or a raw image file. */
+export function isWinnersIndexUrl(url: string): boolean {
+  const parsed = new URL(url);
+  const path = parsed.pathname.replace(/\/+$/, "") || "/";
+  if (path === "/") return true;
+  if (/\.(?:jpe?g|png|webp|gif|tiff?|avif)$/i.test(path)) return true;
+  if (/\/explore\/award-winners\//i.test(path)) return true;
+  if (/\/years\/\d{4}$/i.test(path)) return true;
+  if (/\/(?:winners|winners-gallery)$/i.test(path)) return true;
+  if (/\/photo-competitions\/[^/]+$/i.test(path)) return true;
+  if (/\/photo-competitions\/[^/]+\/\d{4}\/winners$/i.test(path)) return true;
+  return false;
+}
+
 export const sourceAdapterSchema = z.object({
   id: z.string().min(1, "source adapter 需要 id"),
   kind: sourceAdapterKindSchema.default("manual"),
@@ -82,6 +123,7 @@ export const contestSchema = z
     street_photo_relevance: streetPhotoRelevanceSchema,
     rights_tags: z.array(rightsTagSchema),
     gallery_urls: z.array(galleryUrlSchema),
+    gallery_works: z.array(galleryWorkSchema),
     source_adapters: z.array(sourceAdapterSchema),
     last_fetched_at: isoDateTimeSchema.nullable(),
     content_hash: z.string().min(1).nullable(),
@@ -108,6 +150,30 @@ export const contestSchema = z
         message: "非纯线上赛事必须填写 geo；纯线上请把 online 设为 true",
       });
     }
+
+    const indexPages = new Set([
+      canonicalPage(contest.official_url),
+      ...contest.gallery_urls.map((gallery) => canonicalPage(gallery.url)),
+    ]);
+
+    contest.gallery_works.forEach((work, index) => {
+      if (!work.thumb_path.startsWith(`thumbs/${contest.id}/`)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["gallery_works", index, "thumb_path"],
+          message: "缩略图路径必须放在 thumbs/{本场 id}/ 下",
+        });
+      }
+
+      const page = canonicalPage(work.source_page_url);
+      if (isWinnersIndexUrl(work.source_page_url) || indexPages.has(page)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["gallery_works", index, "source_page_url"],
+          message: "source_page_url 必须是这一件作品的页面，不能是获奖列表、官网首页或原图文件",
+        });
+      }
+    });
   });
 
 export type Contest = z.infer<typeof contestSchema>;
@@ -118,3 +184,4 @@ export type StreetPhotoRelevance = z.infer<typeof streetPhotoRelevanceSchema>;
 export type RightsTag = z.infer<typeof rightsTagSchema>;
 export type SourceAdapterKind = z.infer<typeof sourceAdapterKindSchema>;
 export type GalleryUrl = z.infer<typeof galleryUrlSchema>;
+export type GalleryWork = z.infer<typeof galleryWorkSchema>;

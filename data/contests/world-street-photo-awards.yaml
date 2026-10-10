@@ -19,6 +19,7 @@ gallery_urls:
   - url: "https://worldstreetphotoawards.com/wspa-winners-2025/"
     label: "2025 获奖"
     edition: "2025"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

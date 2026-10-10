@@ -16,7 +16,7 @@ export default async function HomePage() {
           街头摄影赛事
         </h1>
         <p className="mt-4 text-base leading-7 text-muted-foreground">
-          把散落在各官网的征稿收成一份可校验的索引。真源是仓库里的 YAML。页面只链到官方和获奖廊，不保存作品图片。
+          把散落在各官网的征稿收成一份可校验的索引。真源是仓库里的 YAML。获奖作品只留小索引图，点击直接去源站的单件作品页，站内不提供高清。
         </p>
       </header>
       <p className="mb-8 border border-border bg-card px-4 py-3 text-sm leading-6">

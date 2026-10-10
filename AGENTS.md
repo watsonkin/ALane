@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 街拍摄影赛事聚合站
 
-M0 only: Zod schema, `data/contests/*.yaml`, list and detail pages, CI stub. Do not add ingest, image mirroring, or ICS until a later milestone asks for them.
+M0: Zod schema, `data/contests/*.yaml`, list and detail pages, small winner thumbs. Do not add ingest crawlers. Thumbs live only under `public/thumbs/{contest-id}/` with longest edge ≤ 400. `gallery_works[].source_page_url` is that work’s own page, and the thumb link uses it directly. Do not store or hotlink originals.
 
 - Validate data with `npm run validate-data` before trusting a YAML edit.
 - `prebuild` snapshots `data/contests` into `src/generated/contests.json`. Production reads that snapshot, not the YAML directory. Do not turn Cache Components back on; Next 16.4 plus OpenNext throws on `preview-props.json` unless the postinstall glob patch is present.

@@ -19,6 +19,7 @@ gallery_urls:
   - url: "https://leicastreetphoto.pl/en/competition-results/"
     label: "第15届入围"
     edition: "15"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

@@ -1,6 +1,6 @@
 # 街拍摄影赛事聚合站
 
-街头摄影赛事的索引站。把征稿的日期、地点、费用、权利条款标签和获奖廊地址收在一起，点进去仍然回到官网。站点不保存、不镜像参赛作品。
+街头摄影赛事的索引站。把征稿的日期、地点、费用、权利条款标签和获奖廊地址收在一起，点进去仍然回到官网。单件作品只存最长边不超过 400 像素的索引缩略图，点击直接去源站作品页，不提供高清。
 
 当前是 **M0 骨架**：schema、手工 YAML、列表 / 详情、以及还不会真正抓取的 CI 占位。采集适配器和死链探测都还没做。列表筛选和 `/calendar.ics` 已经接上。
 
@@ -53,7 +53,8 @@ npm run dev
 | `fee` | `free` / `paid` / `mixed` / `unknown` |
 | `street_photo_relevance` | `core` / `adjacent` / `unreviewed`（人工初标） |
 | `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组表示**未评估**，不是“安全” |
-| `gallery_urls` | `{ url, label?, edition? }`。只存外链，不存图片 |
+| `gallery_urls` | `{ url, label?, edition? }`。整届获奖列表的外链 |
+| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
 | `source_adapters` | `{ id, kind? }`。`kind` 为 `manual` / `jsonld` / `html` / `api`，缺省 `manual`。M0 不会执行它们 |
 | `last_fetched_at`, `content_hash` | 抓取后才填。现在保持 `null` |
 | `health` | `ok` / `warn` / `dead`。M0 只展示，不探测 |

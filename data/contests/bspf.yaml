@@ -25,6 +25,7 @@ gallery_urls:
   - url: "https://www.bspfestival.org/years/2023"
     label: "2023"
     edition: "2023"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

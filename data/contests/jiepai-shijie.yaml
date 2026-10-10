@@ -19,6 +19,7 @@ gallery_urls:
     label: "展览 show-1958"
   - url: "https://www.cnphotos.net/exhibit/show-1241.html"
     label: "展览 show-1241"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

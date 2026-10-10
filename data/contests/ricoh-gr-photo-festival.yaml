@@ -13,6 +13,7 @@ fee: free
 street_photo_relevance: adjacent
 rights_tags: []
 gallery_urls: []
+gallery_works: []
 source_adapters:
   - id: manual-ricoh-gr
     kind: manual

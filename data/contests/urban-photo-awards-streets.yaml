@@ -22,6 +22,7 @@ gallery_urls:
   - url: "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/"
     label: "2024 单张"
     edition: "2024"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

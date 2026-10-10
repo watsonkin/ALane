@@ -22,6 +22,7 @@ gallery_urls:
   - url: "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2024/open/street-photography"
     label: "2024 Open 街拍"
     edition: "2024"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

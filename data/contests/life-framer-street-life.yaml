@@ -15,6 +15,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.life-framer.com/street-life/"
     label: "Street Life 获奖"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

@@ -24,6 +24,7 @@ gallery_urls:
   - url: "https://2023.momentstreetphoto.pl"
     label: "2023 届"
     edition: "2023"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

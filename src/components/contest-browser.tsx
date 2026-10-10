@@ -251,9 +251,11 @@ export function ContestBrowser({
                       : "未定"}
                   </span>
                   <span className="px-2 text-border">/</span>
-                  {contest.gallery_urls.length > 0
-                    ? `获奖廊 ${contest.gallery_urls.length} 条外链`
-                    : "暂无获奖廊"}
+                  {contest.gallery_works.length > 0
+                    ? `缩略索引 ${contest.gallery_works.length}`
+                    : contest.gallery_urls.length > 0
+                      ? `获奖廊 ${contest.gallery_urls.length} 条外链`
+                      : "暂无获奖廊"}
                   <span className="px-2 text-border">/</span>
                   {contest.rights_tags.length > 0
                     ? `条款标签 ${contest.rights_tags.length}`

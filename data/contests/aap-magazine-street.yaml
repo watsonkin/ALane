@@ -16,6 +16,7 @@ gallery_urls:
   - url: "https://www.all-about-photo.com/photography-article/1560/aap-magazine-52-street"
     label: "AAP Magazine 52 Street"
     edition: "52"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

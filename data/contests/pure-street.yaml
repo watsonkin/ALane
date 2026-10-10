@@ -19,6 +19,7 @@ gallery_urls:
   - url: "https://www.purestreetphotography.com/street-photography-awards-2025"
     label: "2025 获奖与入围"
     edition: "2025"
+gallery_works: []
 source_adapters:
   - id: manual-seed
     kind: manual

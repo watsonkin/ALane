@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -134,9 +135,67 @@ export function ContestDetail({ contest }: { contest: Contest }) {
           </section>
 
           <section>
+            <h2 className="font-serif text-2xl">获奖缩略索引</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+              这里只放最长边不超过 400 像素的索引图，用来认出作品，不是观看原作。点击图片会在新标签直接打开源站上这一件作品的页面，中间没有站内中转，也没有广告页。本站不提供高清文件。
+            </p>
+            {contest.gallery_works.length === 0 ? (
+              <p className="mt-4 text-sm text-muted-foreground">还没有单件作品的缩略索引。</p>
+            ) : (
+              <ul className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3">
+                {contest.gallery_works.map((work) => (
+                  <li key={work.source_page_url} className="border border-border bg-card">
+                    <a
+                      href={work.source_page_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block outline-none focus-visible:bg-muted"
+                    >
+                      <Image
+                        src={`/${work.thumb_path}`}
+                        alt={
+                          work.title
+                            ? `${work.author_name ? `${work.author_name}：` : ""}${work.title}（索引缩略，非原图）`
+                            : `${work.source_site_label} 索引缩略，非原图`
+                        }
+                        width={320}
+                        height={200}
+                        unoptimized
+                        className="h-36 w-full bg-background object-contain"
+                      />
+                      <span className="block px-3 pt-3 text-sm text-foreground">
+                        {work.title ?? "未命名作品"}
+                      </span>
+                      <span className="block px-3 pb-3 pt-1 text-xs leading-5 text-muted-foreground">
+                        来源：{work.source_site_label} · 点击前往源站查看原图
+                      </span>
+                    </a>
+                    {work.author_name ? (
+                      <p className="px-3 pb-3 text-xs text-muted-foreground">
+                        {work.author_homepage_url ? (
+                          <a
+                            href={work.author_homepage_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent underline-offset-4 hover:underline"
+                          >
+                            {work.author_name}
+                          </a>
+                        ) : (
+                          work.author_name
+                        )}
+                      </p>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <section>
             <h2 className="font-serif text-2xl">获奖廊外链</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-              只记录官方廊的地址。页面不嵌图片，也不提供下载。
+              这些是整届获奖列表。缩略图不链到这里，只链到上面的单件作品页。
             </p>
             {contest.gallery_urls.length === 0 ? (
               <p className="mt-4 text-sm text-muted-foreground">还没有获奖廊链接。</p>
