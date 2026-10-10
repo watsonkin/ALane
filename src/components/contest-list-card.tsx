@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
+import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   FEE_LABEL,
@@ -40,12 +41,10 @@ export function ContestListCard({
             className="h-[72px] w-24 shrink-0 rounded-[4px] object-cover grayscale shadow-none"
           />
         ) : (
-          <div
-            className="flex h-[72px] w-24 shrink-0 items-center justify-center rounded-[4px] bg-[#d5d2cb] font-serif text-xl text-ink"
-            aria-hidden="true"
-          >
-            {initial}
-          </div>
+          <ThumbPlaceholder
+            initial={initial}
+            className="h-[72px] w-24 shrink-0"
+          />
         )}
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap gap-1.5">

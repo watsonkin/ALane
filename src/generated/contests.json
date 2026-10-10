@@ -501,7 +501,15 @@
         "edition": "2026"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://lspf.co.uk/news/bump-books-prize-winner-wenpeng-lu/",
+        "thumb_path": "thumbs/lspf/bump-books.jpg",
+        "title": "Bump Books prize",
+        "author_name": "Wenpeng Lu",
+        "source_site_label": "London Street Photography Festival"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -768,7 +776,56 @@
         "label": "获奖廊"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/series/show/street-photographer-year",
+        "thumb_path": "thumbs/pispa/street-theatre.jpg",
+        "title": "Street Theatre",
+        "author_name": "Werner Mansholt",
+        "author_homepage_url": "https://www.instagram.com/werner_mansholt",
+        "source_site_label": "Paris International Street Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/series/show/best-single-street-photo",
+        "thumb_path": "thumbs/pispa/steps-beyond.jpg",
+        "title": "Steps Beyond",
+        "author_name": "Anna Meyer-Kahlen",
+        "author_homepage_url": "https://www.instagram.com/annameyerkahlen.streetart",
+        "source_site_label": "Paris International Street Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/series/show/best-street-photo-project",
+        "thumb_path": "thumbs/pispa/when-the-pavement-breathes.jpg",
+        "title": "When The Pavement Breathes",
+        "author_name": "Margarita Mavromichalis",
+        "author_homepage_url": "https://www.margaritamavromichalis.com/",
+        "source_site_label": "Paris International Street Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/single/classic-street/gold-medal",
+        "thumb_path": "thumbs/pispa/classic-gold.jpg",
+        "title": "Sans titre",
+        "author_name": "Christian Roosen",
+        "author_homepage_url": "https://www.instagram.com/roosenchristian",
+        "source_site_label": "Paris International Street Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/single/classic-street/silver-medal",
+        "thumb_path": "thumbs/pispa/classic-silver.jpg",
+        "title": "Hair",
+        "author_name": "Jerkin Linda",
+        "author_homepage_url": "https://www.instagram.com/lindalooby_1",
+        "source_site_label": "Paris International Street Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/single/classic-street/bronze-medal",
+        "thumb_path": "thumbs/pispa/classic-bronze.jpg",
+        "title": "Bogota, November 12, 2023",
+        "author_name": "Daniel Durazo",
+        "author_homepage_url": "https://www.instagram.com/danieldurazo",
+        "source_site_label": "Paris International Street Photo Awards"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

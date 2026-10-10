@@ -19,4 +19,4 @@
 4. 在该场 YAML 写入 `gallery_works`。`npm run validate-data` 会拒绝外链缩略图、获奖列表页，以及超过 400 像素或缺失的文件。
 5. 下架：关于页的邮箱收到请求后，删掉 YAML 条目和 `public/thumbs` 里的文件，再构建部署。
 
-没有已经小于等于 400 像素的衍生图时，不要画文字索引卡，也不要下高清再缩小冒充照片。`thumb_path` 可以留空，页面用灰块，链接仍然是这一件作品的 `source_page_url`。LensCulture 与 Sony 街拍目前就是这样：作品页是真的，照片文件没有小图。Eyeshot、URBAN 的 `photonew/?id=`、Leica Oskar Barnack 的获奖系列页，以及 World Street Photo 的 Swan，用的是站方小图并缩到最长边 ≤ 400。Pure Street、Life Framer、Women Street Photographers 和 BSPF 的 `/years/2025` 仍然只有整届或多人列表，`gallery_works` 留空。
+没有已经小于等于 400 像素的衍生图时，不要画文字索引卡，也不要下高清再缩小冒充照片。`thumb_path` 可以留空，页面用同一块灰底（可带很小的首字），作品名、来源和「前往源站」仍然显示，链接仍然是这一件作品的 `source_page_url`。LensCulture 与 Sony 街拍目前就是这样：作品页是真的，照片文件没有小图。Eyeshot、URBAN 的 `photonew/?id=`、Leica Oskar Barnack 的获奖系列页、World Street Photo 的 Swan，PISPA 单件奖牌页上的 `m_` 小图，以及 LSPF 单篇 Bump Books 获奖稿里的 250 像素衍生图，用的是站方小图并缩到最长边 ≤ 400。Pure Street、Life Framer、Women Street Photographers、街拍视界、Fujifilm Moment、Aussie Street、Ricoh 结果页和 BSPF 的 `/years/2025` 仍然只有整届或多人列表，`gallery_works` 留空。

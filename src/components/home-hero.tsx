@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
+import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   FEE_LABEL,
@@ -59,6 +60,7 @@ export function HomeHero({
           <ul className="mt-4 flex gap-3 overflow-x-auto pb-1">
             {closing.map((contest) => {
               const thumb = contestThumbPath(contest);
+              const initial = contest.name.trim().slice(0, 1) || "·";
               return (
                 <li key={contest.id} className="w-56 shrink-0">
                   <Link
@@ -75,10 +77,7 @@ export function HomeHero({
                         className="h-16 w-full rounded-[4px] object-cover shadow-none"
                       />
                     ) : (
-                      <div
-                        className="h-16 w-full rounded-[4px] bg-[#d5d2cb]"
-                        aria-hidden="true"
-                      />
+                      <ThumbPlaceholder initial={initial} className="h-16 w-full" />
                     )}
                     <p className="mt-3 line-clamp-2 font-serif text-lg leading-snug">
                       {contest.name}
