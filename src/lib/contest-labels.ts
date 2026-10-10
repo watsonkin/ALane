@@ -69,16 +69,65 @@ export const FEE_FILTERS = [
   { value: "unknown", label: FEE_LABEL.unknown },
 ] as const;
 
-export const PLACE_FILTERS = [
-  { value: "all", label: "全部形式" },
+/** Deadline axis. A missing deadline is its own bucket, never "open". */
+export const WINDOW_FILTERS = [
+  { value: "all", label: "全部" },
+  { value: "open", label: "开放中" },
+  { value: "closed", label: "已截止" },
+  { value: "undated", label: "日期未定" },
+] as const;
+
+export const REGION_FILTERS = [
+  { value: "all", label: "全部地区" },
   { value: "online", label: "含线上" },
-  { value: "offline", label: "仅线下" },
+  { value: "cn", label: "中国" },
+  { value: "europe", label: "欧洲" },
+  { value: "americas", label: "美洲" },
+  { value: "oceania", label: "大洋洲" },
+  { value: "other", label: "其他地区" },
 ] as const;
 
 export type StatusFilter = (typeof STATUS_FILTERS)[number]["value"];
 export type RelevanceFilter = (typeof RELEVANCE_FILTERS)[number]["value"];
 export type FeeFilter = (typeof FEE_FILTERS)[number]["value"];
-export type PlaceFilter = (typeof PLACE_FILTERS)[number]["value"];
+export type WindowFilter = (typeof WINDOW_FILTERS)[number]["value"];
+export type RegionFilter = (typeof REGION_FILTERS)[number]["value"];
+
+const EUROPE = new Set([
+  "AT", "BE", "CH", "CZ", "DE", "DK", "ES", "FI", "FR", "GB", "GR", "HU",
+  "IE", "IS", "IT", "LU", "NL", "NO", "PL", "PT", "RO", "SE",
+]);
+const AMERICAS = new Set(["AR", "BR", "CA", "MX", "US"]);
+const OCEANIA = new Set(["AU", "NZ"]);
+
+export function deadlineWindow(
+  contest: Pick<Contest, "deadline_at">,
+  asOfIso: string,
+): Exclude<WindowFilter, "all"> {
+  if (!contest.deadline_at) return "undated";
+  return Date.parse(contest.deadline_at) >= Date.parse(asOfIso) ? "open" : "closed";
+}
+
+/** Online contests also match their country. No country code matches only 含线上. */
+export function matchesRegion(
+  contest: Pick<Contest, "online" | "geo">,
+  region: RegionFilter,
+): boolean {
+  if (region === "all") return true;
+  if (region === "online") return contest.online;
+  const country = contest.geo?.country;
+  if (!country) return false;
+  if (region === "cn") return country === "CN";
+  if (region === "europe") return EUROPE.has(country);
+  if (region === "americas") return AMERICAS.has(country);
+  if (region === "oceania") return OCEANIA.has(country);
+  return (
+    country !== "CN" &&
+    !EUROPE.has(country) &&
+    !AMERICAS.has(country) &&
+    !OCEANIA.has(country)
+  );
+}
 
 export function formatContestDate(iso: string): string {
   const formatted = new Intl.DateTimeFormat("zh-CN", {

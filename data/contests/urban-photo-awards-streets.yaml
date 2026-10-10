@@ -15,7 +15,13 @@ online: false
 fee: unknown
 street_photo_relevance: adjacent
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.urbanphotoawards.com/en/winners-2025/single-pictures/"
+    label: "2025 单张"
+    edition: "2025"
+  - url: "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/"
+    label: "2024 单张"
+    edition: "2024"
 source_adapters:
   - id: manual-seed
     kind: manual

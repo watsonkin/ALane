@@ -12,7 +12,10 @@ online: true
 fee: unknown
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.street-macadam.com/macadam-awards-2025"
+    label: "2025 届"
+    edition: "2025"
 source_adapters:
   - id: manual-seed
     kind: manual

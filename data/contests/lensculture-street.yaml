@@ -12,7 +12,18 @@ online: true
 fee: mixed
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.lensculture.com/photo-competitions/street-photography-awards"
+    label: "历年索引"
+  - url: "https://www.lensculture.com/photo-competitions/street-photography-awards/2025/winners"
+    label: "2025 获奖"
+    edition: "2025"
+  - url: "https://www.lensculture.com/photo-competitions/street-photography-awards/2024/winners"
+    label: "2024 获奖"
+    edition: "2024"
+  - url: "https://www.lensculture.com/photo-competitions/street-photography-awards/2023/winners"
+    label: "2023 获奖"
+    edition: "2023"
 source_adapters:
   - id: manual-seed
     kind: manual

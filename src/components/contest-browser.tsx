@@ -1,53 +1,38 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   FEE_FILTERS,
   FEE_LABEL,
   HEALTH_LABEL,
-  PLACE_FILTERS,
+  REGION_FILTERS,
   RELEVANCE_FILTERS,
   RELEVANCE_LABEL,
   STATUS_FILTERS,
   STATUS_LABEL,
+  WINDOW_FILTERS,
+  deadlineWindow,
   formatContestDate,
   formatPlace,
+  matchesRegion,
   type FeeFilter,
-  type PlaceFilter,
+  type RegionFilter,
   type RelevanceFilter,
   type StatusFilter,
+  type WindowFilter,
 } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
 
-type Filters = {
-  status: StatusFilter;
-  relevance: RelevanceFilter;
-  fee: FeeFilter;
-  place: PlaceFilter;
-};
-
-const INITIAL_FILTERS: Filters = {
-  status: "all",
-  relevance: "all",
-  fee: "all",
-  place: "all",
-};
-
-function matches(contest: Contest, filters: Filters): boolean {
-  if (filters.status !== "all" && contest.status !== filters.status) return false;
-  if (
-    filters.relevance !== "all" &&
-    contest.street_photo_relevance !== filters.relevance
-  ) {
-    return false;
-  }
-  if (filters.fee !== "all" && contest.fee !== filters.fee) return false;
-  if (filters.place === "online" && !contest.online) return false;
-  if (filters.place === "offline" && contest.online) return false;
-  return true;
+function pick<T extends string>(
+  raw: string | null,
+  allowed: readonly { value: T }[],
+): T | "all" {
+  if (raw && allowed.some((option) => option.value === raw)) return raw as T;
+  return "all";
 }
 
 function FilterGroup<T extends string>({
@@ -85,19 +70,69 @@ function FilterGroup<T extends string>({
   );
 }
 
-export function ContestBrowser({ contests }: { contests: Contest[] }) {
-  const [filters, setFilters] = useState<Filters>(INITIAL_FILTERS);
+export function ContestBrowser({
+  contests,
+  asOf,
+}: {
+  contests: Contest[];
+  asOf: string;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const status = pick<Exclude<StatusFilter, "all">>(
+    searchParams.get("status"),
+    STATUS_FILTERS.filter((option) => option.value !== "all"),
+  );
+  const relevance = pick<Exclude<RelevanceFilter, "all">>(
+    searchParams.get("relevance"),
+    RELEVANCE_FILTERS.filter((option) => option.value !== "all"),
+  );
+  const fee = pick<Exclude<FeeFilter, "all">>(
+    searchParams.get("fee"),
+    FEE_FILTERS.filter((option) => option.value !== "all"),
+  );
+  const windowFilter = pick<Exclude<WindowFilter, "all">>(
+    searchParams.get("window"),
+    WINDOW_FILTERS.filter((option) => option.value !== "all"),
+  );
+  const region = pick<Exclude<RegionFilter, "all">>(
+    searchParams.get("region"),
+    REGION_FILTERS.filter((option) => option.value !== "all"),
+  );
+
+  function write(key: string, value: string) {
+    const next = new URLSearchParams(searchParams.toString());
+    if (value === "all") next.delete(key);
+    else next.set(key, value);
+    const query = next.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }
 
   const visible = useMemo(
-    () => contests.filter((contest) => matches(contest, filters)),
-    [contests, filters],
+    () =>
+      contests.filter((contest) => {
+        if (status !== "all" && contest.status !== status) return false;
+        if (relevance !== "all" && contest.street_photo_relevance !== relevance) {
+          return false;
+        }
+        if (fee !== "all" && contest.fee !== fee) return false;
+        if (windowFilter !== "all" && deadlineWindow(contest, asOf) !== windowFilter) {
+          return false;
+        }
+        if (!matchesRegion(contest, region)) return false;
+        return true;
+      }),
+    [asOf, contests, fee, region, relevance, status, windowFilter],
   );
 
   const filtersActive =
-    filters.status !== "all" ||
-    filters.relevance !== "all" ||
-    filters.fee !== "all" ||
-    filters.place !== "all";
+    status !== "all" ||
+    relevance !== "all" ||
+    fee !== "all" ||
+    windowFilter !== "all" ||
+    region !== "all";
 
   if (contests.length === 0) {
     return (
@@ -114,30 +149,41 @@ export function ContestBrowser({ contests }: { contests: Contest[] }) {
     <div className="space-y-8">
       <div className="space-y-4 border border-border bg-card p-4">
         <FilterGroup
-          legend="状态"
-          options={STATUS_FILTERS}
-          value={filters.status}
-          onChange={(status) => setFilters((current) => ({ ...current, status }))}
+          legend="开放窗口"
+          options={WINDOW_FILTERS}
+          value={windowFilter}
+          onChange={(value) => write("window", value)}
         />
-        <FilterGroup
-          legend="街拍相关"
-          options={RELEVANCE_FILTERS}
-          value={filters.relevance}
-          onChange={(relevance) =>
-            setFilters((current) => ({ ...current, relevance }))
-          }
-        />
+        <p className="max-w-3xl text-xs leading-5 text-muted-foreground">
+          「开放中」只包含填写了截止时间、且截止不早于本次构建时刻的赛事。没有截止时间的归入「日期未定」，不会算作开放中。这次的判断时刻是{" "}
+          {formatContestDate(asOf)}，重新部署后会更新。
+        </p>
         <FilterGroup
           legend="费用"
           options={FEE_FILTERS}
-          value={filters.fee}
-          onChange={(fee) => setFilters((current) => ({ ...current, fee }))}
+          value={fee}
+          onChange={(value) => write("fee", value)}
         />
         <FilterGroup
-          legend="形式"
-          options={PLACE_FILTERS}
-          value={filters.place}
-          onChange={(place) => setFilters((current) => ({ ...current, place }))}
+          legend="地区"
+          options={REGION_FILTERS}
+          value={region}
+          onChange={(value) => write("region", value)}
+        />
+        <p className="max-w-3xl text-xs leading-5 text-muted-foreground">
+          「含线上」包括纯线上和线上加实地的赛事。国家按种子里的国家代码分成中国、欧洲、美洲、大洋洲和其他地区；既线上又有国家的赛事，两边都会出现。
+        </p>
+        <FilterGroup
+          legend="状态（辅助）"
+          options={STATUS_FILTERS}
+          value={status}
+          onChange={(value) => write("status", value)}
+        />
+        <FilterGroup
+          legend="街拍相关（辅助）"
+          options={RELEVANCE_FILTERS}
+          value={relevance}
+          onChange={(value) => write("relevance", value)}
         />
       </div>
 
@@ -150,7 +196,7 @@ export function ContestBrowser({ contests }: { contests: Contest[] }) {
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => setFilters(INITIAL_FILTERS)}
+            onClick={() => router.replace(pathname, { scroll: false })}
           >
             清除筛选
           </Button>
@@ -160,7 +206,7 @@ export function ContestBrowser({ contests }: { contests: Contest[] }) {
       {visible.length === 0 ? (
         <div className="border border-dashed border-border px-4 py-10 text-sm text-muted-foreground">
           <p className="font-medium text-foreground">没有符合当前筛选的赛事。</p>
-          <p className="mt-2">放宽状态、相关度、费用或形式后再看一眼。</p>
+          <p className="mt-2">放宽开放窗口、费用、地区，或辅助的状态和相关度后再看一眼。</p>
         </div>
       ) : (
         <ul className="divide-y divide-border border-y border-border">

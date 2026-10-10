@@ -15,7 +15,10 @@ online: false
 fee: paid
 street_photo_relevance: adjacent
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://sipacontest.com/gallery/2025/category/1608"
+    label: "2025 Street Photography"
+    edition: "2025"
 source_adapters:
   - id: manual-seed
     kind: manual

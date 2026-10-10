@@ -18,7 +18,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.miamistreetphotographyfestival.org/2022finalistsmiamistreetphotographyfestival",
+        "label": "2022 入围与获奖",
+        "edition": "2022"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -74,7 +80,23 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.bspfestival.org/years/2025",
+        "label": "2025",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.bspfestival.org/years/2024",
+        "label": "2024",
+        "edition": "2024"
+      },
+      {
+        "url": "https://www.bspfestival.org/years/2023",
+        "label": "2023",
+        "edition": "2023"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -104,7 +126,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.dspfestival.com/2024/",
+        "label": "2024 入围与获奖",
+        "edition": "2024"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -130,7 +158,27 @@
     "fee": "mixed",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.lensculture.com/photo-competitions/street-photography-awards",
+        "label": "历年索引"
+      },
+      {
+        "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2025/winners",
+        "label": "2025 获奖",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2024/winners",
+        "label": "2024 获奖",
+        "edition": "2024"
+      },
+      {
+        "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2023/winners",
+        "label": "2023 获奖",
+        "edition": "2023"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -156,7 +204,12 @@
     "fee": "paid",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.life-framer.com/street-life/",
+        "label": "Street Life 获奖"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -186,7 +239,18 @@
     "fee": "unknown",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.urbanphotoawards.com/en/winners-2025/single-pictures/",
+        "label": "2025 单张",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/",
+        "label": "2024 单张",
+        "edition": "2024"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -212,7 +276,23 @@
     "fee": "paid",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2025-winners/",
+        "label": "2025 获奖",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2024-winners/",
+        "label": "2024 获奖",
+        "edition": "2024"
+      },
+      {
+        "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2023-winners/",
+        "label": "2023 获奖",
+        "edition": "2023"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -242,7 +322,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://lspf.co.uk/news/",
+        "label": "2026 新闻与获奖",
+        "edition": "2026"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -268,7 +354,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.street-macadam.com/macadam-awards-2025",
+        "label": "2025 届",
+        "edition": "2025"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -294,7 +386,17 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.womenstreetphotographers.com/wsp-past-exhibitions",
+        "label": "往年展览"
+      },
+      {
+        "url": "https://www.womenstreetphotographers.com/nyc-exhibition-2026",
+        "label": "纽约 2026 展览",
+        "edition": "2026"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -324,7 +426,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://worldstreetphotoawards.com/wspa-winners-2025/",
+        "label": "2025 获奖",
+        "edition": "2025"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -353,7 +461,16 @@
     "fee": "free",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.cnphotos.net/exhibit/show-1958.html",
+        "label": "展览 show-1958"
+      },
+      {
+        "url": "https://www.cnphotos.net/exhibit/show-1241.html",
+        "label": "展览 show-1241"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -412,7 +529,13 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.aussiestreet.com.au/as2019",
+        "label": "2019 获奖与入围",
+        "edition": "2019"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -438,7 +561,23 @@
     "fee": "free",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2026/open/street-photography",
+        "label": "2026 Open 街拍",
+        "edition": "2026"
+      },
+      {
+        "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2025/open/street-photography",
+        "label": "2025 Open 街拍",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2024/open/street-photography",
+        "label": "2024 Open 街拍",
+        "edition": "2024"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -464,7 +603,13 @@
     "fee": "paid",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.all-about-photo.com/photography-article/1560/aap-magazine-52-street",
+        "label": "AAP Magazine 52 Street",
+        "edition": "52"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -520,7 +665,13 @@
     "fee": "paid",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://sipacontest.com/gallery/2025/category/1608",
+        "label": "2025 Street Photography",
+        "edition": "2025"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

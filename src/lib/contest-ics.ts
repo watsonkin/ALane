@@ -37,7 +37,29 @@ function fold(line: string): string {
   return parts.join("\r\n ");
 }
 
+export const CALENDAR_ARCHIVED_NOTE = "已归档，不代表正在征稿。";
+export const CALENDAR_NO_DEADLINE_NOTE =
+  "未填写截止时间，日历时间取自开放或公布日期，不是报名截止。";
+
+/** Contests with no timestamp at all are left out of the calendar. */
+export function calendarOmitReason(contest: Contest): string | null {
+  if (contest.open_at || contest.deadline_at || contest.announce_at) return null;
+  if (contest.status === "archived") {
+    return "没有开放、截止或公布日期，且状态为已归档，所以没有写入日历。";
+  }
+  return "没有开放、截止或公布日期，所以没有写入日历。";
+}
+
+export function calendarDescriptionNotes(contest: Contest): string[] {
+  if (calendarOmitReason(contest)) return [];
+  const notes: string[] = [];
+  if (contest.status === "archived") notes.push(CALENDAR_ARCHIVED_NOTE);
+  if (!contest.deadline_at) notes.push(CALENDAR_NO_DEADLINE_NOTE);
+  return notes;
+}
+
 function eventWindow(contest: Contest): { start: string; end: string } | null {
+  if (calendarOmitReason(contest)) return null;
   const start = contest.open_at ?? contest.deadline_at ?? contest.announce_at;
   if (!start) return null;
   const end = contest.deadline_at ?? contest.announce_at ?? start;
@@ -59,6 +81,7 @@ export function contestsToIcs(contests: Contest[], dtstamp = new Date()): string
       : (contest.geo?.label ?? "");
     const description = [
       "ALane 索引条目，日期尚未逐条核验。",
+      ...calendarDescriptionNotes(contest),
       `状态：${contest.status}`,
       place ? `地点：${place}` : "",
       contest.official_url,

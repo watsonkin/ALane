@@ -1,0 +1,29 @@
+# M0 示例种子。不是已核验的真实赛事。采集适配器尚未实现。
+id: lantern-mile-2024
+slug: lantern-mile-2024
+name: 灯市一英里（示例种子）
+official_url: https://example.com/contests/lantern-mile-2024
+status: archived
+open_at: "2024-01-08T00:00:00+08:00"
+deadline_at: "2024-03-31T23:59:00+08:00"
+announce_at: "2024-06-01T12:00:00+08:00"
+edition: "2024"
+geo:
+  label: 广州
+  country: 中国
+  city: 广州
+online: false
+fee: unknown
+street_photo_relevance: core
+rights_tags:
+  - moral_rights_waived
+gallery_urls:
+  - url: https://example.com/contests/lantern-mile-2024/winners
+    label: 示例往届廊（外链可能已失效）
+    edition: "2024"
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: dead

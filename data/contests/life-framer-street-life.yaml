@@ -12,7 +12,9 @@ online: true
 fee: paid
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.life-framer.com/street-life/"
+    label: "Street Life 获奖"
 source_adapters:
   - id: manual-seed
     kind: manual

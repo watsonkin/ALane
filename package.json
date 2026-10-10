@@ -6,7 +6,7 @@
     "dev": "next dev --hostname 0.0.0.0 --port 3847",
     "prebuild": "tsx scripts/write-calendar.ts",
     "build": "next build",
-    "cf:build": "opennextjs-cloudflare build",
+    "cf:build": "tsx scripts/write-calendar.ts && opennextjs-cloudflare build",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "start": "next start --hostname 0.0.0.0 --port 3847",

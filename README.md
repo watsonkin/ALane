@@ -2,7 +2,7 @@
 
 街头摄影赛事的索引站。把征稿的日期、地点、费用、权利条款标签和获奖廊地址收在一起，点进去仍然回到官网。站点不保存、不镜像参赛作品。
 
-当前是 **M0 骨架**：schema、手工 YAML、列表 / 详情、以及还不会真正抓取的 CI 占位。采集适配器、ICS 日历、死链探测都还没做。
+当前是 **M0 骨架**：schema、手工 YAML、列表 / 详情、以及还不会真正抓取的 CI 占位。采集适配器和死链探测都还没做。列表筛选和 `/calendar.ics` 已经接上。
 
 代码的真源是这份 **Cursor Origin** 仓库，不是 Airtable，也不是数据库。当前线上路径是 **Cloudflare Workers**（不要再用 Pages 上的 `@cloudflare/next-on-pages`）。也可以另接到 Vercel，见下文。
 
@@ -60,13 +60,15 @@ npm run dev
 
 未知字段会被 `.strict()` 拒绝，避免手写 YAML 时把名字写错还以为存进去了。
 
-列表页可以按状态、街拍相关度、费用和线上 / 线下筛选。详情页按 slug 读取同一份数据。
+列表页的主筛选是开放窗口、费用和地区，写在地址栏的查询参数里（`window`、`fee`、`region`，加上辅助的 `status`、`relevance`）。「开放中」只包含填写了截止时间且尚未过这次构建时刻的赛事；截止时间为空的归入「日期未定」。地区里「含线上」看 `online`，国家按 `geo.country` 归到中国、欧洲、美洲、大洋洲或其他。详情页按 slug 读取同一份数据。
+
+`/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。
 
 ## Cloudflare Workers
 
 适配器是 `@opennextjs/cloudflare`（`1.20.10`），不是 `@cloudflare/next-on-pages`。Wrangler 固定在 `4.149.0`，`@cloudflare/workers-types` 固定在 `5.20261010.1`，避免 `npm ci` 时 workers-types 4 和 Wrangler 4 的 peer 冲突。
 
-`prebuild` 把 YAML 写成 `src/generated/contests.json` 和 `public/calendar.ics`。页面和 Worker 读这份快照，请求时不再读磁盘。Cache Components 和 partial prefetch 已关掉：Next 16.4 会在 Worker 里加载 `preview-props.json`，而 `@opennextjs/cloudflare@1.20.10` 还没把它打进包（上游 PR 1356）。`postinstall` 会给这个版本补上 `preview-props` 的 glob，装到已包含它的版本时自动跳过。`open-next.config.ts` 用默认的 dummy cache，**不需要 R2**。`wrangler.jsonc` 里的 Worker 名字是 `alane`，`WORKER_SELF_REFERENCE` 必须和这个名字一致。
+`prebuild`（`npm run build` 之前）和 `npm run cf:build` 都会把 YAML 写成 `src/generated/contests.json` 和 `public/calendar.ics`。页面和 Worker 读这份快照，请求时不再读磁盘。Cache Components 和 partial prefetch 已关掉：Next 16.4 会在 Worker 里加载 `preview-props.json`，而 `@opennextjs/cloudflare@1.20.10` 还没把它打进包（上游 PR 1356）。`postinstall` 会给这个版本补上 `preview-props` 的 glob，装到已包含它的版本时自动跳过。`open-next.config.ts` 用默认的 dummy cache，**不需要 R2**。`wrangler.jsonc` 里的 Worker 名字是 `alane`，`WORKER_SELF_REFERENCE` 必须和这个名字一致。
 
 不要在现有的 **Pages** 项目上只改构建命令再 Redeploy。`@opennextjs/cloudflare` 产出的是 Worker（`.open-next/worker.js` 和 `.open-next/assets`），经典 Pages 只认静态输出目录，接不上。
 

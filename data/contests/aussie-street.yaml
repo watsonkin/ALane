@@ -14,7 +14,10 @@ online: false
 fee: unknown
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.aussiestreet.com.au/as2019"
+    label: "2019 获奖与入围"
+    edition: "2019"
 source_adapters:
   - id: manual-seed
     kind: manual

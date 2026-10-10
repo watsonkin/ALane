@@ -15,7 +15,10 @@ online: false
 fee: unknown
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.dspfestival.com/2024/"
+    label: "2024 入围与获奖"
+    edition: "2024"
 source_adapters:
   - id: manual-seed
     kind: manual

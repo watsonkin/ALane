@@ -12,7 +12,12 @@ online: true
 fee: unknown
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.womenstreetphotographers.com/wsp-past-exhibitions"
+    label: "往年展览"
+  - url: "https://www.womenstreetphotographers.com/nyc-exhibition-2026"
+    label: "纽约 2026 展览"
+    edition: "2026"
 source_adapters:
   - id: manual-seed
     kind: manual

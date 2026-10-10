@@ -14,7 +14,11 @@ online: true
 fee: free
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.cnphotos.net/exhibit/show-1958.html"
+    label: "展览 show-1958"
+  - url: "https://www.cnphotos.net/exhibit/show-1241.html"
+    label: "展览 show-1241"
 source_adapters:
   - id: manual-seed
     kind: manual
