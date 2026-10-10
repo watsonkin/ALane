@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="ALane  A lane through awards">
+  <!-- Locked lockup: viewfinder corners + flat-top trophy | ALane wordmark | slogan -->
+  <g fill="none" stroke="#1A1A1A" stroke-width="2.25" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Viewfinder L-corners -->
+    <path d="M18 28 V14 H32"/>
+    <path d="M102 28 V14 H88"/>
+    <path d="M18 92 V106 H32"/>
+    <path d="M102 92 V106 H88"/>
+    <!-- Trophy (flat top, no finial/dot, two handles, tiered base) -->
+    <path d="M44 34 H76"/>
+    <path d="M48 34 V52 C48 66 56 72 60 72 C64 72 72 66 72 52 V34"/>
+    <path d="M48 42 H38 C34 42 32 48 36 54"/>
+    <path d="M72 42 H82 C86 42 88 48 84 54"/>
+    <path d="M60 72 V82"/>
+    <path d="M50 82 H70"/>
+    <path d="M46 88 H74"/>
+    <path d="M42 94 H78"/>
+  </g>
+  <!-- Wordmark: high-contrast serif; A without crossbar (chevron) -->
+  <g fill="#1A1A1A">
+    <!-- A as open chevron -->
+    <path d="M148 78 L172 22 L196 78" fill="none" stroke="#1A1A1A" stroke-width="5" stroke-linecap="butt" stroke-linejoin="miter"/>
+    <!-- Lane in serif-like paths approximated with text for fidelity in browsers -->
+    <text x="206" y="72" font-family="Source Serif 4, Source Serif Pro, Georgia, 'Times New Roman', serif" font-size="56" font-weight="600" letter-spacing="-0.5">Lane</text>
+  </g>
+  <!-- Slogan with flanking rules -->
+  <g fill="#1A1A1A" stroke="#1A1A1A">
+    <line x1="148" y1="98" x2="188" y2="98" stroke-width="1"/>
+    <text x="198" y="102" font-family="Inter, system-ui, sans-serif" font-size="11" letter-spacing="2.5" fill="#1A1A1A" stroke="none">A LANE THROUGH AWARDS</text>
+    <line x1="412" y1="98" x2="452" y2="98" stroke-width="1"/>
+  </g>
+</svg>

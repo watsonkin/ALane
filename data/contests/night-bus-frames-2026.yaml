@@ -1,0 +1,26 @@
+# M0 示例种子。不是已核验的真实赛事。采集适配器尚未实现。
+id: night-bus-frames-2026
+slug: night-bus-frames-2026
+name: 夜班车窗（示例种子）
+official_url: https://example.com/contests/night-bus-frames-2026
+status: draft
+open_at: "2026-04-10T00:00:00+08:00"
+deadline_at: "2026-09-01T23:59:00+08:00"
+announce_at: null
+edition: "2026"
+geo:
+  label: 成都
+  country: 中国
+  city: 成都
+online: false
+fee: mixed
+street_photo_relevance: unreviewed
+rights_tags:
+  - exclusive
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok
