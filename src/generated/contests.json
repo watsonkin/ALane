@@ -352,7 +352,15 @@
         "edition": "2024"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/interview-with-luis-olivan-tenorio-overall-winner-of-urban-photo-awards-2025-urbaninsights/",
+        "thumb_path": "thumbs/urban-photo-awards-streets/porto-in-may.jpg",
+        "title": "Porto in May",
+        "author_name": "Luis Olivan Tenorio",
+        "source_site_label": "URBAN Photo Awards"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -395,7 +403,37 @@
         "edition": "2023"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.eyeshotstreetphotography.com/michael-robinson-chavez/",
+        "thumb_path": "thumbs/eyeshot-open-call/mestizo.jpg",
+        "title": "Mestizo",
+        "author_name": "Michael Robinson Chavez",
+        "source_site_label": "Eyeshot"
+      },
+      {
+        "source_page_url": "https://www.eyeshotstreetphotography.com/taras-bychko-3/",
+        "thumb_path": "thumbs/eyeshot-open-call/out-of-time.jpg",
+        "title": "Out of Time",
+        "author_name": "Taras Bychko",
+        "source_site_label": "Eyeshot"
+      },
+      {
+        "source_page_url": "https://www.eyeshotstreetphotography.com/margarita-mavromichalis/",
+        "thumb_path": "thumbs/eyeshot-open-call/when-the-pavement-breathes.jpg",
+        "title": "When the Pavement Breathes",
+        "author_name": "Margarita Mavromichalis",
+        "author_homepage_url": "https://www.margaritamavromichalis.com/",
+        "source_site_label": "Eyeshot"
+      },
+      {
+        "source_page_url": "https://www.eyeshotstreetphotography.com/lisandra-alvarez/",
+        "thumb_path": "thumbs/eyeshot-open-call/deep-dream.jpg",
+        "title": "Sueño Profundo / Deep Dream",
+        "author_name": "Lisandra Alvarez",
+        "source_site_label": "Eyeshot"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -797,7 +835,30 @@
         "edition": "2024"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.worldphoto.org/team-profile/callie-eh-malaysia",
+        "thumb_path": "thumbs/sony-wpa-street/the-hand.png",
+        "title": "The Hand",
+        "author_name": "Callie Eh",
+        "author_homepage_url": "https://www.callieeh.com/",
+        "source_site_label": "World Photography Organisation"
+      },
+      {
+        "source_page_url": "https://www.worldphoto.org/team-profile/etienne-souchon-france",
+        "thumb_path": "thumbs/sony-wpa-street/havana-running-away.png",
+        "title": "Havana Running Away",
+        "author_name": "Etienne Souchon",
+        "source_site_label": "World Photography Organisation"
+      },
+      {
+        "source_page_url": "https://www.worldphoto.org/team-profile/andreas-mikonauschke-germany",
+        "thumb_path": "thumbs/sony-wpa-street/exhausted.png",
+        "title": "Exhausted",
+        "author_name": "Andreas Mikonauschke",
+        "source_site_label": "World Photography Organisation"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

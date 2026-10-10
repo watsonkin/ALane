@@ -19,4 +19,4 @@
 4. 在该场 YAML 写入 `gallery_works`。`npm run validate-data` 会拒绝外链缩略图、获奖列表页，以及超过 400 像素或缺失的文件。
 5. 下架：关于页的邮箱收到请求后，删掉 YAML 条目和 `public/thumbs` 里的文件，再构建部署。
 
-抓取被拦，或 robots 不允许保存图片时，可以先放标明「非原图」的索引卡，但 `source_page_url` 仍然必须是真实的单件作品页。LensCulture 在本环境返回 403，所以 `lensculture-street` 的四张图是索引卡，不是作品复制；链接指向 `p1.lensculture.com/projects/…` 上的具体项目页。BSPF 的 `/years/2025` 只有整届列表、没有单件作品页，因此没有做缩略试点。
+抓取被拦，或页面上只有超过 400 像素的大图时，可以先放标明「非原图」的索引卡，但 `source_page_url` 仍然必须是真实的单件作品页。LensCulture 在本环境返回 403，所以 `lensculture-street` 的四张图是索引卡，链接指向 `p1.lensculture.com/projects/…` 上的具体项目页。Eyeshot 系列页和 URBAN 的 Luis Olivan Tenorio 专访可以拿到不超过 600 像素的衍生图，已缩到最长边 ≤ 400。Sony Open 街拍画廊只有 `max_2600x2600` 大图、没有单张作品页，所以 `sony-wpa-street` 用索引卡，链接指向该届街拍类获奖者的 `team-profile`。Women Street Photographers 和 BSPF 的 `/years/2025` 仍然只有整届或多人列表，没有单件作品页，因此 `gallery_works` 留空。

@@ -22,7 +22,28 @@ gallery_urls:
   - url: "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2023-winners/"
     label: "2023 获奖"
     edition: "2023"
-gallery_works: []
+gallery_works:
+  - source_page_url: "https://www.eyeshotstreetphotography.com/michael-robinson-chavez/"
+    thumb_path: thumbs/eyeshot-open-call/mestizo.jpg
+    title: "Mestizo"
+    author_name: "Michael Robinson Chavez"
+    source_site_label: "Eyeshot"
+  - source_page_url: "https://www.eyeshotstreetphotography.com/taras-bychko-3/"
+    thumb_path: thumbs/eyeshot-open-call/out-of-time.jpg
+    title: "Out of Time"
+    author_name: "Taras Bychko"
+    source_site_label: "Eyeshot"
+  - source_page_url: "https://www.eyeshotstreetphotography.com/margarita-mavromichalis/"
+    thumb_path: thumbs/eyeshot-open-call/when-the-pavement-breathes.jpg
+    title: "When the Pavement Breathes"
+    author_name: "Margarita Mavromichalis"
+    author_homepage_url: "https://www.margaritamavromichalis.com/"
+    source_site_label: "Eyeshot"
+  - source_page_url: "https://www.eyeshotstreetphotography.com/lisandra-alvarez/"
+    thumb_path: thumbs/eyeshot-open-call/deep-dream.jpg
+    title: "Sueño Profundo / Deep Dream"
+    author_name: "Lisandra Alvarez"
+    source_site_label: "Eyeshot"
 source_adapters:
   - id: manual-seed
     kind: manual

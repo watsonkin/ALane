@@ -22,7 +22,12 @@ gallery_urls:
   - url: "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/"
     label: "2024 单张"
     edition: "2024"
-gallery_works: []
+gallery_works:
+  - source_page_url: "https://www.urbanphotoawards.com/en/interview-with-luis-olivan-tenorio-overall-winner-of-urban-photo-awards-2025-urbaninsights/"
+    thumb_path: thumbs/urban-photo-awards-streets/porto-in-may.jpg
+    title: "Porto in May"
+    author_name: "Luis Olivan Tenorio"
+    source_site_label: "URBAN Photo Awards"
 source_adapters:
   - id: manual-seed
     kind: manual
