@@ -43,3 +43,8 @@ next-env.d.ts
 # local scratch that is not the site
 /uploads/
 /agent-tools/
+
+# opennext / wrangler
+.open-next/
+.wrangler/
+.dev.vars

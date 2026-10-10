@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -17,3 +18,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Local `next dev` only. No-ops during `next build`. The site does not use bindings.
+initOpenNextCloudflareForDev();

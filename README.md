@@ -4,7 +4,7 @@
 
 当前是 **M0 骨架**：schema、手工 YAML、列表 / 详情、以及还不会真正抓取的 CI 占位。采集适配器、ICS 日历、死链探测都还没做。
 
-托管目标是 **Vercel**。代码的真源是这份 **Cursor Origin** 仓库，不是 Airtable，也不是数据库。
+代码的真源是这份 **Cursor Origin** 仓库，不是 Airtable，也不是数据库。当前线上路径是 **Cloudflare Workers**（不要再用 Pages 上的 `@cloudflare/next-on-pages`）。也可以另接到 Vercel，见下文。
 
 ## 本地运行
 
@@ -24,8 +24,11 @@ npm run dev
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run validate-data` | 用 Zod 校验 `data/contests`，并抽查几条不该通过的数据 |
-| `npm run build` | 生产构建。坏掉的 YAML 会让构建失败 |
-| `npm run start` | 跑构建产物，同样是 3847 端口 |
+| `npm run build` | `next build`。坏掉的 YAML 会让构建失败。CI 用这条 |
+| `npm run cf:build` | `opennextjs-cloudflare build`（内部会再跑 `npm run build`，再打成 Worker） |
+| `npm run preview` | 构建后用 Wrangler 在本地 Workers 运行时预览 |
+| `npm run deploy` | 构建并部署到 Cloudflare。需要本机已登录 Wrangler，仓库里没有密钥 |
+| `npm run start` | 跑 Next 构建产物，同样是 3847 端口 |
 
 ## 数据
 
@@ -58,6 +61,26 @@ npm run dev
 未知字段会被 `.strict()` 拒绝，避免手写 YAML 时把名字写错还以为存进去了。
 
 列表页可以按状态、街拍相关度、费用和线上 / 线下筛选。详情页按 slug 读取同一份数据。
+
+## Cloudflare Workers
+
+适配器是 `@opennextjs/cloudflare`（`1.20.10`），不是 `@cloudflare/next-on-pages`。Wrangler 固定在 `4.149.0`，`@cloudflare/workers-types` 固定在 `5.20261010.1`，避免 `npm ci` 时 workers-types 4 和 Wrangler 4 的 peer 冲突。
+
+赛事 YAML 在 `next build` 时写进页面。`open-next.config.ts` 用默认的 dummy cache，**不需要 R2**。`wrangler.jsonc` 里的 Worker 名字是 `alane`，`WORKER_SELF_REFERENCE` 必须和这个名字一致。
+
+不要在现有的 **Pages** 项目上只改构建命令再 Redeploy。`@opennextjs/cloudflare` 产出的是 Worker（`.open-next/worker.js` 和 `.open-next/assets`），经典 Pages 只认静态输出目录，接不上。
+
+在 Cloudflare 里用 **Workers Builds**（Workers & Pages 里新建 Worker，连 GitHub `watsonkin/ALane` 的 `main`）。先改设置，再重新部署：
+
+| 设置 | 值 |
+| --- | --- |
+| Build command | `npm run cf:build` |
+| Deploy command | `npx opennextjs-cloudflare deploy` |
+| 输出目录 | 不填。不要设 Pages 的 Output directory |
+| Node.js | `22` |
+| Root directory | 仓库根目录 |
+
+非生产分支的预览命令可以用 `npx opennextjs-cloudflare upload`。M0 没有密钥，不要在构建里打印 token。本地预览需要把 `.dev.vars.example` 复制成 `.dev.vars`（只有 `NEXTJS_ENV=development`）。这个文件已忽略，不要提交，Wrangler 部署也不会带上它。
 
 ## 把 Origin 仓库接到 Vercel
 
