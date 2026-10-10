@@ -36,7 +36,7 @@ npm run dev
 
 请把日期写成**带时区**的 ISO 8601，并加上引号，例如 `"2026-06-30T23:59:00+08:00"`。加载器用 YAML 1.2 core schema，避免日期被解析成 `Date`。
 
-仓库里现有的四条都是**示例种子**（`example.com`，名称里带「示例种子」）。它们用来把页面和校验跑通，不是已经核验过的真实征稿。
+`data/contests/` 里是 20 条人工种子（Caution 标成 `health: warn`，Magnum 为 `archived`，纪实大项下的街拍类别标成 `adjacent`）。部分日期按往年节奏估算，权利标签仍为空，表示尚未评估。
 
 ### 字段
 
@@ -66,7 +66,7 @@ npm run dev
 
 适配器是 `@opennextjs/cloudflare`（`1.20.10`），不是 `@cloudflare/next-on-pages`。Wrangler 固定在 `4.149.0`，`@cloudflare/workers-types` 固定在 `5.20261010.1`，避免 `npm ci` 时 workers-types 4 和 Wrangler 4 的 peer 冲突。
 
-赛事 YAML 在 `next build` 时写进页面。`open-next.config.ts` 用默认的 dummy cache，**不需要 R2**。`wrangler.jsonc` 里的 Worker 名字是 `alane`，`WORKER_SELF_REFERENCE` 必须和这个名字一致。
+`prebuild` 把 YAML 写成 `src/generated/contests.json` 和 `public/calendar.ics`。页面和 Worker 读这份快照，请求时不再读磁盘。Cache Components 和 partial prefetch 已关掉：Next 16.4 会在 Worker 里加载 `preview-props.json`，而 `@opennextjs/cloudflare@1.20.10` 还没把它打进包（上游 PR 1356）。`postinstall` 会给这个版本补上 `preview-props` 的 glob，装到已包含它的版本时自动跳过。`open-next.config.ts` 用默认的 dummy cache，**不需要 R2**。`wrangler.jsonc` 里的 Worker 名字是 `alane`，`WORKER_SELF_REFERENCE` 必须和这个名字一致。
 
 不要在现有的 **Pages** 项目上只改构建命令再 Redeploy。`@opennextjs/cloudflare` 产出的是 Worker（`.open-next/worker.js` 和 `.open-next/assets`），经典 Pages 只认静态输出目录，接不上。
 

@@ -1,0 +1,24 @@
+id: hangzhou-street
+slug: hangzhou-street
+name: "杭州街头摄影展"
+official_url: "https://www.hangzhou.com.cn/"
+status: published
+open_at: "2026-05-01T00:00:00+08:00"
+deadline_at: "2026-10-31T23:59:00+08:00"
+announce_at: null
+edition: "2026"
+geo:
+  label: "Hangzhou, China"
+  country: CN
+  city: Hangzhou
+online: false
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

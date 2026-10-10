@@ -1,0 +1,24 @@
+id: siena-ipa-street
+slug: siena-ipa-street
+name: "Siena International Photo Awards — Street（综合赛类别）"
+official_url: "https://sipacontest.com/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2026"
+geo:
+  label: "Siena, Italy"
+  country: IT
+  city: Siena
+online: false
+fee: paid
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

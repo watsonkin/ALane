@@ -21,7 +21,7 @@
     <!-- A as open chevron -->
     <path d="M148 78 L172 22 L196 78" fill="none" stroke="#1A1A1A" stroke-width="5" stroke-linecap="butt" stroke-linejoin="miter"/>
     <!-- Lane in serif-like paths approximated with text for fidelity in browsers -->
-    <text x="206" y="72" font-family="Source Serie 4, Source Serif Pro, Georgia, 'Times New Roman', serif" font-size="56" font-weight="600" letter-spacing="-0.5">Lane</text>
+    <text x="206" y="72" font-family="Source Serif 4, Source Serif Pro, Georgia, 'Times New Roman', serif" font-size="56" font-weight="600" letter-spacing="-0.5">Lane</text>
   </g>
   <!-- Slogan with flanking rules -->
   <g fill="#1A1A1A" stroke="#1A1A1A">

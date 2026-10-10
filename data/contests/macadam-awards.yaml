@@ -1,0 +1,21 @@
+id: macadam-awards
+slug: macadam-awards
+name: "Macadam Awards"
+official_url: "https://www.street-macadam.com/macadam-awards-2026"
+status: published
+open_at: "2026-05-01T00:00:00+00:00"
+deadline_at: "2026-08-31T23:59:00+00:00"
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

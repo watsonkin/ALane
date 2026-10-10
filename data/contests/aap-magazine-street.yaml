@@ -1,0 +1,21 @@
+id: aap-magazine-street
+slug: aap-magazine-street
+name: "AAP Magazine STREET"
+official_url: "https://www.all-about-photo.com/all-about-photo-contest/244/aap-magazine-street-2026"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

@@ -1,0 +1,21 @@
+id: world-press-photo
+slug: world-press-photo
+name: "World Press Photo Contest（非纯街拍专项 · 新闻纪实）"
+official_url: "https://www.worldpressphoto.org/contest/2026"
+status: published
+open_at: "2025-12-01T00:00:00+00:00"
+deadline_at: "2026-02-28T23:59:00+00:00"
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

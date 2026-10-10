@@ -1,0 +1,24 @@
+id: urban-photo-awards-streets
+slug: urban-photo-awards-streets
+name: "URBAN Photo Awards — STREETS"
+official_url: "https://www.urbanphotoawards.com/en/"
+status: published
+open_at: "2026-04-01T00:00:00+00:00"
+deadline_at: "2026-06-30T23:59:00+00:00"
+announce_at: null
+edition: "2026"
+geo:
+  label: "Trieste, Italy"
+  country: IT
+  city: Trieste
+online: false
+fee: unknown
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

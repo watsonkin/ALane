@@ -1,0 +1,21 @@
+id: leica-oskar-barnack
+slug: leica-oskar-barnack
+name: "Leica Oskar Barnack Award（非纯街拍专项 · 人文纪实）"
+official_url: "https://www.leica-oskar-barnack-award.com/en/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

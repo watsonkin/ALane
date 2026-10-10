@@ -1,0 +1,23 @@
+id: jiepai-shijie
+slug: jiepai-shijie
+name: "「街拍视界」全国街头摄影大展"
+official_url: "https://www.cnphotos.net/exhibit/show-1092.html"
+status: published
+open_at: "2026-06-01T00:00:00+08:00"
+deadline_at: "2026-10-31T23:59:00+08:00"
+announce_at: null
+edition: "2026"
+geo:
+  label: China
+  country: CN
+online: true
+fee: free
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

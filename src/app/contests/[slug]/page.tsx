@@ -2,15 +2,17 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { ContestDetail } from "@/components/contest-detail";
 import { MissingContest } from "@/components/missing-contest";
-import { readContestsFromDisk } from "@/lib/contest-files";
-import { loadContestBySlug } from "@/lib/contests";
+import { contestStaticParams, loadContestBySlug } from "@/lib/contests";
 
 type ContestPageProps = {
   params: Promise<{ slug: string }>;
 };
 
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
 export function generateStaticParams() {
-  return readContestsFromDisk().map((contest) => ({ slug: contest.slug }));
+  return contestStaticParams();
 }
 
 export async function generateMetadata({

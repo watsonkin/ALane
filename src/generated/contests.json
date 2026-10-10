@@ -1,0 +1,560 @@
+[
+  {
+    "id": "miami-street-photography-festival",
+    "slug": "miami-street-photography-festival",
+    "name": "Miami Street Photography Festival Contest",
+    "official_url": "https://www.miamistreetphotographyfestival.org/",
+    "status": "published",
+    "open_at": "2025-10-01T00:00:00-04:00",
+    "deadline_at": "2026-01-31T23:59:00-05:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Miami, United States",
+      "country": "US",
+      "city": "Miami"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "world-press-photo",
+    "slug": "world-press-photo",
+    "name": "World Press Photo Contest（非纯街拍专项 · 新闻纪实）",
+    "official_url": "https://www.worldpressphoto.org/contest/2026",
+    "status": "published",
+    "open_at": "2025-12-01T00:00:00+00:00",
+    "deadline_at": "2026-02-28T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "bspf",
+    "slug": "bspf",
+    "name": "Brussels Street Photography Festival (BSPF)",
+    "official_url": "https://www.bspfestival.org/open-call",
+    "status": "published",
+    "open_at": "2026-03-01T00:00:00+00:00",
+    "deadline_at": "2026-05-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Brussels, Belgium",
+      "country": "BE",
+      "city": "Brussels"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "dspf",
+    "slug": "dspf",
+    "name": "Dublin Street Photography Festival (DSPF)",
+    "official_url": "https://www.dspfestival.com/",
+    "status": "published",
+    "open_at": "2026-03-01T00:00:00+00:00",
+    "deadline_at": "2026-05-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Dublin, Ireland",
+      "country": "IE",
+      "city": "Dublin"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "lensculture-street",
+    "slug": "lensculture-street",
+    "name": "LensCulture Street Photography Awards",
+    "official_url": "https://www.lensculture.com/photo-competitions/street-photography-awards",
+    "status": "published",
+    "open_at": "2026-04-01T00:00:00+00:00",
+    "deadline_at": "2026-06-30T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "mixed",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "life-framer-street-life",
+    "slug": "life-framer-street-life",
+    "name": "Life Framer — Street Life",
+    "official_url": "https://www.life-framer.com/competitions/",
+    "status": "published",
+    "open_at": "2026-05-01T00:00:00+00:00",
+    "deadline_at": "2026-06-30T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "Street Life 2026",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "urban-photo-awards-streets",
+    "slug": "urban-photo-awards-streets",
+    "name": "URBAN Photo Awards — STREETS",
+    "official_url": "https://www.urbanphotoawards.com/en/",
+    "status": "published",
+    "open_at": "2026-04-01T00:00:00+00:00",
+    "deadline_at": "2026-06-30T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Trieste, Italy",
+      "country": "IT",
+      "city": "Trieste"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "eyeshot-open-call",
+    "slug": "eyeshot-open-call",
+    "name": "Eyeshot Open Call",
+    "official_url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2026/",
+    "status": "published",
+    "open_at": "2026-05-01T00:00:00+00:00",
+    "deadline_at": "2026-08-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "lspf",
+    "slug": "lspf",
+    "name": "London Street Photography Festival (LSPF)",
+    "official_url": "https://lspf.co.uk/",
+    "status": "published",
+    "open_at": "2026-05-01T00:00:00+00:00",
+    "deadline_at": "2026-08-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "London, United Kingdom",
+      "country": "GB",
+      "city": "London"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "macadam-awards",
+    "slug": "macadam-awards",
+    "name": "Macadam Awards",
+    "official_url": "https://www.street-macadam.com/macadam-awards-2026",
+    "status": "published",
+    "open_at": "2026-05-01T00:00:00+00:00",
+    "deadline_at": "2026-08-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "women-street-photographers",
+    "slug": "women-street-photographers",
+    "name": "Women Street Photographers Annual Exhibition",
+    "official_url": "https://www.womenstreetphotographers.com/",
+    "status": "published",
+    "open_at": "2026-07-01T00:00:00+00:00",
+    "deadline_at": "2026-10-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "world-street-photo-awards",
+    "slug": "world-street-photo-awards",
+    "name": "World Street Photo Awards",
+    "official_url": "https://worldstreetphotoawards.com/",
+    "status": "published",
+    "open_at": "2026-07-01T00:00:00+00:00",
+    "deadline_at": "2026-10-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Berlin, Germany",
+      "country": "DE",
+      "city": "Berlin"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "jiepai-shijie",
+    "slug": "jiepai-shijie",
+    "name": "「街拍视界」全国街头摄影大展",
+    "official_url": "https://www.cnphotos.net/exhibit/show-1092.html",
+    "status": "published",
+    "open_at": "2026-06-01T00:00:00+08:00",
+    "deadline_at": "2026-10-31T23:59:00+08:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "China",
+      "country": "CN"
+    },
+    "online": true,
+    "fee": "free",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "hangzhou-street",
+    "slug": "hangzhou-street",
+    "name": "杭州街头摄影展",
+    "official_url": "https://www.hangzhou.com.cn/",
+    "status": "published",
+    "open_at": "2026-05-01T00:00:00+08:00",
+    "deadline_at": "2026-10-31T23:59:00+08:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Hangzhou, China",
+      "country": "CN",
+      "city": "Hangzhou"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "aussie-street",
+    "slug": "aussie-street",
+    "name": "Australian Street Photography Awards",
+    "official_url": "https://www.aussiestreet.com.au/",
+    "status": "published",
+    "open_at": "2026-08-01T00:00:00+10:00",
+    "deadline_at": "2026-11-30T23:59:00+11:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Australia",
+      "country": "AU"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "sony-wpa-street",
+    "slug": "sony-wpa-street",
+    "name": "Sony World Photography Awards — Street（非纯街拍专项）",
+    "official_url": "https://www.worldphoto.org/sony-world-photography-awards",
+    "status": "published",
+    "open_at": "2026-06-01T00:00:00+00:00",
+    "deadline_at": "2026-12-31T23:59:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "free",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "aap-magazine-street",
+    "slug": "aap-magazine-street",
+    "name": "AAP Magazine STREET",
+    "official_url": "https://www.all-about-photo.com/all-about-photo-contest/244/aap-magazine-street-2026",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "leica-oskar-barnack",
+    "slug": "leica-oskar-barnack",
+    "name": "Leica Oskar Barnack Award（非纯街拍专项 · 人文纪实）",
+    "official_url": "https://www.leica-oskar-barnack-award.com/en/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "siena-ipa-street",
+    "slug": "siena-ipa-street",
+    "name": "Siena International Photo Awards — Street（综合赛类别）",
+    "official_url": "https://sipacontest.com/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Siena, Italy",
+      "country": "IT",
+      "city": "Siena"
+    },
+    "online": false,
+    "fee": "paid",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "magnum-photography-awards",
+    "slug": "magnum-photography-awards",
+    "name": "Magnum Photography Awards（历史条目 · 近年未见稳定续办）",
+    "official_url": "https://www.magnumphotos.com/",
+    "status": "archived",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": null,
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "adjacent",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  }
+]

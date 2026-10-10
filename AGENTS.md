@@ -13,5 +13,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 M0 only: Zod schema, `data/contests/*.yaml`, list and detail pages, CI stub. Do not add ingest, image mirroring, or ICS until a later milestone asks for them.
 
 - Validate data with `npm run validate-data` before trusting a YAML edit.
-- Contest pages read the filesystem through `src/lib/contests.ts` (`use cache`). A YAML edit ships with the next build.
+- `prebuild` snapshots `data/contests` into `src/generated/contests.json`. Production reads that snapshot, not the YAML directory. Do not turn Cache Components back on; Next 16.4 plus OpenNext throws on `preview-props.json` unless the postinstall glob patch is present.
 - Dev server: `npm run dev` on port 3847.

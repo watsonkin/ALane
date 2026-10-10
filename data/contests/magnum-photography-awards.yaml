@@ -1,0 +1,21 @@
+id: magnum-photography-awards
+slug: magnum-photography-awards
+name: "Magnum Photography Awards（历史条目 · 近年未见稳定续办）"
+official_url: "https://www.magnumphotos.com/"
+status: archived
+open_at: null
+deadline_at: null
+announce_at: null
+edition: null
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

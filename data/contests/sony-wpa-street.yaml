@@ -1,0 +1,21 @@
+id: sony-wpa-street
+slug: sony-wpa-street
+name: "Sony World Photography Awards — Street（非纯街拍专项）"
+official_url: "https://www.worldphoto.org/sony-world-photography-awards"
+status: published
+open_at: "2026-06-01T00:00:00+00:00"
+deadline_at: "2026-12-31T23:59:00+00:00"
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: free
+street_photo_relevance: adjacent
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

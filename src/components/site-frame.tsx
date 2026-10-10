@@ -18,9 +18,14 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
           >
             <AlaneLockup />
           </Link>
-          <p className="hidden text-xs text-muted-foreground sm:block">
-            M0 骨架
-          </p>
+          <nav className="flex shrink-0 items-center gap-4 text-xs text-muted-foreground">
+            <Link href="/about" className="hover:text-ink">
+              关于
+            </Link>
+            <a href="/calendar.ics" className="hover:text-ink">
+              日历
+            </a>
+          </nav>
         </div>
       </header>
       <main id="content" className="mx-auto w-full max-w-5xl flex-1 px-5 py-8 sm:px-8 sm:py-12">
@@ -28,7 +33,7 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
       </main>
       <footer className="border-t border-border">
         <div className="mx-auto w-full max-w-5xl px-5 py-6 text-xs leading-5 text-muted-foreground sm:px-8">
-          本站只做赛事信息聚合与外链索引，不托管、不镜像参赛作品。权利标签仅供参考，以官方条款为准。当前条目是示例种子，日期和链接都还没有核验。
+          本站只做赛事信息聚合与外链索引，不托管、不镜像参赛作品。权利标签仅供参考，以官方条款为准。部分日期按往年节奏估算，标成需留意的条目请先看官网。
         </div>
       </footer>
     </>

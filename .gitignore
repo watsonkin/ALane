@@ -48,3 +48,6 @@ next-env.d.ts
 .open-next/
 .wrangler/
 .dev.vars
+
+# generated from data/contests at prebuild
+/public/calendar.ics

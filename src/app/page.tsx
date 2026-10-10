@@ -1,6 +1,8 @@
 import { ContestBrowser } from "@/components/contest-browser";
 import { loadContests } from "@/lib/contests";
 
+export const dynamic = "force-static";
+
 export default async function HomePage() {
   const contests = await loadContests();
 
@@ -16,7 +18,7 @@ export default async function HomePage() {
         </p>
       </header>
       <p className="mb-8 border border-border bg-card px-4 py-3 text-sm leading-6">
-        现在这 {contests.length} 条是示例种子，用来把 schema 和页面跑通。日期、链接和权利标签都还没核验，不要当成正在进行的征稿。
+        现在这 {contests.length} 条是人工收录的种子名单。标成「需留意」的条目，以及部分按往年节奏估算的日期，都还没有逐条核验，以官网为准。
       </p>
       <ContestBrowser contests={contests} />
     </div>
