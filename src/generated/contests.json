@@ -250,7 +250,6 @@
     "gallery_works": [
       {
         "source_page_url": "https://p1.lensculture.com/projects/1997649-tides-of-life",
-        "thumb_path": "thumbs/lensculture-street/tides-of-life.png",
         "title": "Tides of Life",
         "author_name": "Jozef Macak",
         "author_homepage_url": "https://www.jozefmacak.com",
@@ -258,7 +257,6 @@
       },
       {
         "source_page_url": "https://p1.lensculture.com/projects/1997777-dislocated-presences",
-        "thumb_path": "thumbs/lensculture-street/dislocated-presences.png",
         "title": "Dislocated Presences",
         "author_name": "David Masoko",
         "author_homepage_url": "https://www.davidmasoko.com",
@@ -266,14 +264,12 @@
       },
       {
         "source_page_url": "https://p1.lensculture.com/projects/1997818-silent-motion-vibrant-stillness",
-        "thumb_path": "thumbs/lensculture-street/silent-motion-vibrant-stillness.png",
         "title": "Silent Motion, Vibrant Stillness",
         "author_name": "Chervine Dalaeli",
         "source_site_label": "LensCulture"
       },
       {
         "source_page_url": "https://p1.lensculture.com/projects/1997447-reflecting-new-york",
-        "thumb_path": "thumbs/lensculture-street/reflecting-new-york.png",
         "title": "Reflecting New York",
         "author_name": "Stefan Falke",
         "source_site_label": "LensCulture"
@@ -354,10 +350,45 @@
     ],
     "gallery_works": [
       {
-        "source_page_url": "https://www.urbanphotoawards.com/en/interview-with-luis-olivan-tenorio-overall-winner-of-urban-photo-awards-2025-urbaninsights/",
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=271512/luis-olivan-tenorio/porto-in-may",
         "thumb_path": "thumbs/urban-photo-awards-streets/porto-in-may.jpg",
         "title": "Porto in May",
         "author_name": "Luis Olivan Tenorio",
+        "source_site_label": "URBAN Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=245072/eleni-albarosa/sabato-dei-fuochi",
+        "thumb_path": "thumbs/urban-photo-awards-streets/sabato-dei-fuochi.jpg",
+        "title": "Sabato dei Fuochi",
+        "author_name": "Eleni Albarosa",
+        "source_site_label": "URBAN Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=274584/md-enamul-kabir/the-flying-chicken",
+        "thumb_path": "thumbs/urban-photo-awards-streets/the-flying-chicken.jpg",
+        "title": "The Flying Chicken",
+        "author_name": "Md Enamul Kabir",
+        "source_site_label": "URBAN Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=273841/jozef-macak/crossroad-of-stories",
+        "thumb_path": "thumbs/urban-photo-awards-streets/crossroad-of-stories.jpg",
+        "title": "Crossroad of stories",
+        "author_name": "Jozef Macak",
+        "source_site_label": "URBAN Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=237412/antonio-flores/the-offering-of-the-heirs-of-the-fire",
+        "thumb_path": "thumbs/urban-photo-awards-streets/offering-of-the-heirs.jpg",
+        "title": "The offering of the heirs of the fire.",
+        "author_name": "Antonio Flores",
+        "source_site_label": "URBAN Photo Awards"
+      },
+      {
+        "source_page_url": "https://www.urbanphotoawards.com/en/photonew/?id=266531/france-leclerc/full-swing",
+        "thumb_path": "thumbs/urban-photo-awards-streets/full-swing.jpg",
+        "title": "Full Swing",
+        "author_name": "France Leclerc",
         "source_site_label": "URBAN Photo Awards"
       }
     ],
@@ -577,7 +608,15 @@
         "edition": "2025"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://worldstreetphotoawards.com/florian-wurzinger-photographer-of-the-year-2025/",
+        "thumb_path": "thumbs/world-street-photo-awards/swan.jpg",
+        "title": "Swan",
+        "author_name": "Florian Wurzinger",
+        "source_site_label": "World Street Photo Awards"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -838,7 +877,6 @@
     "gallery_works": [
       {
         "source_page_url": "https://www.worldphoto.org/team-profile/callie-eh-malaysia",
-        "thumb_path": "thumbs/sony-wpa-street/the-hand.png",
         "title": "The Hand",
         "author_name": "Callie Eh",
         "author_homepage_url": "https://www.callieeh.com/",
@@ -846,14 +884,12 @@
       },
       {
         "source_page_url": "https://www.worldphoto.org/team-profile/etienne-souchon-france",
-        "thumb_path": "thumbs/sony-wpa-street/havana-running-away.png",
         "title": "Havana Running Away",
         "author_name": "Etienne Souchon",
         "source_site_label": "World Photography Organisation"
       },
       {
         "source_page_url": "https://www.worldphoto.org/team-profile/andreas-mikonauschke-germany",
-        "thumb_path": "thumbs/sony-wpa-street/exhausted.png",
         "title": "Exhausted",
         "author_name": "Andreas Mikonauschke",
         "source_site_label": "World Photography Organisation"
@@ -918,7 +954,54 @@
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
     "gallery_urls": [],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/winner-2026-damir-faizulin.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/preserving-nature.jpg",
+        "title": "Preserving Nature as Preserving Ourselves",
+        "author_name": "Damir Faizulin",
+        "source_site_label": "Leica Oskar Barnack Award"
+      },
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2026-laila-annmarie-stevens.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/clayton-sisterhood.jpg",
+        "title": "Clayton Sisterhood Project",
+        "author_name": "Laila AnnMarie Stevens",
+        "author_homepage_url": "https://www.lailaannmarie.com/",
+        "source_site_label": "Leica Oskar Barnack Award"
+      },
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/winner-2025-alejandro-cegarra.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/the-two-walls.jpg",
+        "title": "The Two Walls",
+        "author_name": "Alejandro Cegarra",
+        "author_homepage_url": "https://www.alecegarra.com/",
+        "source_site_label": "Leica Oskar Barnack Award"
+      },
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2025-serghei-duve.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/bright-memory.jpg",
+        "title": "Bright Memory",
+        "author_name": "Serghei Duve",
+        "source_site_label": "Leica Oskar Barnack Award"
+      },
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/winner-2024-davide-monteleone.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/critical-minerals.jpg",
+        "title": "Critical Minerals – Geography of Energy",
+        "author_name": "Davide Monteleone",
+        "author_homepage_url": "https://davidemonteleone.com/",
+        "source_site_label": "Leica Oskar Barnack Award"
+      },
+      {
+        "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2024-maria-gutu.html",
+        "thumb_path": "thumbs/leica-oskar-barnack/homeland.jpg",
+        "title": "Homeland",
+        "author_name": "Maria Guțu",
+        "author_homepage_url": "https://mariagutu.tilda.ws/",
+        "source_site_label": "Leica Oskar Barnack Award"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

@@ -47,5 +47,5 @@ async function ContestResolved({ params }: ContestPageProps) {
   // Render the missing state instead of throwing notFound(). With Cache
   // Components, that throw becomes an empty error shell for unknown slugs.
   if (!contest) return <MissingContest slug={slug} />;
-  return <ContestDetail contest={contest} />;
+  return <ContestDetail contest={contest} asOf={new Date().toISOString()} />;
 }

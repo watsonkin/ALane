@@ -73,7 +73,7 @@ const thumbPathSchema = z
 export const galleryWorkSchema = z
   .object({
     source_page_url: httpUrlSchema,
-    thumb_path: thumbPathSchema,
+    thumb_path: thumbPathSchema.optional(),
     title: z.string().min(1).optional(),
     author_name: z.string().min(1).optional(),
     author_homepage_url: httpUrlSchema.optional(),
@@ -157,7 +157,7 @@ export const contestSchema = z
     ]);
 
     contest.gallery_works.forEach((work, index) => {
-      if (!work.thumb_path.startsWith(`thumbs/${contest.id}/`)) {
+      if (work.thumb_path && !work.thumb_path.startsWith(`thumbs/${contest.id}/`)) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           path: ["gallery_works", index, "thumb_path"],

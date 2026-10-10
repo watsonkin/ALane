@@ -129,17 +129,79 @@ export function matchesRegion(
   );
 }
 
+/**
+ * Public date label. Uses the calendar day written in the timestamp
+ * (2026-10-31T23:59:00+00:00 stays 10月31日), not a Shanghai clock that
+ * turns end-of-day UTC into the next morning.
+ */
 export function formatContestDate(iso: string): string {
-  const formatted = new Intl.DateTimeFormat("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).format(new Date(iso));
-  return `${formatted}（北京时间）`;
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!match) {
+    return new Intl.DateTimeFormat("zh-CN", {
+      timeZone: "Asia/Shanghai",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(iso));
+  }
+  return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+}
+
+export function windowChipLabel(
+  window: Exclude<WindowFilter, "all">,
+): string {
+  if (window === "open") return "开放中";
+  if (window === "closed") return "已截止";
+  return "日期未定";
+}
+
+export function compareByWindow(a: Contest, b: Contest, asOfIso: string): number {
+  const rank = { open: 0, undated: 1, closed: 2 } as const;
+  const left = deadlineWindow(a, asOfIso);
+  const right = deadlineWindow(b, asOfIso);
+  if (rank[left] !== rank[right]) return rank[left] - rank[right];
+  if (left === "open") {
+    return Date.parse(a.deadline_at ?? "") - Date.parse(b.deadline_at ?? "");
+  }
+  if (left === "closed") {
+    return Date.parse(b.deadline_at ?? "") - Date.parse(a.deadline_at ?? "");
+  }
+  return a.name.localeCompare(b.name, "zh");
+}
+
+export type RightsChip = "trusted" | "caution" | "unevaluated";
+
+export const RIGHTS_CHIP_LABEL: Record<RightsChip, string> = {
+  trusted: "Trusted",
+  caution: "需留意",
+  unevaluated: "未评估",
+};
+
+/**
+ * Public rights chip.
+ * health warn is the seed caution flag (often a rights caution) → 需留意.
+ * Any recorded rights tag is also 需留意, even when health is ok.
+ * health dead is not Trusted.
+ * health ok with no caution tag → Trusted. That is the seed flag, not a finished legal review.
+ */
+export function rightsChip(
+  contest: Pick<Contest, "health" | "rights_tags">,
+): RightsChip {
+  if (
+    contest.health === "warn" ||
+    contest.health === "dead" ||
+    contest.rights_tags.length > 0
+  ) {
+    return "caution";
+  }
+  if (contest.health === "ok") return "trusted";
+  return "unevaluated";
+}
+
+export function contestThumbPath(
+  contest: Pick<Contest, "gallery_works">,
+): string | null {
+  return contest.gallery_works.find((work) => work.thumb_path)?.thumb_path ?? null;
 }
 
 export function formatPlace(contest: Pick<Contest, "online" | "geo">): string {

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s · ALane",
   },
   description:
-    "街头摄影赛事的元数据索引。小缩略图链到源站单件作品页，不提供高清。数据真源是仓库里的 YAML。",
+    "街头摄影赛事索引。看截止日期，再打开官网。",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

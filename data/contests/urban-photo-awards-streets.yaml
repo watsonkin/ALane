@@ -23,10 +23,35 @@ gallery_urls:
     label: "2024 单张"
     edition: "2024"
 gallery_works:
-  - source_page_url: "https://www.urbanphotoawards.com/en/interview-with-luis-olivan-tenorio-overall-winner-of-urban-photo-awards-2025-urbaninsights/"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=271512/luis-olivan-tenorio/porto-in-may"
     thumb_path: thumbs/urban-photo-awards-streets/porto-in-may.jpg
     title: "Porto in May"
     author_name: "Luis Olivan Tenorio"
+    source_site_label: "URBAN Photo Awards"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=245072/eleni-albarosa/sabato-dei-fuochi"
+    thumb_path: thumbs/urban-photo-awards-streets/sabato-dei-fuochi.jpg
+    title: "Sabato dei Fuochi"
+    author_name: "Eleni Albarosa"
+    source_site_label: "URBAN Photo Awards"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=274584/md-enamul-kabir/the-flying-chicken"
+    thumb_path: thumbs/urban-photo-awards-streets/the-flying-chicken.jpg
+    title: "The Flying Chicken"
+    author_name: "Md Enamul Kabir"
+    source_site_label: "URBAN Photo Awards"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=273841/jozef-macak/crossroad-of-stories"
+    thumb_path: thumbs/urban-photo-awards-streets/crossroad-of-stories.jpg
+    title: "Crossroad of stories"
+    author_name: "Jozef Macak"
+    source_site_label: "URBAN Photo Awards"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=237412/antonio-flores/the-offering-of-the-heirs-of-the-fire"
+    thumb_path: thumbs/urban-photo-awards-streets/offering-of-the-heirs.jpg
+    title: "The offering of the heirs of the fire."
+    author_name: "Antonio Flores"
+    source_site_label: "URBAN Photo Awards"
+  - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=266531/france-leclerc/full-swing"
+    thumb_path: thumbs/urban-photo-awards-streets/full-swing.jpg
+    title: "Full Swing"
+    author_name: "France Leclerc"
     source_site_label: "URBAN Photo Awards"
 source_adapters:
   - id: manual-seed

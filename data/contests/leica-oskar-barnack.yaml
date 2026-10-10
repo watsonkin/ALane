@@ -13,7 +13,41 @@ fee: unknown
 street_photo_relevance: adjacent
 rights_tags: []
 gallery_urls: []
-gallery_works: []
+gallery_works:
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/winner-2026-damir-faizulin.html"
+    thumb_path: thumbs/leica-oskar-barnack/preserving-nature.jpg
+    title: "Preserving Nature as Preserving Ourselves"
+    author_name: "Damir Faizulin"
+    source_site_label: "Leica Oskar Barnack Award"
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2026-laila-annmarie-stevens.html"
+    thumb_path: thumbs/leica-oskar-barnack/clayton-sisterhood.jpg
+    title: "Clayton Sisterhood Project"
+    author_name: "Laila AnnMarie Stevens"
+    author_homepage_url: "https://www.lailaannmarie.com/"
+    source_site_label: "Leica Oskar Barnack Award"
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/winner-2025-alejandro-cegarra.html"
+    thumb_path: thumbs/leica-oskar-barnack/the-two-walls.jpg
+    title: "The Two Walls"
+    author_name: "Alejandro Cegarra"
+    author_homepage_url: "https://www.alecegarra.com/"
+    source_site_label: "Leica Oskar Barnack Award"
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2025-serghei-duve.html"
+    thumb_path: thumbs/leica-oskar-barnack/bright-memory.jpg
+    title: "Bright Memory"
+    author_name: "Serghei Duve"
+    source_site_label: "Leica Oskar Barnack Award"
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/winner-2024-davide-monteleone.html"
+    thumb_path: thumbs/leica-oskar-barnack/critical-minerals.jpg
+    title: "Critical Minerals – Geography of Energy"
+    author_name: "Davide Monteleone"
+    author_homepage_url: "https://davidemonteleone.com/"
+    source_site_label: "Leica Oskar Barnack Award"
+  - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/newcomer-2024-maria-gutu.html"
+    thumb_path: thumbs/leica-oskar-barnack/homeland.jpg
+    title: "Homeland"
+    author_name: "Maria Guțu"
+    author_homepage_url: "https://mariagutu.tilda.ws/"
+    source_site_label: "Leica Oskar Barnack Award"
 source_adapters:
   - id: manual-seed
     kind: manual

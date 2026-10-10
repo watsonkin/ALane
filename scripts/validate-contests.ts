@@ -98,6 +98,7 @@ function imageSize(buf: Buffer): { width: number; height: number } {
 
 for (const contest of contests) {
   for (const work of contest.gallery_works) {
+    if (!work.thumb_path) continue;
     const file = path.join(process.cwd(), "public", work.thumb_path);
     if (!fs.existsSync(file)) {
       console.error(`缺少缩略图文件：${work.thumb_path}`);

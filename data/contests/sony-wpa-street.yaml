@@ -24,18 +24,15 @@ gallery_urls:
     edition: "2024"
 gallery_works:
   - source_page_url: "https://www.worldphoto.org/team-profile/callie-eh-malaysia"
-    thumb_path: thumbs/sony-wpa-street/the-hand.png
     title: "The Hand"
     author_name: "Callie Eh"
     author_homepage_url: "https://www.callieeh.com/"
     source_site_label: "World Photography Organisation"
   - source_page_url: "https://www.worldphoto.org/team-profile/etienne-souchon-france"
-    thumb_path: thumbs/sony-wpa-street/havana-running-away.png
     title: "Havana Running Away"
     author_name: "Etienne Souchon"
     source_site_label: "World Photography Organisation"
   - source_page_url: "https://www.worldphoto.org/team-profile/andreas-mikonauschke-germany"
-    thumb_path: thumbs/sony-wpa-street/exhausted.png
     title: "Exhausted"
     author_name: "Andreas Mikonauschke"
     source_site_label: "World Photography Organisation"
