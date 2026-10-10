@@ -1,5 +1,67 @@
 [
   {
+    "id": "leica-street-photo",
+    "slug": "leica-street-photo",
+    "name": "Leica Street Photo（第15届 · 非 Oskar Barnack）",
+    "official_url": "https://leicastreetphoto.pl/en/",
+    "status": "published",
+    "open_at": "2025-11-21T00:00:00+01:00",
+    "deadline_at": "2026-01-09T19:59:00+01:00",
+    "announce_at": null,
+    "edition": "15",
+    "geo": {
+      "label": "Warsaw, Poland",
+      "country": "PL",
+      "city": "Warsaw"
+    },
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://leicastreetphoto.pl/en/competition-results/",
+        "label": "第15届入围",
+        "edition": "15"
+      }
+    ],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "lomography-street",
+    "slug": "lomography-street",
+    "name": "Lomography Street Photography Award 2025（胶片或 Lomo 镜头）",
+    "official_url": "https://www.lomography.com/competitions/3769-street-photography-award-2025",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": "2026-01-15T23:59:00Z",
+    "announce_at": null,
+    "edition": "2025",
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
     "id": "miami-street-photography-festival",
     "slug": "miami-street-photography-festival",
     "name": "Miami Street Photography Festival Contest",
@@ -444,6 +506,51 @@
     "health": "warn"
   },
   {
+    "id": "fujifilm-moment",
+    "slug": "fujifilm-moment",
+    "name": "FUJIFILM MOMENT STREET PHOTO AWARDS",
+    "official_url": "https://momentstreetphoto.pl/en",
+    "status": "published",
+    "open_at": "2026-09-05T00:00:00+02:00",
+    "deadline_at": "2026-10-31T23:59:00+01:00",
+    "announce_at": "2026-12-12T00:00:00+01:00",
+    "edition": "2026",
+    "geo": {
+      "label": "Częstochowa, Poland",
+      "country": "PL",
+      "city": "Częstochowa"
+    },
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://momentstreetphoto.pl/en/article/results-7",
+        "label": "结果"
+      },
+      {
+        "url": "https://2024.momentstreetphoto.pl",
+        "label": "2024 届",
+        "edition": "2024"
+      },
+      {
+        "url": "https://2023.momentstreetphoto.pl",
+        "label": "2023 届",
+        "edition": "2023"
+      }
+    ],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
     "id": "jiepai-shijie",
     "slug": "jiepai-shijie",
     "name": "「街拍视界」全国街头摄影大展",
@@ -501,6 +608,41 @@
     "street_photo_relevance": "core",
     "rights_tags": [],
     "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "pispa",
+    "slug": "pispa",
+    "name": "Paris International Street Photo Awards (PISPA)",
+    "official_url": "https://www.streetphotoawards.art/",
+    "status": "published",
+    "open_at": "2026-09-01T00:00:00+02:00",
+    "deadline_at": "2026-11-02T23:59:00+01:00",
+    "announce_at": "2026-12-26T00:00:00+01:00",
+    "edition": "2026",
+    "geo": {
+      "label": "Paris, France",
+      "country": "FR",
+      "city": "Paris"
+    },
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.streetphotoawards.art/site/winners-gallery",
+        "label": "获奖廊"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -636,6 +778,84 @@
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
     "gallery_urls": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "pure-street",
+    "slug": "pure-street",
+    "name": "Pure Street Photography Awards",
+    "official_url": "https://www.purestreetphotography.com/awards",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": null,
+    "geo": null,
+    "online": true,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.purestreetphotography.com/street-photography-awards-2026",
+        "label": "2026 获奖与入围",
+        "edition": "2026"
+      },
+      {
+        "url": "https://www.purestreetphotography.com/street-photography-awards-2025",
+        "label": "2025 获奖与入围",
+        "edition": "2025"
+      }
+    ],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "ok"
+  },
+  {
+    "id": "rome-photo-lab",
+    "slug": "rome-photo-lab",
+    "name": "Rome Photo Lab（关联 Macadam）",
+    "official_url": "https://www.romephotolab.it/homepage-en/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2026",
+    "geo": {
+      "label": "Rome, Italy",
+      "country": "IT",
+      "city": "Rome"
+    },
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.romephotolab.it/winners-2025/",
+        "label": "2025 获奖",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.romephotolab.it/winners-2024/",
+        "label": "2024 获奖",
+        "edition": "2024"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

@@ -1,0 +1,21 @@
+id: lomography-street
+slug: lomography-street
+name: "Lomography Street Photography Award 2025（胶片或 Lomo 镜头）"
+official_url: "https://www.lomography.com/competitions/3769-street-photography-award-2025"
+status: published
+open_at: null
+deadline_at: "2026-01-15T23:59:00Z"
+announce_at: null
+edition: "2025"
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

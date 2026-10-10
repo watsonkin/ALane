@@ -1,0 +1,26 @@
+id: pispa
+slug: pispa
+name: "Paris International Street Photo Awards (PISPA)"
+official_url: "https://www.streetphotoawards.art/"
+status: published
+open_at: "2026-09-01T00:00:00+02:00"
+deadline_at: "2026-11-02T23:59:00+01:00"
+announce_at: "2026-12-26T00:00:00+01:00"
+edition: "2026"
+geo:
+  label: "Paris, France"
+  country: FR
+  city: Paris
+online: true
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://www.streetphotoawards.art/site/winners-gallery"
+    label: "获奖廊"
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok

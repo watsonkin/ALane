@@ -1,0 +1,27 @@
+id: leica-street-photo
+slug: leica-street-photo
+name: "Leica Street Photo（第15届 · 非 Oskar Barnack）"
+official_url: "https://leicastreetphoto.pl/en/"
+status: published
+open_at: "2025-11-21T00:00:00+01:00"
+deadline_at: "2026-01-09T19:59:00+01:00"
+announce_at: null
+edition: "15"
+geo:
+  label: "Warsaw, Poland"
+  country: PL
+  city: Warsaw
+online: true
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://leicastreetphoto.pl/en/competition-results/"
+    label: "第15届入围"
+    edition: "15"
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

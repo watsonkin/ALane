@@ -1,0 +1,27 @@
+id: pure-street
+slug: pure-street
+name: "Pure Street Photography Awards"
+official_url: "https://www.purestreetphotography.com/awards"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: null
+geo: null
+online: true
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://www.purestreetphotography.com/street-photography-awards-2026"
+    label: "2026 获奖与入围"
+    edition: "2026"
+  - url: "https://www.purestreetphotography.com/street-photography-awards-2025"
+    label: "2025 获奖与入围"
+    edition: "2025"
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: ok
