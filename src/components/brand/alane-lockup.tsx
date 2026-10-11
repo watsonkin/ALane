@@ -34,10 +34,8 @@ export function AlaneLockup({ className }: { className?: string }) {
           <OpenA />
           <span className="translate-y-[0.02em]">Lane</span>
         </span>
-        <span className="mt-1.5 hidden items-center gap-2 font-sans text-[10px] uppercase leading-none tracking-[0.22em] text-[#5C5C5C] sm:flex">
-          <span aria-hidden="true" className="h-px w-5 bg-current" />
+        <span className="mt-1 block font-sans text-[13px] leading-none text-[#5C5C5C]">
           A lane through awards
-          <span aria-hidden="true" className="h-px w-5 bg-current" />
         </span>
       </span>
     </span>

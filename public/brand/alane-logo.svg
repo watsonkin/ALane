@@ -23,10 +23,5 @@
     <!-- Lane in serif-like paths approximated with text for fidelity in browsers -->
     <text x="206" y="72" font-family="Source Serif 4, Source Serif Pro, Georgia, 'Times New Roman', serif" font-size="56" font-weight="600" letter-spacing="-0.5">Lane</text>
   </g>
-  <!-- Slogan with flanking rules -->
-  <g fill="#5C5C5C" stroke="#5C5C5C">
-    <line x1="148" y1="98" x2="188" y2="98" stroke-width="1"/>
-    <text x="198" y="102" font-family="Inter, system-ui, sans-serif" font-size="11" letter-spacing="2.5" fill="#5C5C5C" stroke="none">A LANE THROUGH AWARDS</text>
-    <line x1="412" y1="98" x2="452" y2="98" stroke-width="1"/>
-  </g>
+  <text x="148" y="102" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#5C5C5C" stroke="none">A lane through awards</text>
 </svg>
