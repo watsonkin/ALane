@@ -34,16 +34,18 @@ function FilterGroup<T extends string>({
   options,
   value,
   onChange,
+  nowrap = false,
 }: {
   legend: string;
   options: readonly { value: T; label: string }[];
   value: T;
   onChange: (value: T) => void;
+  nowrap?: boolean;
 }) {
   return (
-    <fieldset className="min-w-0 max-w-full">
+    <fieldset className={nowrap ? "shrink-0" : "min-w-0 max-w-full"}>
       <legend className="mb-2 text-[12px] leading-none text-muted-foreground">{legend}</legend>
-      <div className="flex flex-wrap gap-2">
+      <div className={nowrap ? "flex flex-nowrap gap-2" : "flex flex-wrap gap-2"}>
         {options.map((option) => {
           const selected = option.value === value;
           return (
@@ -149,37 +151,38 @@ export function ContestBrowser({
   return (
     <div className="space-y-8">
       <div className="border border-border bg-card p-4">
-        <div className="flex flex-wrap items-end gap-x-3 gap-y-3">
+        <div className="flex flex-nowrap items-end gap-3 overflow-x-auto">
           <FilterGroup
+            nowrap
             legend="开放窗口"
             options={WINDOW_FILTERS}
             value={windowFilter}
             onChange={(value) => write("window", value)}
           />
           <FilterGroup
+            nowrap
             legend="费用"
             options={FEE_FILTERS}
             value={fee}
             onChange={(value) => write("fee", value)}
           />
-          <div className="flex max-w-full flex-wrap items-end gap-3">
-            <FilterGroup
-              legend="地区"
-              options={REGION_FILTERS}
-              value={region}
-              onChange={(value) => write("region", value)}
-            />
-            <button
-              type="button"
-              aria-expanded={expanded}
-              aria-controls="contest-filter-panel"
-              onClick={() => setExpanded((open) => !open)}
-              className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-            >
-              {expanded ? "收起" : "展开筛选"}
-              <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
-            </button>
-          </div>
+          <FilterGroup
+            nowrap
+            legend="地区"
+            options={REGION_FILTERS}
+            value={region}
+            onChange={(value) => write("region", value)}
+          />
+          <button
+            type="button"
+            aria-expanded={expanded}
+            aria-controls="contest-filter-panel"
+            onClick={() => setExpanded((open) => !open)}
+            className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            {expanded ? "收起" : "展开筛选"}
+            <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
+          </button>
         </div>
         <div id="contest-filter-panel" hidden={!expanded} className="mt-4">
           <div className="flex flex-wrap items-start gap-x-3 gap-y-3">
