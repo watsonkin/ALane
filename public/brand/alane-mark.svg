@@ -1,12 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
-  <!-- Camera viewfinder corners + trophy, flat top, no finial dot -->
-  <g fill="none" stroke="#C4A35A" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
-    <path d="M20 32V16h16M100 32V16H84M20 88v16h16M100 88v16H84"/>
-    <!-- Trophy lifted 4 units so the base clears the lower brackets. Same paths as the lockup sketch. -->
-    <g transform="translate(0 -4)">
-      <path d="M42 36h36M46 36v18c0 14 8 20 14 20s14-6 14-20V36"/>
-      <path d="M46 44H36c-4 0-6 6-2 12M74 44h10c4 0 6 6 2 12"/>
-      <path d="M60 74v10M48 84h24M44 90h32M40 96h40"/>
-    </g>
+  <!-- Black focus brackets. Four L corners, not a closed rectangle. -->
+  <path fill="none" stroke="#1A1A1A" stroke-width="4.25" stroke-linecap="square" stroke-linejoin="miter" d="M18 44V14H48M72 14H102V44M18 76V106H48M72 106H102V76"/>
+  <!-- Gold loving cup: rim, bowl, handles, tiered base, open star. -->
+  <g fill="none" stroke="#C4A35A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 33A20 6 0 0 1 80 33"/>
+    <path d="M40 35C37 50 44 64 54 69C57.5 71 62.5 71 66 69C76 64 83 50 80 35"/>
+    <path d="M42 38C24 34 22 56 44 60"/>
+    <path d="M78 38C96 34 98 56 76 60"/>
+    <path d="M60 70V76"/>
+    <path d="M50 76H70V82H50Z"/>
+    <path d="M43 82H77V88H43Z"/>
+    <path d="M34 88H86V97H34Z"/>
+    <path fill="none" d="M60 39.5L63.1 47.8L71.9 48.1L64.9 53.6L67.3 62.1L60 57.2L52.7 62.1L55.1 53.6L48.1 48.1L56.9 47.8Z"/>
   </g>
 </svg>

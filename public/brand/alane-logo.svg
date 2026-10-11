@@ -1,20 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="ALane  A lane through awards">
-  <!-- Locked lockup: viewfinder corners + flat-top trophy | ALane wordmark | slogan -->
-  <g fill="none" stroke="#C4A35A" stroke-width="2.25" stroke-linecap="square" stroke-linejoin="miter">
-    <!-- Viewfinder L-corners -->
-    <path d="M18 28 V14 H32"/>
-    <path d="M102 28 V14 H88"/>
-    <path d="M18 92 V106 H32"/>
-    <path d="M102 92 V106 H88"/>
-    <!-- Trophy (flat top, no finial/dot, two handles, tiered base) -->
-    <path d="M44 34 H76"/>
-    <path d="M48 34 V52 C48 66 56 72 60 72 C64 72 72 66 72 52 V34"/>
-    <path d="M48 42 H38 C34 42 32 48 36 54"/>
-    <path d="M72 42 H82 C86 42 88 48 84 54"/>
-    <path d="M60 72 V82"/>
-    <path d="M50 82 H70"/>
-    <path d="M46 88 H74"/>
-    <path d="M42 94 H78"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" role="img" aria-label="ALane — A lane through awards">
+  <!-- Focus brackets + gold loving cup. Wordmark and slogan stay to the right. -->
+  <path fill="none" stroke="#1A1A1A" stroke-width="4.25" stroke-linecap="square" stroke-linejoin="miter" d="M18 44V14H48M72 14H102V44M18 76V106H48M72 106H102V76"/>
+  <g fill="none" stroke="#C4A35A" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M40 33A20 6 0 0 1 80 33"/>
+    <path d="M40 35C37 50 44 64 54 69C57.5 71 62.5 71 66 69C76 64 83 50 80 35"/>
+    <path d="M42 38C24 34 22 56 44 60"/>
+    <path d="M78 38C96 34 98 56 76 60"/>
+    <path d="M60 70V76"/>
+    <path d="M50 76H70V82H50Z"/>
+    <path d="M43 82H77V88H43Z"/>
+    <path d="M34 88H86V97H34Z"/>
+    <path fill="none" d="M60 39.5L63.1 47.8L71.9 48.1L64.9 53.6L67.3 62.1L60 57.2L52.7 62.1L55.1 53.6L48.1 48.1L56.9 47.8Z"/>
   </g>
   <!-- Wordmark: high-contrast serif; A without crossbar (chevron) -->
   <g fill="#1A1A1A">
