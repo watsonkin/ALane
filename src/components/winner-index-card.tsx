@@ -3,10 +3,7 @@ import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import type { GalleryWork } from "@/lib/contest-schema";
 
 export function WinnerIndexCard({ work }: { work: GalleryWork }) {
-  const title = work.title ?? "未命名作品";
-  const initial = (work.title ?? work.author_name ?? work.source_site_label)
-    .trim()
-    .slice(0, 1);
+  const title = work.title ?? work.author_name ?? work.source_site_label;
 
   return (
     <article className="flex h-full w-full flex-col overflow-hidden rounded-[4px] border border-border bg-card">
@@ -26,7 +23,7 @@ export function WinnerIndexCard({ work }: { work: GalleryWork }) {
             className="h-36 w-full object-cover shadow-none"
           />
         ) : (
-          <ThumbPlaceholder initial={initial} className="h-36 w-full rounded-none" />
+          <ThumbPlaceholder title={title} className="h-36 w-full rounded-none" />
         )}
         <div className="space-y-1 px-3 pt-3">
           <p className="font-serif text-base leading-snug text-ink">{title}</p>

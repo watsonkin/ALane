@@ -54,14 +54,14 @@ npm run dev
 | `street_photo_relevance` | `core` / `adjacent` / `unreviewed`（人工初标） |
 | `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组表示**未评估**，不是“安全” |
 | `gallery_urls` | `{ url, label?, edition? }`。整届获奖列表的外链 |
-| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400；没有小图时页面用灰块，不画文字索引卡。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
+| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400；没有官方小图时用灰底占位，中文界面写 title，英文界面写名称首字母。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
 | `source_adapters` | `{ id, kind? }`。`kind` 为 `manual` / `jsonld` / `html` / `api`，缺省 `manual`。M0 不会执行它们 |
 | `last_fetched_at`, `content_hash` | 抓取后才填。现在保持 `null` |
 | `health` | `ok` / `warn` / `dead`。M0 只展示，不探测 |
 
 未知字段会被 `.strict()` 拒绝，避免手写 YAML 时把名字写错还以为存进去了。
 
-列表页的主筛选是开放窗口、费用和地区，写在地址栏的查询参数里（`window`、`fee`、`region`，加上辅助的 `status`、`relevance`）。「开放中」只包含填写了截止时间且尚未过这次构建时刻的赛事；截止时间为空的归入「日期未定」。地区里「含线上」看 `online`，国家按 `geo.country` 归到中国、欧洲、美洲、大洋洲或其他。详情页按 slug 读取同一份数据。
+列表页的主筛选是开放窗口、费用和地区，写在地址栏的查询参数里（`window`、`fee`、`region`，加上辅助的 `status`、`relevance`）。默认显示库内全部赛事。点「开放中」只看填写了截止时间且尚未过这次构建时刻的赛事；截止时间为空的状态是「待定」。已截止和待定仍留在默认列表里。地区里「含线上」看 `online`，国家按 `geo.country` 归到中国、欧洲、美洲、大洋洲或其他。详情页按 slug 读取同一份数据。
 
 `/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。
 

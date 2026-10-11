@@ -74,7 +74,7 @@ export const WINDOW_FILTERS = [
   { value: "all", label: "全部" },
   { value: "open", label: "开放中" },
   { value: "closed", label: "已截止" },
-  { value: "undated", label: "日期未定" },
+  { value: "undated", label: "待定" },
 ] as const;
 
 export const REGION_FILTERS = [
@@ -152,7 +152,38 @@ export function windowChipLabel(
 ): string {
   if (window === "open") return "开放中";
   if (window === "closed") return "已截止";
-  return "日期未定";
+  return "待定";
+}
+
+/** Page language. Chinese UI fills placeholders with the title; English UI uses initials. */
+export const SITE_UI_LOCALE = "zh-CN";
+
+export function isChineseUi(locale: string = SITE_UI_LOCALE): boolean {
+  return locale.toLowerCase().startsWith("zh");
+}
+
+/** English UI: initials such as WSPA. Falls back to the title when the name has no Latin words. */
+export function englishInitials(name: string): string {
+  const stripped = name.replace(/[（(][^）)]*[）)]/g, " ");
+  const words = stripped.match(/[A-Za-z0-9]+/g) ?? [];
+  const initials = words.map((word) => word[0]!.toUpperCase()).join("");
+  if (initials) return initials.slice(0, 8);
+  const title = name.trim();
+  return title.slice(0, 12) || "·";
+}
+
+/**
+ * Gray-placeholder caption.
+ * zh: the contest or work title (CSS clamps it when the box is small).
+ * en: name initials.
+ */
+export function thumbPlaceholderText(
+  title: string,
+  locale: string = SITE_UI_LOCALE,
+): string {
+  const name = title.trim() || "赛事";
+  if (isChineseUi(locale)) return name;
+  return englishInitials(name);
 }
 
 export function compareByWindow(a: Contest, b: Contest, asOfIso: string): number {

@@ -90,7 +90,7 @@ export function ContestBrowser({
   const windowRaw = searchParams.get("window");
   const windowFilter: WindowFilter =
     windowRaw === null
-      ? "open"
+      ? "all"
       : pick<Exclude<WindowFilter, "all">>(
           windowRaw,
           WINDOW_FILTERS.filter((option) => option.value !== "all"),
@@ -103,7 +103,7 @@ export function ContestBrowser({
   function write(key: string, value: string) {
     const next = new URLSearchParams(searchParams.toString());
     if (key === "window") {
-      if (value === "open") next.delete("window");
+      if (value === "all") next.delete("window");
       else next.set("window", value);
     } else if (value === "all") next.delete(key);
     else next.set(key, value);
@@ -134,7 +134,7 @@ export function ContestBrowser({
     status !== "all" ||
     relevance !== "all" ||
     fee !== "all" ||
-    windowFilter !== "open" ||
+    windowFilter !== "all" ||
     region !== "all";
 
   if (contests.length === 0) {

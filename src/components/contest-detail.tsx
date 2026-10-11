@@ -59,6 +59,12 @@ export function ContestDetail({
 
       <header className="max-w-3xl">
         <div className="flex flex-wrap gap-2">
+          <Badge
+            variant={window === "open" ? "default" : "outline"}
+            className={window === "closed" ? "text-muted-foreground" : undefined}
+          >
+            {windowChipLabel(window)}
+          </Badge>
           <Badge variant={contest.status === "published" ? "default" : "outline"}>
             {STATUS_LABEL[contest.status]}
           </Badge>
@@ -159,7 +165,7 @@ export function ContestDetail({
           <section>
             <h2 className="font-serif text-2xl">获奖缩略索引</h2>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-              有小图时最长边不超过 400 像素。没有小图时用同一块灰底，作品名、来源和「前往源站」仍在卡片上。点卡片在新标签打开源站的这一件作品。
+              有小图时最长边不超过 400 像素。没有小图时灰底上写作品名，来源和「前往源站」仍在卡片上。点卡片在新标签打开源站的这一件作品。
             </p>
             {contest.gallery_works.length === 0 ? (
               <div className="mt-4 space-y-3">

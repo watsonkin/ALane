@@ -1,7 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
-import { ThumbPlaceholder } from "@/components/thumb-placeholder";
+import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   FEE_LABEL,
@@ -22,7 +21,6 @@ export function ContestListCard({
   asOf: string;
 }) {
   const thumb = contestThumbPath(contest);
-  const initial = contest.name.trim().slice(0, 1) || "·";
   const window = deadlineWindow(contest, asOf);
 
   return (
@@ -31,21 +29,14 @@ export function ContestListCard({
         href={`/contests/${contest.slug}`}
         className="flex gap-3 p-3 outline-none focus-visible:bg-muted sm:gap-4 sm:p-4"
       >
-        {thumb ? (
-          <Image
-            src={`/${thumb}`}
-            alt=""
-            width={96}
-            height={72}
-            unoptimized
-            className="h-[72px] w-24 shrink-0 rounded-[4px] object-cover grayscale shadow-none"
-          />
-        ) : (
-          <ThumbPlaceholder
-            initial={initial}
-            className="h-[72px] w-24 shrink-0"
-          />
-        )}
+        <ContestThumb
+          name={contest.name}
+          thumbPath={thumb}
+          width={96}
+          height={72}
+          grayscale
+          className="h-[72px] w-24 shrink-0"
+        />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap gap-1.5">
             <Badge
