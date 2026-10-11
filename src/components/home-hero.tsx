@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
 import { ContestThumb } from "@/components/thumb-placeholder";
@@ -22,29 +21,16 @@ export function HomeHero({
   const closing = selectClosingSoon(contests, asOf);
 
   return (
-    <section className="mb-10 space-y-10">
-      <div className="grid items-center gap-8 lg:grid-cols-2">
-        <div>
-          <p className="text-xs text-muted-foreground">赛事索引</p>
-          <h1 className="mt-2 font-serif text-4xl leading-tight sm:text-5xl">
-            街头摄影赛事
-          </h1>
-          <p className="mt-4 max-w-md text-base leading-7 text-muted-foreground">
-            正在征稿的街拍比赛。点进一场，看截止日期和官网。
-          </p>
-        </div>
-        <Image
-          src="/hero-street.jpg"
-          alt="黑白街头摄影"
-          width={800}
-          height={542}
-          unoptimized
-          priority
-          className="aspect-[4/3] w-full rounded-[4px] object-cover shadow-none"
-        />
-      </div>
+    <section className="mb-6 border-b border-border pb-6">
+      <p className="text-[13px] tracking-wide text-muted-foreground">赛事索引</p>
+      <h1 className="mt-2 font-serif text-[30px] leading-tight text-ink">
+        街头摄影赛事
+      </h1>
+      <p className="mt-3 max-w-[40ch] text-[15px] leading-snug text-muted-foreground">
+        正在征稿的街拍比赛。点进一场，看截止日期和官网。
+      </p>
 
-      <div>
+      <div className="mt-6">
         <h2 className="font-serif text-2xl">即将截止</h2>
         {closing.contests.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">
