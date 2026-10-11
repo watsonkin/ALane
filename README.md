@@ -48,13 +48,14 @@ npm run dev
 | `official_url` | 官网，http(s) |
 | `status` | `draft` / `published` / `archived` |
 | `open_at`, `deadline_at`, `announce_at` | 带时区的时间，或 `null`。截止必须晚于开放 |
-| `edition` | 届次，或 `null` |
+| `edition` | 届次，或 `null`。中文界面只用这一栏 |
+| `edition_en` | 可选。英文界面优先它，没有再回退 `edition`。可空 |
 | `geo` | `{ label, country?, city? }`，或 `null` |
 | `online` | 是否含线上。纯线下时 `geo` 必填 |
 | `fee` | `free` / `paid` / `mixed` / `unknown` |
 | `street_photo_relevance` | `core` / `adjacent` / `unreviewed`（人工初标） |
 | `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组表示**未评估**，不是“安全” |
-| `gallery_urls` | `{ url, label?, edition? }`。整届获奖列表的外链 |
+| `gallery_urls` | `{ url, label?, edition?, edition_en? }`。整届获奖列表的外链。英文界面的届次同样优先 `edition_en` |
 | `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400。列表和即将截止优先用这张作品小图。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
 | `organizer_icon` | 可选。本地路径 `/icons/organizers/{slug}.svg`（也可不写开头的斜线），不能是外链。没有作品小图时，缩略槽用浅底 `#F1EEE7` 居中 contain，最大边约占槽的 60%。没有标，或标加载失败，才用灰底 `#E8E4DC` 字 `#8A8A8A`（中文 title，英文首字母） |
 | `source_adapters` | `{ id, kind? }`。`kind` 为 `manual` / `jsonld` / `html` / `api`，缺省 `manual`。M0 不会执行它们 |

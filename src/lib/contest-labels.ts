@@ -365,6 +365,19 @@ export function thumbPlaceholderText(title: string, locale: string): string {
   return englishInitials(name);
 }
 
+/** English UI prefers edition_en. Chinese UI reads edition only. */
+export function displayEdition(
+  record: { edition?: string | null; edition_en?: string | null },
+  locale: Locale,
+): string | null {
+  if (locale === "en") {
+    const english = record.edition_en?.trim();
+    if (english) return english;
+  }
+  const edition = record.edition?.trim();
+  return edition || null;
+}
+
 export function displayName(
   contest: Pick<Contest, "name"> & { name_zh?: string | null; name_en?: string | null },
   locale: Locale,

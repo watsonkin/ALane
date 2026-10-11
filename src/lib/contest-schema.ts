@@ -58,6 +58,7 @@ export const galleryUrlSchema = z.object({
   url: httpUrlSchema,
   label: z.string().min(1).optional(),
   edition: z.string().min(1).optional(),
+  edition_en: z.string().min(1).nullable().optional(),
 });
 
 /** Longest edge stored on disk. Display size should stay smaller than this. */
@@ -127,6 +128,7 @@ export const contestSchema = z
     deadline_at: isoDateTimeSchema.nullable(),
     announce_at: isoDateTimeSchema.nullable(),
     edition: z.string().min(1).nullable(),
+    edition_en: z.string().min(1).nullable().optional(),
     geo: geoSchema.nullable(),
     online: z.boolean(),
     fee: feeTierSchema,

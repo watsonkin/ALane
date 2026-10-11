@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import {
   contestThumbPath,
   deadlineWindow,
+  displayEdition,
   displayName,
   feeLabel,
   formatContestDate,
@@ -66,7 +67,7 @@ export function ContestListCard({
           <div className="mt-2 flex items-baseline justify-between gap-3">
             <h2 className="font-serif text-xl leading-snug text-foreground sm:text-2xl">{name}</h2>
             <p className="shrink-0 text-sm text-muted-foreground">
-              {contest.edition ?? t.editionMissing}
+              {displayEdition(contest, locale) ?? t.editionMissing}
             </p>
           </div>
           <p

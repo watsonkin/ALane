@@ -424,6 +424,7 @@
     "deadline_at": "2026-08-30T23:59:00+08:00",
     "announce_at": null,
     "edition": "第三届",
+    "edition_en": "3rd",
     "geo": {
       "label": "China",
       "country": "CN"
@@ -436,17 +437,20 @@
       {
         "url": "https://www.cnphotos.net/photographs/show-2494.html",
         "label": "投稿精选（一）",
-        "edition": "第三届"
+        "edition": "第三届",
+        "edition_en": "3rd"
       },
       {
         "url": "https://www.cnphotos.net/photographs/show-2495.html",
         "label": "投稿精选（二）",
-        "edition": "第三届"
+        "edition": "第三届",
+        "edition_en": "3rd"
       },
       {
         "url": "https://www.cnphotos.net/photographs/show-2506.html",
         "label": "投稿精选（三）",
-        "edition": "第三届"
+        "edition": "第三届",
+        "edition_en": "3rd"
       }
     ],
     "gallery_works": [],
@@ -625,6 +629,7 @@
     "deadline_at": "2026-10-07T23:59:00+08:00",
     "announce_at": null,
     "edition": "第八届",
+    "edition_en": "8th",
     "geo": {
       "label": "Hangzhou, China",
       "country": "CN",

@@ -8,6 +8,7 @@ open_at: "2026-06-01T00:00:00+08:00"
 deadline_at: "2026-08-30T23:59:00+08:00"
 announce_at: null
 edition: "第三届"
+edition_en: "3rd"
 geo:
   label: China
   country: CN
@@ -19,12 +20,15 @@ gallery_urls:
   - url: "https://www.cnphotos.net/photographs/show-2494.html"
     label: "投稿精选（一）"
     edition: "第三届"
+    edition_en: "3rd"
   - url: "https://www.cnphotos.net/photographs/show-2495.html"
     label: "投稿精选（二）"
     edition: "第三届"
+    edition_en: "3rd"
   - url: "https://www.cnphotos.net/photographs/show-2506.html"
     label: "投稿精选（三）"
     edition: "第三届"
+    edition_en: "3rd"
 gallery_works: []
 source_adapters:
   - id: manual-seed

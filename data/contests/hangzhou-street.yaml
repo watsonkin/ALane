@@ -8,6 +8,7 @@ open_at: "2026-05-22T00:00:00+08:00"
 deadline_at: "2026-10-07T23:59:00+08:00"
 announce_at: null
 edition: "第八届"
+edition_en: "8th"
 geo:
   label: "Hangzhou, China"
   country: CN

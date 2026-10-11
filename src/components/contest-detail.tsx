@@ -8,6 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   adapterLabel,
   deadlineWindow,
+  displayEdition,
   displayName,
   feeLabel,
   formatContestDate,
@@ -80,6 +81,7 @@ export function ContestDetail({
   const window = deadlineWindow(contest, asOf);
   const t = copy(locale);
   const name = displayName(contest, locale);
+  const edition = displayEdition(contest, locale);
 
   return (
     <article className="max-w-[760px]">
@@ -144,7 +146,7 @@ export function ContestDetail({
           <MetaItem label={t.relevance}>
             {relevanceLabel(contest.street_photo_relevance, locale)}
           </MetaItem>
-          {contest.edition ? <MetaItem label={t.edition}>{contest.edition}</MetaItem> : null}
+          {edition ? <MetaItem label={t.edition}>{edition}</MetaItem> : null}
           <MetaItem label={t.rights}>
             <RightsChip contest={contest} locale={locale} />
           </MetaItem>
@@ -193,19 +195,22 @@ export function ContestDetail({
           <p className="mt-2 text-sm text-muted-foreground">{t.noGalleries}</p>
         ) : (
           <ul className="mt-1">
-            {contest.gallery_urls.map((gallery) => (
-              <li key={gallery.url} className="border-b border-border py-2 text-sm">
-                <a
-                  href={gallery.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent underline-offset-4 hover:underline"
-                >
-                  {gallery.label ?? t.gallery}
-                  {gallery.edition ? ` · ${gallery.edition}` : ""}
-                </a>
-              </li>
-            ))}
+            {contest.gallery_urls.map((gallery) => {
+              const galleryEdition = displayEdition(gallery, locale);
+              return (
+                <li key={gallery.url} className="border-b border-border py-2 text-sm">
+                  <a
+                    href={gallery.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline-offset-4 hover:underline"
+                  >
+                    {gallery.label ?? t.gallery}
+                    {galleryEdition ? ` · ${galleryEdition}` : ""}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>
@@ -216,7 +221,7 @@ export function ContestDetail({
           {contest.open_at ? null : <MetaItem label={t.opens}>{t.notRecorded}</MetaItem>}
           {contest.announce_at ? null : <MetaItem label={t.announced}>{t.notRecorded}</MetaItem>}
           {contest.geo ? null : <MetaItem label={t.geo}>{t.notRecorded}</MetaItem>}
-          {contest.edition ? null : <MetaItem label={t.edition}>{t.notRecorded}</MetaItem>}
+          {edition ? null : <MetaItem label={t.edition}>{t.notRecorded}</MetaItem>}
           <MetaItem label={t.publishStatus}>{statusLabel(contest.status, locale)}</MetaItem>
           <MetaItem label={t.health}>{healthLabel(contest.health, locale)}</MetaItem>
           <MetaItem label="slug">{contest.slug}</MetaItem>
