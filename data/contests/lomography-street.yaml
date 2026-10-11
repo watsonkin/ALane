@@ -14,6 +14,7 @@ street_photo_relevance: core
 rights_tags: []
 gallery_urls: []
 gallery_works: []
+organizer_icon: /icons/organizers/lomography-street.svg
 source_adapters:
   - id: manual-seed
     kind: manual

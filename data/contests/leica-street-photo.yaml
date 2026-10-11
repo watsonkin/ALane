@@ -20,6 +20,7 @@ gallery_urls:
     label: "第15届入围"
     edition: "15"
 gallery_works: []
+organizer_icon: /icons/organizers/leica-street-photo.svg
 source_adapters:
   - id: manual-seed
     kind: manual

@@ -56,6 +56,15 @@ if (hotlinkThumb.success) {
   process.exit(1);
 }
 
+const hotlinkIcon = contestSchema.safeParse({
+  ...sample,
+  organizer_icon: "https://cdn.example.com/logo.svg",
+});
+if (hotlinkIcon.success) {
+  console.error("外链主办方 icon 应该校验失败。");
+  process.exit(1);
+}
+
 const indexWork = contestSchema.safeParse({
   ...sample,
   id: "lensculture-street",
@@ -97,6 +106,28 @@ function imageSize(buf: Buffer): { width: number; height: number } {
 }
 
 for (const contest of contests) {
+  if (contest.organizer_icon) {
+    const iconRel = contest.organizer_icon.replace(/^\//, "");
+    const iconFile = path.join(process.cwd(), "public", iconRel);
+    if (!fs.existsSync(iconFile)) {
+      console.error(`缺少主办方 icon：${contest.organizer_icon}`);
+      process.exit(1);
+    }
+    if (iconFile.endsWith(".svg")) {
+      const svg = fs.readFileSync(iconFile, "utf8");
+      if (/<image[\s>]/.test(svg) || /(?:xlink:)?href\s*=\s*["']https?:/i.test(svg)) {
+        console.error(`${contest.organizer_icon} 不能引用外站图片`);
+        process.exit(1);
+      }
+    } else {
+      const { width, height } = imageSize(fs.readFileSync(iconFile));
+      if (Math.max(width, height) > THUMB_MAX_EDGE) {
+        console.error(`${contest.organizer_icon} 最长边超过 ${THUMB_MAX_EDGE}`);
+        process.exit(1);
+      }
+    }
+  }
+
   for (const work of contest.gallery_works) {
     if (!work.thumb_path) continue;
     const file = path.join(process.cwd(), "public", work.thumb_path);

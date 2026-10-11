@@ -54,7 +54,8 @@ npm run dev
 | `street_photo_relevance` | `core` / `adjacent` / `unreviewed`（人工初标） |
 | `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组表示**未评估**，不是“安全” |
 | `gallery_urls` | `{ url, label?, edition? }`。整届获奖列表的外链 |
-| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400；没有官方小图时用灰底占位，中文界面写 title，英文界面写名称首字母。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
+| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400。列表和即将截止优先用这张作品小图。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
+| `organizer_icon` | 可选。本地路径 `/icons/organizers/{slug}.svg`（也可不写开头的斜线），不能是外链。没有作品小图时，缩略槽用浅底 `#F1EEE7` 居中 contain，最大边约占槽的 60%。没有标，或标加载失败，才用灰底 `#E8E4DC` 字 `#8A8A8A`（中文 title，英文首字母） |
 | `source_adapters` | `{ id, kind? }`。`kind` 为 `manual` / `jsonld` / `html` / `api`，缺省 `manual`。M0 不会执行它们 |
 | `last_fetched_at`, `content_hash` | 抓取后才填。现在保持 `null` |
 | `health` | `ok` / `warn` / `dead`。M0 只展示，不探测 |

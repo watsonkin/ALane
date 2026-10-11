@@ -26,6 +26,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/leica-street-photo.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -53,6 +54,7 @@
     "rights_tags": [],
     "gallery_urls": [],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/lomography-street.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -747,6 +749,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/fujifilm-moment.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -904,6 +907,7 @@
     "rights_tags": [],
     "gallery_urls": [],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/ricoh-gr-photo-festival.svg",
     "source_adapters": [
       {
         "id": "manual-ricoh-gr",
@@ -967,6 +971,7 @@
         "source_site_label": "World Photography Organisation"
       }
     ],
+    "organizer_icon": "/icons/organizers/sony-wpa-street.svg",
     "source_adapters": [
       {
         "id": "manual-seed",

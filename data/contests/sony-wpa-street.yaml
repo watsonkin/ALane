@@ -36,6 +36,7 @@ gallery_works:
     title: "Exhausted"
     author_name: "Andreas Mikonauschke"
     source_site_label: "World Photography Organisation"
+organizer_icon: /icons/organizers/sony-wpa-street.svg
 source_adapters:
   - id: manual-seed
     kind: manual

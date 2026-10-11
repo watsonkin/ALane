@@ -54,6 +54,7 @@ export function HomeHero({
                     <ContestThumb
                       name={contest.name}
                       thumbPath={contestThumbPath(contest)}
+                      organizerIcon={contest.organizer_icon}
                       width={192}
                       height={112}
                       className="h-16 w-full"

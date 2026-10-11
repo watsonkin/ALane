@@ -70,6 +70,14 @@ const thumbPathSchema = z
     "缩略图必须是 thumbs/{contest-id}/ 下的本地文件，不能是外链",
   );
 
+/** Local organizer mark. Not a work photo and not a remote URL. */
+const organizerIconSchema = z
+  .string()
+  .regex(
+    /^\/?icons\/organizers\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:svg|png|webp)$/,
+    "主办方 icon 必须是 /icons/organizers/ 下的本地 svg、png 或 webp，不能是外链",
+  );
+
 export const galleryWorkSchema = z
   .object({
     source_page_url: httpUrlSchema,
@@ -124,6 +132,7 @@ export const contestSchema = z
     rights_tags: z.array(rightsTagSchema),
     gallery_urls: z.array(galleryUrlSchema),
     gallery_works: z.array(galleryWorkSchema),
+    organizer_icon: organizerIconSchema.optional(),
     source_adapters: z.array(sourceAdapterSchema),
     last_fetched_at: isoDateTimeSchema.nullable(),
     content_hash: z.string().min(1).nullable(),

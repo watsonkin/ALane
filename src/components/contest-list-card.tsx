@@ -32,6 +32,7 @@ export function ContestListCard({
         <ContestThumb
           name={contest.name}
           thumbPath={thumb}
+          organizerIcon={contest.organizer_icon}
           width={96}
           height={72}
           grayscale
