@@ -656,7 +656,15 @@
         "edition": "2026"
       }
     ],
-    "gallery_works": [],
+    "gallery_works": [
+      {
+        "source_page_url": "https://www.womenstreetphotographers.com/adele-chan",
+        "thumb_path": "thumbs/women-street-photographers/men-sleeping.jpg",
+        "title": "Men sleeping outside the library",
+        "author_name": "Adele Chan",
+        "source_site_label": "Women Street Photographers"
+      }
+    ],
     "source_adapters": [
       {
         "id": "manual-seed",

@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
-import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   FEE_LABEL,
@@ -19,10 +18,13 @@ export function HomeHero({
   asOf: string;
 }) {
   const closing = contests
-    .filter(
-      (contest) =>
-        contest.deadline_at !== null && deadlineWindow(contest, asOf) === "open",
-    )
+    .filter((contest) => {
+      return (
+        contest.deadline_at !== null &&
+        deadlineWindow(contest, asOf) === "open" &&
+        contestThumbPath(contest) !== null
+      );
+    })
     .sort(
       (a, b) => Date.parse(a.deadline_at ?? "") - Date.parse(b.deadline_at ?? ""),
     );
@@ -50,42 +52,32 @@ export function HomeHero({
         />
       </div>
 
-      <div>
-        <h2 className="font-serif text-2xl">即将截止</h2>
-        {closing.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">
-            当前没有填写了截止时间、且尚未到期的赛事。
-          </p>
-        ) : (
+      {closing.length > 0 ? (
+        <div>
+          <h2 className="font-serif text-2xl">即将截止</h2>
           <ul className="mt-4 flex gap-3 overflow-x-auto pb-1">
             {closing.map((contest) => {
               const thumb = contestThumbPath(contest);
-              const initial = contest.name.trim().slice(0, 1) || "·";
+              if (!thumb) return null;
               return (
                 <li key={contest.id} className="w-56 shrink-0">
                   <Link
                     href={`/contests/${contest.slug}`}
                     className="block rounded-[4px] border border-border bg-card p-3 outline-none focus-visible:bg-muted"
                   >
-                    {thumb ? (
-                      <Image
-                        src={`/${thumb}`}
-                        alt=""
-                        width={192}
-                        height={112}
-                        unoptimized
-                        className="h-16 w-full rounded-[4px] object-cover shadow-none"
-                      />
-                    ) : (
-                      <ThumbPlaceholder initial={initial} className="h-16 w-full" />
-                    )}
+                    <Image
+                      src={`/${thumb}`}
+                      alt=""
+                      width={192}
+                      height={112}
+                      unoptimized
+                      className="h-16 w-full rounded-[4px] object-cover shadow-none"
+                    />
                     <p className="mt-3 line-clamp-2 font-serif text-lg leading-snug">
                       {contest.name}
                     </p>
                     <p className="mt-2 text-sm text-caution">
-                      {contest.deadline_at
-                        ? formatContestDate(contest.deadline_at)
-                        : "日期未定"}
+                      {formatContestDate(contest.deadline_at ?? "")}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       <Badge variant="outline">{FEE_LABEL[contest.fee]}</Badge>
@@ -96,8 +88,8 @@ export function HomeHero({
               );
             })}
           </ul>
-        )}
-      </div>
+        </div>
+      ) : null}
     </section>
   );
 }

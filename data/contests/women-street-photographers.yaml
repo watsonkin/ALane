@@ -18,7 +18,12 @@ gallery_urls:
   - url: "https://www.womenstreetphotographers.com/nyc-exhibition-2026"
     label: "纽约 2026 展览"
     edition: "2026"
-gallery_works: []
+gallery_works:
+  - source_page_url: "https://www.womenstreetphotographers.com/adele-chan"
+    thumb_path: thumbs/women-street-photographers/men-sleeping.jpg
+    title: "Men sleeping outside the library"
+    author_name: "Adele Chan"
+    source_site_label: "Women Street Photographers"
 source_adapters:
   - id: manual-seed
     kind: manual
