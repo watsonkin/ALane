@@ -22,11 +22,7 @@ export function HomeHero({
 
   return (
     <section className="mb-6 border-b border-border pb-6">
-      <p className="text-[13px] tracking-wide text-muted-foreground">赛事索引</p>
-      <h1 className="mt-2 font-serif text-[30px] leading-tight text-ink">
-        街头摄影赛事
-      </h1>
-      <p className="mt-3 max-w-[40ch] text-[15px] leading-snug text-muted-foreground">
+      <p className="max-w-[40ch] text-[15px] leading-snug text-muted-foreground">
         正在征稿的街拍比赛。点进一场，看截止日期和官网。
       </p>
 
