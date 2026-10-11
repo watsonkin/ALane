@@ -24,7 +24,7 @@ function OpenA() {
 export function AlaneLockup({ className }: { className?: string }) {
   return (
     <span className={cn("inline-flex min-w-0 items-center gap-2.5 text-ink sm:gap-3", className)}>
-      <AlaneMark className="size-9 shrink-0 sm:size-11" />
+      <AlaneMark className="size-9 shrink-0 text-mark-gold sm:size-11" />
       <span className="min-w-0">
         <span className="sr-only">ALane</span>
         <span
@@ -34,7 +34,7 @@ export function AlaneLockup({ className }: { className?: string }) {
           <OpenA />
           <span className="translate-y-[0.02em]">Lane</span>
         </span>
-        <span className="mt-1.5 hidden items-center gap-2 font-sans text-[10px] uppercase leading-none tracking-[0.22em] sm:flex">
+        <span className="mt-1.5 hidden items-center gap-2 font-sans text-[10px] uppercase leading-none tracking-[0.22em] text-[#5C5C5C] sm:flex">
           <span aria-hidden="true" className="h-px w-5 bg-current" />
           A lane through awards
           <span aria-hidden="true" className="h-px w-5 bg-current" />

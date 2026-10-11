@@ -13,6 +13,8 @@
   --font-serif: var(--font-source-serif), "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", "Source Han Serif SC", ui-serif, serif;
   --color-paper: var(--paper);
   --color-ink: var(--ink);
+  --color-mark-gold: var(--mark-gold);
+  --color-mark-gold-on-dark: var(--mark-gold-on-dark);
   --color-caution: var(--caution);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -58,6 +60,9 @@
   --ink: #1a1a1a;
   --accent: #2f4a6a;
   --caution: #b45309;
+  /* Brand mark only. Paper UI uses mark.gold; mark.gold-on-dark is unused on this light header. */
+  --mark-gold: #C4A35A;
+  --mark-gold-on-dark: #E0C57A;
 
   --background: var(--paper);
   --foreground: var(--ink);

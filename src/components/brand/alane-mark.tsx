@@ -12,7 +12,7 @@ export function AlaneMark({ className }: { className?: string }) {
       className={className}
     >
       <g
-        stroke="currentColor"
+        stroke="var(--mark-gold)"
         strokeWidth="2.5"
         strokeLinecap="square"
         strokeLinejoin="miter"

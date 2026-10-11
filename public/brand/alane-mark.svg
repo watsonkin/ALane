@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" aria-hidden="true">
   <!-- Camera viewfinder corners + trophy, flat top, no finial dot -->
-  <g stroke="currentColor" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+  <g fill="none" stroke="#C4A35A" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
     <path d="M20 32V16h16M100 32V16H84M20 88v16h16M100 88v16H84"/>
     <!-- Trophy lifted 4 units so the base clears the lower brackets. Same paths as the lockup sketch. -->
     <g transform="translate(0 -4)">
