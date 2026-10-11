@@ -14,7 +14,13 @@ export function RightsChip({
   return (
     <Badge
       variant="outline"
-      className={kind === "caution" ? "text-caution" : undefined}
+      className={
+        kind === "caution"
+          ? "border-caution text-caution"
+          : kind === "trusted"
+            ? "border-accent text-accent"
+            : undefined
+      }
     >
       {RIGHTS_CHIP_LABEL[kind]}
     </Badge>

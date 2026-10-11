@@ -23,7 +23,11 @@ export function WinnerIndexCard({ work }: { work: GalleryWork }) {
             className="h-36 w-full object-cover shadow-none"
           />
         ) : (
-          <ThumbPlaceholder title={title} className="h-36 w-full rounded-none" />
+          <ThumbPlaceholder
+            title={title}
+            className="h-36 w-full rounded-none bg-[#E8E4DC]"
+            textClassName="text-base text-[#8A8A8A]"
+          />
         )}
         <div className="space-y-1 px-3 pt-3">
           <p className="font-serif text-base leading-snug text-ink">{title}</p>

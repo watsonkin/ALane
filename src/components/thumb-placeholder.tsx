@@ -14,10 +14,12 @@ export function ThumbPlaceholder({
   title,
   locale = SITE_UI_LOCALE,
   className,
+  textClassName,
 }: {
   title: string;
   locale?: string;
   className?: string;
+  textClassName?: string;
 }) {
   const text = thumbPlaceholderText(title, locale);
   const chinese = isChineseUi(locale);
@@ -36,6 +38,7 @@ export function ThumbPlaceholder({
           chinese
             ? "line-clamp-3 text-[12px] leading-tight"
             : "text-sm font-medium tracking-wide",
+          textClassName,
         )}
       >
         {text}
