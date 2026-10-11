@@ -1,14 +1,14 @@
 import { Badge } from "@/components/ui/badge";
-import {
-  RIGHTS_CHIP_LABEL,
-  rightsChip,
-} from "@/lib/contest-labels";
+import { rightsChip, rightsChipLabel } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
+import type { Locale } from "@/lib/locale";
 
 export function RightsChip({
   contest,
+  locale,
 }: {
   contest: Pick<Contest, "health" | "rights_tags">;
+  locale: Locale;
 }) {
   const kind = rightsChip(contest);
   return (
@@ -22,7 +22,7 @@ export function RightsChip({
             : undefined
       }
     >
-      {RIGHTS_CHIP_LABEL[kind]}
+      {rightsChipLabel(kind, locale)}
     </Badge>
   );
 }

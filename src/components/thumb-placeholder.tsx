@@ -2,11 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import {
-  SITE_UI_LOCALE,
-  isChineseUi,
-  thumbPlaceholderText,
-} from "@/lib/contest-labels";
+import { isChineseUi, thumbPlaceholderText } from "@/lib/contest-labels";
+import type { Locale } from "@/lib/locale";
 import { cn } from "@/lib/utils";
 
 /**
@@ -15,12 +12,12 @@ import { cn } from "@/lib/utils";
  */
 export function ThumbPlaceholder({
   title,
-  locale = SITE_UI_LOCALE,
+  locale,
   className,
   textClassName,
 }: {
   title: string;
-  locale?: string;
+  locale: Locale;
   className?: string;
   textClassName?: string;
 }) {
@@ -52,6 +49,7 @@ export function ThumbPlaceholder({
 
 export function ContestThumb({
   name,
+  locale,
   thumbPath,
   organizerIcon = null,
   className,
@@ -60,6 +58,7 @@ export function ContestThumb({
   grayscale = false,
 }: {
   name: string;
+  locale: Locale;
   thumbPath: string | null;
   organizerIcon?: string | null;
   className?: string;
@@ -109,9 +108,10 @@ export function ContestThumb({
     <div className={cn(slot, "bg-[#E8E4DC]")} data-thumb-slot={slotSize}>
       <ThumbPlaceholder
         title={name}
+        locale={locale}
         className="absolute inset-0 h-full w-full rounded-[4px] bg-[#E8E4DC] [container-type:size]"
         textClassName={
-          isChineseUi(SITE_UI_LOCALE)
+          isChineseUi(locale)
             ? "line-clamp-2 text-[length:30cqh] leading-none"
             : "text-[length:32cqh] font-medium leading-none tracking-wide"
         }

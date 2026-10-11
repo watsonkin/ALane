@@ -3,34 +3,42 @@ import { RightsChip } from "@/components/rights-chip";
 import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
-  FEE_LABEL,
-  RELEVANCE_LABEL,
-  STATUS_LABEL,
   contestThumbPath,
   deadlineWindow,
+  displayName,
+  feeLabel,
   formatContestDate,
+  relevanceLabel,
+  statusLabel,
   windowChipLabel,
 } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
+import { hrefFor, type Locale } from "@/lib/locale";
+import { copy } from "@/lib/messages";
 
 export function ContestListCard({
   contest,
   asOf,
+  locale,
 }: {
   contest: Contest;
   asOf: string;
+  locale: Locale;
 }) {
   const thumb = contestThumbPath(contest);
   const window = deadlineWindow(contest, asOf);
+  const name = displayName(contest, locale);
+  const t = copy(locale);
 
   return (
     <li className="border border-border bg-card">
       <Link
-        href={`/contests/${contest.slug}`}
+        href={hrefFor(locale, `/contests/${contest.slug}`)}
         className="flex gap-3 p-3 outline-none focus-visible:bg-muted sm:gap-4 sm:p-4"
       >
         <ContestThumb
-          name={contest.name}
+          name={name}
+          locale={locale}
           thumbPath={thumb}
           organizerIcon={contest.organizer_icon}
           width={96}
@@ -44,23 +52,21 @@ export function ContestListCard({
               variant={window === "open" ? "default" : "outline"}
               className={window === "closed" ? "text-muted-foreground" : undefined}
             >
-              {windowChipLabel(window)}
+              {windowChipLabel(window, locale)}
             </Badge>
             <Badge variant={contest.status === "published" ? "default" : "outline"}>
-              {STATUS_LABEL[contest.status]}
+              {statusLabel(contest.status, locale)}
             </Badge>
             <Badge variant="secondary">
-              {RELEVANCE_LABEL[contest.street_photo_relevance]}
+              {relevanceLabel(contest.street_photo_relevance, locale)}
             </Badge>
-            <Badge variant="outline">{FEE_LABEL[contest.fee]}</Badge>
-            <RightsChip contest={contest} />
+            <Badge variant="outline">{feeLabel(contest.fee, locale)}</Badge>
+            <RightsChip contest={contest} locale={locale} />
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-3">
-            <h2 className="font-serif text-xl leading-snug text-foreground sm:text-2xl">
-              {contest.name}
-            </h2>
+            <h2 className="font-serif text-xl leading-snug text-foreground sm:text-2xl">{name}</h2>
             <p className="shrink-0 text-sm text-muted-foreground">
-              {contest.edition ?? "届次未填"}
+              {contest.edition ?? t.editionMissing}
             </p>
           </div>
           <p
@@ -70,8 +76,8 @@ export function ContestListCard({
                 : "mt-1 text-sm text-muted-foreground"
             }
           >
-            截止{" "}
-            {contest.deadline_at ? formatContestDate(contest.deadline_at) : "未定"}
+            {t.deadline}{" "}
+            {contest.deadline_at ? formatContestDate(contest.deadline_at, locale) : t.dateUnset}
           </p>
         </div>
       </Link>

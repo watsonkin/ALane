@@ -1,3 +1,4 @@
+import type { Locale } from "@/lib/locale";
 import type {
   Contest,
   ContestHealth,
@@ -14,10 +15,22 @@ export const STATUS_LABEL: Record<ContestStatus, string> = {
   archived: "已归档",
 };
 
+const STATUS_LABEL_EN: Record<ContestStatus, string> = {
+  draft: "Draft",
+  published: "Published",
+  archived: "Archived",
+};
+
 export const HEALTH_LABEL: Record<ContestHealth, string> = {
   ok: "正常",
   warn: "需留意",
   dead: "可能失效",
+};
+
+const HEALTH_LABEL_EN: Record<ContestHealth, string> = {
+  ok: "Healthy",
+  warn: "Check",
+  dead: "May be dead",
 };
 
 export const FEE_LABEL: Record<FeeTier, string> = {
@@ -27,10 +40,23 @@ export const FEE_LABEL: Record<FeeTier, string> = {
   unknown: "费用未知",
 };
 
+const FEE_LABEL_EN: Record<FeeTier, string> = {
+  free: "Free",
+  paid: "Paid",
+  mixed: "Mixed",
+  unknown: "Fee unknown",
+};
+
 export const RELEVANCE_LABEL: Record<StreetPhotoRelevance, string> = {
   core: "核心街拍",
   adjacent: "相邻题材",
   unreviewed: "未初标",
+};
+
+const RELEVANCE_LABEL_EN: Record<StreetPhotoRelevance, string> = {
+  core: "Core street",
+  adjacent: "Adjacent",
+  unreviewed: "Unreviewed",
 };
 
 export const RIGHTS_TAG_LABEL: Record<RightsTag, string> = {
@@ -40,11 +66,25 @@ export const RIGHTS_TAG_LABEL: Record<RightsTag, string> = {
   moral_rights_waived: "放弃精神权利",
 };
 
+const RIGHTS_TAG_LABEL_EN: Record<RightsTag, string> = {
+  transfer_copyright: "Copyright transfer",
+  exclusive: "Exclusive",
+  no_payment: "Unpaid",
+  moral_rights_waived: "Moral rights waived",
+};
+
 export const ADAPTER_KIND_LABEL: Record<SourceAdapterKind, string> = {
   manual: "手工种子",
   jsonld: "JSON-LD（未接入）",
   html: "HTML（未接入）",
   api: "API（未接入）",
+};
+
+const ADAPTER_KIND_LABEL_EN: Record<SourceAdapterKind, string> = {
+  manual: "Manual seed",
+  jsonld: "JSON-LD (not connected)",
+  html: "HTML (not connected)",
+  api: "API (not connected)",
 };
 
 export const STATUS_FILTERS = [
@@ -86,6 +126,98 @@ export const REGION_FILTERS = [
   { value: "oceania", label: "大洋洲" },
   { value: "other", label: "其他地区" },
 ] as const;
+
+const STATUS_FILTER_EN: Record<StatusFilter, string> = {
+  all: "Any status",
+  published: STATUS_LABEL_EN.published,
+  draft: STATUS_LABEL_EN.draft,
+  archived: STATUS_LABEL_EN.archived,
+};
+
+const RELEVANCE_FILTER_EN: Record<RelevanceFilter, string> = {
+  all: "Any relevance",
+  core: RELEVANCE_LABEL_EN.core,
+  adjacent: RELEVANCE_LABEL_EN.adjacent,
+  unreviewed: RELEVANCE_LABEL_EN.unreviewed,
+};
+
+const FEE_FILTER_EN: Record<FeeFilter, string> = {
+  all: "Any fee",
+  free: FEE_LABEL_EN.free,
+  paid: FEE_LABEL_EN.paid,
+  mixed: FEE_LABEL_EN.mixed,
+  unknown: FEE_LABEL_EN.unknown,
+};
+
+const WINDOW_FILTER_EN: Record<WindowFilter, string> = {
+  all: "All",
+  open: "Open",
+  closed: "Closed",
+  undated: "Date TBD",
+};
+
+const REGION_FILTER_EN: Record<RegionFilter, string> = {
+  all: "All regions",
+  online: "Includes online",
+  cn: "China",
+  europe: "Europe",
+  americas: "Americas",
+  oceania: "Oceania",
+  other: "Other regions",
+};
+
+function localizeFilters<T extends string>(
+  options: readonly { value: T; label: string }[],
+  locale: Locale,
+  english: Record<T, string>,
+): readonly { value: T; label: string }[] {
+  if (locale !== "en") return options;
+  return options.map((option) => ({ value: option.value, label: english[option.value] }));
+}
+
+export function statusFilters(locale: Locale) {
+  return localizeFilters(STATUS_FILTERS, locale, STATUS_FILTER_EN);
+}
+
+export function relevanceFilters(locale: Locale) {
+  return localizeFilters(RELEVANCE_FILTERS, locale, RELEVANCE_FILTER_EN);
+}
+
+export function feeFilters(locale: Locale) {
+  return localizeFilters(FEE_FILTERS, locale, FEE_FILTER_EN);
+}
+
+export function windowFilters(locale: Locale) {
+  return localizeFilters(WINDOW_FILTERS, locale, WINDOW_FILTER_EN);
+}
+
+export function regionFilters(locale: Locale) {
+  return localizeFilters(REGION_FILTERS, locale, REGION_FILTER_EN);
+}
+
+export function statusLabel(status: ContestStatus, locale: Locale): string {
+  return locale === "en" ? STATUS_LABEL_EN[status] : STATUS_LABEL[status];
+}
+
+export function healthLabel(health: ContestHealth, locale: Locale): string {
+  return locale === "en" ? HEALTH_LABEL_EN[health] : HEALTH_LABEL[health];
+}
+
+export function feeLabel(fee: FeeTier, locale: Locale): string {
+  return locale === "en" ? FEE_LABEL_EN[fee] : FEE_LABEL[fee];
+}
+
+export function relevanceLabel(relevance: StreetPhotoRelevance, locale: Locale): string {
+  return locale === "en" ? RELEVANCE_LABEL_EN[relevance] : RELEVANCE_LABEL[relevance];
+}
+
+export function rightsTagLabel(tag: RightsTag, locale: Locale): string {
+  return locale === "en" ? RIGHTS_TAG_LABEL_EN[tag] : RIGHTS_TAG_LABEL[tag];
+}
+
+export function adapterLabel(kind: SourceAdapterKind, locale: Locale): string {
+  return locale === "en" ? ADAPTER_KIND_LABEL_EN[kind] : ADAPTER_KIND_LABEL[kind];
+}
 
 export type StatusFilter = (typeof STATUS_FILTERS)[number]["value"];
 export type RelevanceFilter = (typeof RELEVANCE_FILTERS)[number]["value"];
@@ -129,22 +261,31 @@ export function matchesRegion(
   );
 }
 
+const EN_MONTHS = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+] as const;
+
 /**
  * Public date label. Uses the calendar day written in the timestamp
- * (2026-10-31T23:59:00+00:00 stays 10月31日), not a Shanghai clock that
+ * (2026-10-31T23:59:00+00:00 stays 31 Oct / 10月31日), not a Shanghai clock that
  * turns end-of-day UTC into the next morning.
  */
-export function formatContestDate(iso: string): string {
+export function formatContestDate(iso: string, locale: Locale): string {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   if (!match) {
-    return new Intl.DateTimeFormat("zh-CN", {
-      timeZone: "Asia/Shanghai",
+    return new Intl.DateTimeFormat(locale === "en" ? "en-GB" : "zh-CN", {
+      timeZone: "UTC",
       year: "numeric",
-      month: "long",
+      month: locale === "en" ? "short" : "long",
       day: "numeric",
     }).format(new Date(iso));
   }
-  return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (locale === "en") return `${day} ${EN_MONTHS[month - 1] ?? ""} ${year}`;
+  return `${year}年${month}月${day}日`;
 }
 
 /** Homepage「即将截止」: open deadlines from now through this many calendar days. */
@@ -194,16 +335,12 @@ export function selectClosingSoon(
 
 export function windowChipLabel(
   window: Exclude<WindowFilter, "all">,
+  locale: Locale,
 ): string {
-  if (window === "open") return "开放中";
-  if (window === "closed") return "已截止";
-  return "待定";
+  return locale === "en" ? WINDOW_FILTER_EN[window] : window === "open" ? "开放中" : window === "closed" ? "已截止" : "待定";
 }
 
-/** Page language. Chinese UI fills placeholders with the title; English UI uses initials. */
-export const SITE_UI_LOCALE = "zh-CN";
-
-export function isChineseUi(locale: string = SITE_UI_LOCALE): boolean {
+export function isChineseUi(locale: string): boolean {
   return locale.toLowerCase().startsWith("zh");
 }
 
@@ -222,16 +359,30 @@ export function englishInitials(name: string): string {
  * zh: the contest or work title (CSS clamps it when the box is small).
  * en: name initials.
  */
-export function thumbPlaceholderText(
-  title: string,
-  locale: string = SITE_UI_LOCALE,
-): string {
-  const name = title.trim() || "赛事";
+export function thumbPlaceholderText(title: string, locale: string): string {
+  const name = title.trim() || (isChineseUi(locale) ? "赛事" : "Award");
   if (isChineseUi(locale)) return name;
   return englishInitials(name);
 }
 
-export function compareByWindow(a: Contest, b: Contest, asOfIso: string): number {
+export function displayName(
+  contest: Pick<Contest, "name"> & { name_zh?: string | null; name_en?: string | null },
+  locale: Locale,
+): string {
+  if (locale === "zh-CN") {
+    const zhName = contest.name_zh?.trim();
+    return zhName || contest.name;
+  }
+  const enName = contest.name_en?.trim();
+  return enName || contest.name;
+}
+
+export function compareByWindow(
+  a: Contest,
+  b: Contest,
+  asOfIso: string,
+  locale: Locale,
+): number {
   const rank = { open: 0, undated: 1, closed: 2 } as const;
   const left = deadlineWindow(a, asOfIso);
   const right = deadlineWindow(b, asOfIso);
@@ -242,7 +393,10 @@ export function compareByWindow(a: Contest, b: Contest, asOfIso: string): number
   if (left === "closed") {
     return Date.parse(b.deadline_at ?? "") - Date.parse(a.deadline_at ?? "");
   }
-  return a.name.localeCompare(b.name, "zh");
+  return displayName(a, locale).localeCompare(
+    displayName(b, locale),
+    locale === "en" ? "en" : "zh",
+  );
 }
 
 export type RightsChip = "trusted" | "caution" | "unevaluated";
@@ -252,6 +406,16 @@ export const RIGHTS_CHIP_LABEL: Record<RightsChip, string> = {
   caution: "需留意",
   unevaluated: "未评估",
 };
+
+const RIGHTS_CHIP_LABEL_EN: Record<RightsChip, string> = {
+  trusted: "Trusted",
+  caution: "Check rights",
+  unevaluated: "Not reviewed",
+};
+
+export function rightsChipLabel(kind: RightsChip, locale: Locale): string {
+  return locale === "en" ? RIGHTS_CHIP_LABEL_EN[kind] : RIGHTS_CHIP_LABEL[kind];
+}
 
 /**
  * Public rights chip.
@@ -280,8 +444,13 @@ export function contestThumbPath(
   return contest.gallery_works.find((work) => work.thumb_path)?.thumb_path ?? null;
 }
 
-export function formatPlace(contest: Pick<Contest, "online" | "geo">): string {
-  if (contest.online && contest.geo) return `线上 + ${contest.geo.label}`;
-  if (contest.online) return "仅线上";
-  return contest.geo?.label ?? "地点未填";
+export function formatPlace(
+  contest: Pick<Contest, "online" | "geo">,
+  locale: Locale,
+): string {
+  if (contest.online && contest.geo) {
+    return locale === "en" ? `Online + ${contest.geo.label}` : `线上 + ${contest.geo.label}`;
+  }
+  if (contest.online) return locale === "en" ? "Online only" : "仅线上";
+  return contest.geo?.label ?? (locale === "en" ? "Place not recorded" : "地点未填");
 }

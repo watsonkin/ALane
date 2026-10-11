@@ -119,6 +119,8 @@ export const contestSchema = z
     id: slugSchema,
     slug: slugSchema,
     name: z.string().min(1, "name 不能为空"),
+    name_zh: z.string().min(1).optional(),
+    name_en: z.string().min(1).optional(),
     official_url: httpUrlSchema,
     status: contestStatusSchema,
     open_at: isoDateTimeSchema.nullable(),

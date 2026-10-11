@@ -6,26 +6,22 @@ import { WinnerIndexCard } from "@/components/winner-index-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
-  ADAPTER_KIND_LABEL,
-  FEE_LABEL,
-  HEALTH_LABEL,
-  RELEVANCE_LABEL,
-  RIGHTS_TAG_LABEL,
-  STATUS_LABEL,
+  adapterLabel,
   deadlineWindow,
+  displayName,
+  feeLabel,
   formatContestDate,
   formatPlace,
+  healthLabel,
+  relevanceLabel,
+  rightsTagLabel,
+  statusLabel,
   windowChipLabel,
 } from "@/lib/contest-labels";
 import type { Contest, RightsTag } from "@/lib/contest-schema";
+import { hrefFor, type Locale } from "@/lib/locale";
+import { copy, type Copy } from "@/lib/messages";
 import { cn } from "@/lib/utils";
-
-const RIGHTS_TAG_NOTE: Record<RightsTag, string> = {
-  transfer_copyright: "条款里出现了版权转让。",
-  exclusive: "条款里出现了独家使用。",
-  no_payment: "使用作品可能不付酬。",
-  moral_rights_waived: "条款里出现了放弃精神权利。",
-};
 
 function MetaItem({
   label,
@@ -52,40 +48,44 @@ function MetaItem({
   );
 }
 
-function rightsSummary(contest: Contest): string {
+function rightsSummary(contest: Contest, locale: Locale, t: Copy): string {
   if (contest.rights_tags.length > 0) {
-    return `需留意：${contest.rights_tags.map((tag) => RIGHTS_TAG_LABEL[tag]).join("、")}。`;
+    return t.rightsSummaryTags(
+      contest.rights_tags.map((tag) => rightsTagLabel(tag, locale)).join(t.tagSep),
+    );
   }
-  if (contest.health === "warn" || contest.health === "dead") {
-    return "该条目标成需留意，条款以官网为准。";
-  }
-  if (contest.health === "ok") {
-    return "未记录版权转让、独家、无报酬或放弃精神权利。";
-  }
-  return "权利尚未评估。";
+  if (contest.health === "warn" || contest.health === "dead") return t.rightsSummaryCaution;
+  if (contest.health === "ok") return t.rightsSummaryOk;
+  return t.rightsSummaryUnknown;
 }
 
-function placeValue(contest: Contest): string {
-  const place = formatPlace(contest);
+function placeValue(contest: Contest, locale: Locale): string {
+  const place = formatPlace(contest, locale);
   const extra = [contest.geo?.country, contest.geo?.city].filter(Boolean);
   if (extra.length === 0 || place.includes(extra.join(""))) return place;
-  return `${place}（${extra.join(" · ")}）`;
+  return locale === "en"
+    ? `${place} (${extra.join(" · ")})`
+    : `${place}（${extra.join(" · ")}）`;
 }
 
 export function ContestDetail({
   contest,
   asOf,
+  locale,
 }: {
   contest: Contest;
   asOf: string;
+  locale: Locale;
 }) {
   const window = deadlineWindow(contest, asOf);
+  const t = copy(locale);
+  const name = displayName(contest, locale);
 
   return (
     <article className="max-w-[760px]">
       <p className="mb-4 text-sm">
-        <Link href="/" className="text-accent underline-offset-4 hover:underline">
-          ← 全部赛事
+        <Link href={hrefFor(locale, "/")} className="text-accent underline-offset-4 hover:underline">
+          {t.backToAll}
         </Link>
       </p>
 
@@ -96,16 +96,14 @@ export function ContestDetail({
               variant={window === "open" ? "default" : "outline"}
               className={window === "closed" ? "text-muted-foreground" : undefined}
             >
-              {windowChipLabel(window)}
+              {windowChipLabel(window, locale)}
             </Badge>
             <Badge variant="secondary">
-              {RELEVANCE_LABEL[contest.street_photo_relevance]}
+              {relevanceLabel(contest.street_photo_relevance, locale)}
             </Badge>
-            <Badge variant="outline">{FEE_LABEL[contest.fee]}</Badge>
+            <Badge variant="outline">{feeLabel(contest.fee, locale)}</Badge>
           </div>
-          <h1 className="mt-2 font-serif text-[30px] font-semibold leading-tight text-ink">
-            {contest.name}
-          </h1>
+          <h1 className="mt-2 font-serif text-[30px] font-semibold leading-tight text-ink">{name}</h1>
         </div>
         <a
           href={contest.official_url}
@@ -116,39 +114,39 @@ export function ContestDetail({
             "h-10 w-full shrink-0 px-4 text-sm md:w-auto",
           )}
         >
-          打开官网
+          {t.openOfficial}
           <ExternalLink aria-hidden="true" />
         </a>
       </header>
       {contest.health === "dead" ? (
-        <p className="mt-2 text-sm text-caution">官网链接可能已经失效。</p>
+        <p className="mt-2 text-sm text-caution">{t.linkMayBeDead}</p>
       ) : null}
 
       <div className="mt-3 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
         <dl>
-          <MetaItem label="截止" emphasize>
-            {contest.deadline_at ? formatContestDate(contest.deadline_at) : "待定"}
+          <MetaItem label={t.deadline} emphasize>
+            {contest.deadline_at ? formatContestDate(contest.deadline_at, locale) : t.dateTbd}
           </MetaItem>
           {contest.open_at ? (
-            <MetaItem label="开放">{formatContestDate(contest.open_at)}</MetaItem>
+            <MetaItem label={t.opens}>{formatContestDate(contest.open_at, locale)}</MetaItem>
           ) : null}
           {contest.announce_at ? (
-            <MetaItem label="公布">{formatContestDate(contest.announce_at)}</MetaItem>
+            <MetaItem label={t.announced}>{formatContestDate(contest.announce_at, locale)}</MetaItem>
           ) : null}
           {contest.geo || contest.online ? (
-            <MetaItem label="地点">
-              {contest.geo ? placeValue(contest) : "仅线上"}
+            <MetaItem label={t.place}>
+              {contest.geo ? placeValue(contest, locale) : formatPlace(contest, locale)}
             </MetaItem>
           ) : null}
-          <MetaItem label="费用">{FEE_LABEL[contest.fee]}</MetaItem>
+          <MetaItem label={t.fee}>{feeLabel(contest.fee, locale)}</MetaItem>
         </dl>
         <dl>
-          <MetaItem label="相关度">
-            {RELEVANCE_LABEL[contest.street_photo_relevance]}
+          <MetaItem label={t.relevance}>
+            {relevanceLabel(contest.street_photo_relevance, locale)}
           </MetaItem>
-          {contest.edition ? <MetaItem label="届次">{contest.edition}</MetaItem> : null}
-          <MetaItem label="权利">
-            <RightsChip contest={contest} />
+          {contest.edition ? <MetaItem label={t.edition}>{contest.edition}</MetaItem> : null}
+          <MetaItem label={t.rights}>
+            <RightsChip contest={contest} locale={locale} />
           </MetaItem>
         </dl>
       </div>
@@ -156,33 +154,33 @@ export function ContestDetail({
       {contest.rights_tags.length > 0 ? (
         <details className="group mt-4 text-sm leading-snug text-muted-foreground">
           <summary className="flex cursor-pointer list-none items-baseline gap-2 [&::-webkit-details-marker]:hidden">
-            <span className="min-w-0 text-ink">{rightsSummary(contest)}</span>
-            <span className="shrink-0 text-accent group-open:hidden">展开</span>
-            <span className="hidden shrink-0 text-accent group-open:inline">收起</span>
+            <span className="min-w-0 text-ink">{rightsSummary(contest, locale, t)}</span>
+            <span className="shrink-0 text-accent group-open:hidden">{t.show}</span>
+            <span className="hidden shrink-0 text-accent group-open:inline">{t.hide}</span>
           </summary>
           <ul className="mt-2 space-y-1">
             {contest.rights_tags.map((tag) => (
               <li key={tag}>
-                {RIGHTS_TAG_LABEL[tag]}：{RIGHTS_TAG_NOTE[tag]}
+                {rightsTagLabel(tag, locale)}
+                {locale === "en" ? ": " : "："}
+                {t.rightsNotes[tag as RightsTag]}
               </li>
             ))}
-            <li>权利标签仅供参考，以官方条款为准。</li>
+            <li>{t.rightsDisclaimer}</li>
           </ul>
         </details>
       ) : null}
 
       <section className="mt-4">
-        <h2 className="text-base font-semibold text-ink">获奖缩略索引</h2>
-        <p className="mt-1 text-sm leading-snug text-muted-foreground">
-          点卡片在新标签打开源站的这一件作品。
-        </p>
+        <h2 className="text-base font-semibold text-ink">{t.winnerIndex}</h2>
+        <p className="mt-1 text-sm leading-snug text-muted-foreground">{t.winnerHint}</p>
         {contest.gallery_works.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">还没有单件作品页。</p>
+          <p className="mt-3 text-sm text-muted-foreground">{t.noWorks}</p>
         ) : (
           <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
             {contest.gallery_works.map((work) => (
               <li key={work.source_page_url}>
-                <WinnerIndexCard work={work} />
+                <WinnerIndexCard work={work} locale={locale} />
               </li>
             ))}
           </ul>
@@ -190,9 +188,9 @@ export function ContestDetail({
       </section>
 
       <section className="mt-4">
-        <h2 className="text-base font-semibold text-ink">获奖廊外链</h2>
+        <h2 className="text-base font-semibold text-ink">{t.galleries}</h2>
         {contest.gallery_urls.length === 0 ? (
-          <p className="mt-2 text-sm text-muted-foreground">还没有获奖廊链接。</p>
+          <p className="mt-2 text-sm text-muted-foreground">{t.noGalleries}</p>
         ) : (
           <ul className="mt-1">
             {contest.gallery_urls.map((gallery) => (
@@ -203,7 +201,7 @@ export function ContestDetail({
                   rel="noopener noreferrer"
                   className="text-accent underline-offset-4 hover:underline"
                 >
-                  {gallery.label ?? "获奖廊"}
+                  {gallery.label ?? t.gallery}
                   {gallery.edition ? ` · ${gallery.edition}` : ""}
                 </a>
               </li>
@@ -213,27 +211,23 @@ export function ContestDetail({
       </section>
 
       <details className="mt-4 border-t border-border pt-2">
-        <summary className="cursor-pointer py-2 text-sm font-semibold text-ink">
-          技术/采集信息
-        </summary>
+        <summary className="cursor-pointer py-2 text-sm font-semibold text-ink">{t.technical}</summary>
         <dl className="pb-2 text-[13px]">
-          {contest.open_at ? null : <MetaItem label="开放">未填写</MetaItem>}
-          {contest.announce_at ? null : <MetaItem label="公布">未填写</MetaItem>}
-          {contest.geo ? null : <MetaItem label="地理">未填写</MetaItem>}
-          {contest.edition ? null : <MetaItem label="届次">未填写</MetaItem>}
-          <MetaItem label="发布状态">{STATUS_LABEL[contest.status]}</MetaItem>
-          <MetaItem label="健康">{HEALTH_LABEL[contest.health]}</MetaItem>
+          {contest.open_at ? null : <MetaItem label={t.opens}>{t.notRecorded}</MetaItem>}
+          {contest.announce_at ? null : <MetaItem label={t.announced}>{t.notRecorded}</MetaItem>}
+          {contest.geo ? null : <MetaItem label={t.geo}>{t.notRecorded}</MetaItem>}
+          {contest.edition ? null : <MetaItem label={t.edition}>{t.notRecorded}</MetaItem>}
+          <MetaItem label={t.publishStatus}>{statusLabel(contest.status, locale)}</MetaItem>
+          <MetaItem label={t.health}>{healthLabel(contest.health, locale)}</MetaItem>
           <MetaItem label="slug">{contest.slug}</MetaItem>
-          <MetaItem label="官网">{contest.official_url}</MetaItem>
-          <MetaItem label="采集">
+          <MetaItem label={t.officialSite}>{contest.official_url}</MetaItem>
+          <MetaItem label={t.sources}>
             {contest.source_adapters
-              .map((adapter) => `${adapter.id} · ${ADAPTER_KIND_LABEL[adapter.kind]}`)
-              .join("；") || "未填"}
+              .map((adapter) => `${adapter.id} · ${adapterLabel(adapter.kind, locale)}`)
+              .join(t.sourceSep) || t.sourcesEmpty}
           </MetaItem>
-          <MetaItem label="最近采集">
-            {contest.last_fetched_at ?? "未采集"}
-          </MetaItem>
-          <MetaItem label="内容摘要">{contest.content_hash ?? "无"}</MetaItem>
+          <MetaItem label={t.lastFetch}>{contest.last_fetched_at ?? t.notFetched}</MetaItem>
+          <MetaItem label={t.contentHash}>{contest.content_hash ?? t.none}</MetaItem>
         </dl>
       </details>
     </article>

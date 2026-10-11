@@ -1,3 +1,4 @@
+import type { Locale } from "@/lib/locale";
 import type { Contest } from "@/lib/contest-schema";
 
 function icsEscape(value: string): string {
@@ -42,12 +43,19 @@ export const CALENDAR_NO_DEADLINE_NOTE =
   "未填写截止时间，日历时间取自开放或公布日期，不是报名截止。";
 
 /** Contests with no timestamp at all are left out of the calendar. */
-export function calendarOmitReason(contest: Contest): string | null {
+export function calendarOmitReason(
+  contest: Contest,
+  locale: Locale = "zh-CN",
+): string | null {
   if (contest.open_at || contest.deadline_at || contest.announce_at) return null;
   if (contest.status === "archived") {
-    return "没有开放、截止或公布日期，且状态为已归档，所以没有写入日历。";
+    return locale === "en"
+      ? "No open, deadline, or announcement date, and the entry is archived, so it is left out of the calendar."
+      : "没有开放、截止或公布日期，且状态为已归档，所以没有写入日历。";
   }
-  return "没有开放、截止或公布日期，所以没有写入日历。";
+  return locale === "en"
+    ? "No open, deadline, or announcement date, so it is left out of the calendar."
+    : "没有开放、截止或公布日期，所以没有写入日历。";
 }
 
 export function calendarDescriptionNotes(contest: Contest): string[] {

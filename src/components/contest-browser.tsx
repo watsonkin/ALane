@@ -12,7 +12,12 @@ import {
   WINDOW_FILTERS,
   compareByWindow,
   deadlineWindow,
+  feeFilters,
   matchesRegion,
+  regionFilters,
+  relevanceFilters,
+  statusFilters,
+  windowFilters,
   type FeeFilter,
   type RegionFilter,
   type RelevanceFilter,
@@ -20,6 +25,8 @@ import {
   type WindowFilter,
 } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
+import type { Locale } from "@/lib/locale";
+import { copy } from "@/lib/messages";
 
 function pick<T extends string>(
   raw: string | null,
@@ -69,10 +76,13 @@ function FilterGroup<T extends string>({
 export function ContestBrowser({
   contests,
   asOf,
+  locale,
 }: {
   contests: Contest[];
   asOf: string;
+  locale: Locale;
 }) {
+  const t = copy(locale);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -129,8 +139,8 @@ export function ContestBrowser({
           if (!matchesRegion(contest, region)) return false;
           return true;
         })
-        .sort((a, b) => compareByWindow(a, b, asOf)),
-    [asOf, contests, fee, region, relevance, status, windowFilter],
+        .sort((a, b) => compareByWindow(a, b, asOf, locale)),
+    [asOf, contests, fee, locale, region, relevance, status, windowFilter],
   );
 
   const filtersActive =
@@ -143,7 +153,7 @@ export function ContestBrowser({
   if (contests.length === 0) {
     return (
       <div className="border border-dashed border-border bg-card px-4 py-10 text-sm text-muted-foreground">
-        <p className="font-medium text-foreground">还没有赛事。</p>
+        <p className="font-medium text-foreground">{t.noContests}</p>
       </div>
     );
   }
@@ -154,22 +164,22 @@ export function ContestBrowser({
         <div className="flex flex-nowrap items-end gap-3 overflow-x-auto">
           <FilterGroup
             nowrap
-            legend="开放窗口"
-            options={WINDOW_FILTERS}
+            legend={t.filterWindow}
+            options={windowFilters(locale)}
             value={windowFilter}
             onChange={(value) => write("window", value)}
           />
           <FilterGroup
             nowrap
-            legend="费用"
-            options={FEE_FILTERS}
+            legend={t.filterFee}
+            options={feeFilters(locale)}
             value={fee}
             onChange={(value) => write("fee", value)}
           />
           <FilterGroup
             nowrap
-            legend="地区"
-            options={REGION_FILTERS}
+            legend={t.filterRegion}
+            options={regionFilters(locale)}
             value={region}
             onChange={(value) => write("region", value)}
           />
@@ -180,21 +190,21 @@ export function ContestBrowser({
             onClick={() => setExpanded((open) => !open)}
             className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            {expanded ? "收起" : "展开筛选"}
+            {expanded ? t.hideFilters : t.showFilters}
             <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
           </button>
         </div>
         <div id="contest-filter-panel" hidden={!expanded} className="mt-4">
           <div className="flex flex-wrap items-start gap-x-3 gap-y-3">
             <FilterGroup
-              legend="状态"
-              options={STATUS_FILTERS}
+              legend={t.filterStatus}
+              options={statusFilters(locale)}
               value={status}
               onChange={(value) => write("status", value)}
             />
             <FilterGroup
-              legend="相关度"
-              options={RELEVANCE_FILTERS}
+              legend={t.filterRelevance}
+              options={relevanceFilters(locale)}
               value={relevance}
               onChange={(value) => write("relevance", value)}
             />
@@ -204,7 +214,7 @@ export function ContestBrowser({
 
       <div className="flex items-baseline justify-between gap-3">
         <p className="text-sm text-muted-foreground" aria-live="polite">
-          {contests.length} 场里显示 {visible.length} 场
+          {t.showing(visible.length, contests.length)}
         </p>
         {filtersActive ? (
           <Button
@@ -213,20 +223,20 @@ export function ContestBrowser({
             size="sm"
             onClick={() => router.replace(pathname, { scroll: false })}
           >
-            清除筛选
+            {t.clearFilters}
           </Button>
         ) : null}
       </div>
 
       {visible.length === 0 ? (
         <div className="border border-dashed border-border px-4 py-10 text-sm text-muted-foreground">
-          <p className="font-medium text-foreground">没有符合当前筛选的赛事。</p>
-          <p className="mt-2">放宽开放窗口、费用、地区，或辅助的状态和相关度后再看一眼。</p>
+          <p className="font-medium text-foreground">{t.noMatches}</p>
+          <p className="mt-2">{t.noMatchesHint}</p>
         </div>
       ) : (
         <ul className="space-y-3">
           {visible.map((contest) => (
-            <ContestListCard key={contest.id} contest={contest} asOf={asOf} />
+            <ContestListCard key={contest.id} contest={contest} asOf={asOf} locale={locale} />
           ))}
         </ul>
       )}

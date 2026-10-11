@@ -1,8 +1,11 @@
 import Image from "next/image";
 import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import type { GalleryWork } from "@/lib/contest-schema";
+import type { Locale } from "@/lib/locale";
+import { copy } from "@/lib/messages";
 
-export function WinnerIndexCard({ work }: { work: GalleryWork }) {
+export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: Locale }) {
+  const t = copy(locale);
   const title = work.title ?? work.author_name ?? work.source_site_label;
 
   return (
@@ -26,6 +29,7 @@ export function WinnerIndexCard({ work }: { work: GalleryWork }) {
           ) : (
             <ThumbPlaceholder
               title={title}
+              locale={locale}
               className="absolute inset-0 h-full w-full rounded-none bg-[#E8E4DC]"
               textClassName="text-base text-[#8A8A8A]"
             />
@@ -34,9 +38,9 @@ export function WinnerIndexCard({ work }: { work: GalleryWork }) {
         <div className="space-y-1 px-3 pt-3">
           <p className="font-serif text-base leading-snug text-ink">{title}</p>
           <p className="text-xs leading-5 text-muted-foreground">
-            来源 · {work.source_site_label}
+            {t.fromSource} · {work.source_site_label}
           </p>
-          <p className="text-xs text-accent">前往源站</p>
+          <p className="text-xs text-accent">{t.visitSource}</p>
         </div>
       </a>
       {work.author_name ? (

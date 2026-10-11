@@ -43,7 +43,8 @@ npm run dev
 | 字段 | 含义 |
 | --- | --- |
 | `id`, `slug` | 小写字母、数字、连字符。`slug` 出现在 `/contests/[slug]` |
-| `name` | 展示名称 |
+| `name` | 入库主名。展示时中文优先可选 `name_zh`，英文优先可选 `name_en`，缺了就用 `name` |
+| `name_zh`, `name_en` | 可选。不填也不藏卡 |
 | `official_url` | 官网，http(s) |
 | `status` | `draft` / `published` / `archived` |
 | `open_at`, `deadline_at`, `announce_at` | 带时区的时间，或 `null`。截止必须晚于开放 |
@@ -64,7 +65,9 @@ npm run dev
 
 列表页的主筛选是开放窗口、费用和地区，默认只露这一行，芯片仍可点。同一个「展开筛选」会直接放出状态和相关度，收起后辅维芯片隐藏，已选条件仍生效。条件写在地址栏（`window`、`fee`、`region`，加上 `status`、`relevance`）。默认显示库内全部赛事。点「开放中」只看填写了截止时间且尚未过这次构建时刻的赛事；截止时间为空的状态是「待定」。已截止和待定仍留在默认列表里。地区里「含线上」看 `online`，国家按 `geo.country` 归到中国、欧洲、美洲、大洋洲或其他。详情页按 slug 读取同一份数据。
 
-`/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。
+`/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。日历说明保持中文，只有一份订阅。
+
+语言是 `zh-CN` 和 `en`。中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。优先级是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。选了英文之后刷新中文根路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`。不看 IP，不用 hash。灰底占位中文用标题，英文用首字母。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。
 
 ## Cloudflare Workers
 
@@ -119,7 +122,9 @@ data/contests/          YAML 真源
 src/lib/contest-schema.ts
 src/lib/contest-files.ts
 src/lib/contests.ts
-src/app/page.tsx        列表
+src/app/page.tsx        中文列表
+src/app/en/page.tsx     英文列表
+src/proxy.ts            语言跳转
 src/app/contests/[slug]/page.tsx
 .github/workflows/ci.yml
 .github/workflows/ingest.yml
