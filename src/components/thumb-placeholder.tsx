@@ -68,53 +68,54 @@ export function ContestThumb({
   grayscale?: boolean;
 }) {
   const [iconFailed, setIconFailed] = useState(false);
+  const slot = cn("relative shrink-0 overflow-hidden rounded-[4px]", className);
+  const slotSize = `${width}x${height}`;
 
   if (thumbPath) {
     return (
-      <Image
-        src={`/${thumbPath}`}
-        alt=""
-        width={width}
-        height={height}
-        unoptimized
-        className={cn(
-          "rounded-[4px] object-cover shadow-none",
-          grayscale && "grayscale",
-          className,
-        )}
-      />
+      <div className={slot} data-thumb-slot={slotSize}>
+        <Image
+          src={`/${thumbPath}`}
+          alt=""
+          fill
+          sizes={`${width}px`}
+          unoptimized
+          className={cn("object-cover object-center", grayscale && "grayscale")}
+        />
+      </div>
     );
   }
 
   if (organizerIcon && !iconFailed) {
     const src = organizerIcon.startsWith("/") ? organizerIcon : `/${organizerIcon}`;
     return (
-      <div
-        data-thumb="organizer-icon"
-        className={cn(
-          "flex items-center justify-center overflow-hidden rounded-[4px] bg-[#F1EEE7] shadow-none",
-          className,
-        )}
-      >
-        <img
-          src={src}
-          alt=""
-          className="max-h-[60%] max-w-[60%] object-contain"
-          onError={() => setIconFailed(true)}
-        />
+      <div className={cn(slot, "bg-[#F1EEE7]")} data-thumb-slot={slotSize}>
+        <div
+          data-thumb="organizer-icon"
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          <img
+            src={src}
+            alt=""
+            className="max-h-[60%] max-w-[60%] object-contain"
+            onError={() => setIconFailed(true)}
+          />
+        </div>
       </div>
     );
   }
 
   return (
-    <ThumbPlaceholder
-      title={name}
-      className={cn("[container-type:size]", className)}
-      textClassName={
-        isChineseUi(SITE_UI_LOCALE)
-          ? "line-clamp-2 text-[length:30cqh] leading-none"
-          : "text-[length:32cqh] font-medium leading-none tracking-wide"
-      }
-    />
+    <div className={cn(slot, "bg-[#E8E4DC]")} data-thumb-slot={slotSize}>
+      <ThumbPlaceholder
+        title={name}
+        className="absolute inset-0 h-full w-full rounded-[4px] bg-[#E8E4DC] [container-type:size]"
+        textClassName={
+          isChineseUi(SITE_UI_LOCALE)
+            ? "line-clamp-2 text-[length:30cqh] leading-none"
+            : "text-[length:32cqh] font-medium leading-none tracking-wide"
+        }
+      />
+    </div>
   );
 }

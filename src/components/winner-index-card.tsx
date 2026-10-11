@@ -13,22 +13,24 @@ export function WinnerIndexCard({ work }: { work: GalleryWork }) {
         rel="noopener noreferrer"
         className="block outline-none focus-visible:bg-muted"
       >
-        {work.thumb_path ? (
-          <Image
-            src={`/${work.thumb_path}`}
-            alt={title}
-            width={200}
-            height={150}
-            unoptimized
-            className="h-36 w-full object-cover shadow-none"
-          />
-        ) : (
-          <ThumbPlaceholder
-            title={title}
-            className="h-36 w-full rounded-none bg-[#E8E4DC]"
-            textClassName="text-base text-[#8A8A8A]"
-          />
-        )}
+        <div className="relative h-36 w-full shrink-0 overflow-hidden bg-[#E8E4DC]">
+          {work.thumb_path ? (
+            <Image
+              src={`/${work.thumb_path}`}
+              alt={title}
+              fill
+              sizes="240px"
+              unoptimized
+              className="object-cover object-center"
+            />
+          ) : (
+            <ThumbPlaceholder
+              title={title}
+              className="absolute inset-0 h-full w-full rounded-none bg-[#E8E4DC]"
+              textClassName="text-base text-[#8A8A8A]"
+            />
+          )}
+        </div>
         <div className="space-y-1 px-3 pt-3">
           <p className="font-serif text-base leading-snug text-ink">{title}</p>
           <p className="text-xs leading-5 text-muted-foreground">
