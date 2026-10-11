@@ -64,33 +64,6 @@ function FilterGroup<T extends string>({
   );
 }
 
-function FilterDisclosure({
-  expanded,
-  controls,
-  onClick,
-  collapsedLabel,
-  expandedLabel,
-}: {
-  expanded: boolean;
-  controls: string;
-  onClick: () => void;
-  collapsedLabel: string;
-  expandedLabel: string;
-}) {
-  return (
-    <button
-      type="button"
-      aria-expanded={expanded}
-      aria-controls={controls}
-      onClick={onClick}
-      className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-    >
-      {expanded ? expandedLabel : collapsedLabel}
-      <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
-    </button>
-  );
-}
-
 export function ContestBrowser({
   contests,
   asOf,
@@ -102,12 +75,6 @@ export function ContestBrowser({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [expanded, setExpanded] = useState(false);
-  const [moreOpen, setMoreOpen] = useState(false);
-
-  function toggleExpanded() {
-    setExpanded((open) => !open);
-    setMoreOpen(false);
-  }
 
   const status = pick<Exclude<StatusFilter, "all">>(
     searchParams.get("status"),
@@ -202,58 +169,32 @@ export function ContestBrowser({
               value={region}
               onChange={(value) => write("region", value)}
             />
-            <FilterDisclosure
-              expanded={expanded}
-              controls="contest-filter-panel"
-              onClick={toggleExpanded}
-              collapsedLabel="展开筛选"
-              expandedLabel="收起"
-            />
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls="contest-filter-panel"
+              onClick={() => setExpanded((open) => !open)}
+              className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+              {expanded ? "收起" : "展开筛选"}
+              <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
+            </button>
           </div>
         </div>
-        <div
-          id="contest-filter-panel"
-          className={
-            expanded
-              ? "grid grid-rows-[1fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
-              : "grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
-          }
-        >
-          <div className="overflow-hidden" inert={!expanded}>
-            <div className="pt-4">
-              <FilterDisclosure
-                expanded={moreOpen}
-                controls="contest-filter-more"
-                onClick={() => setMoreOpen((open) => !open)}
-                collapsedLabel="更多筛选"
-                expandedLabel="更多筛选"
-              />
-              <div
-                id="contest-filter-more"
-                className={
-                  moreOpen
-                    ? "grid grid-rows-[1fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
-                    : "grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
-                }
-              >
-                <div className="overflow-hidden" inert={!moreOpen}>
-                  <div className="flex flex-wrap items-start gap-x-3 gap-y-3 pt-3">
-                    <FilterGroup
-                      legend="状态"
-                      options={STATUS_FILTERS}
-                      value={status}
-                      onChange={(value) => write("status", value)}
-                    />
-                    <FilterGroup
-                      legend="相关度"
-                      options={RELEVANCE_FILTERS}
-                      value={relevance}
-                      onChange={(value) => write("relevance", value)}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div id="contest-filter-panel" hidden={!expanded} className="mt-4">
+          <div className="flex flex-wrap items-start gap-x-3 gap-y-3">
+            <FilterGroup
+              legend="状态"
+              options={STATUS_FILTERS}
+              value={status}
+              onChange={(value) => write("status", value)}
+            />
+            <FilterGroup
+              legend="相关度"
+              options={RELEVANCE_FILTERS}
+              value={relevance}
+              onChange={(value) => write("relevance", value)}
+            />
           </div>
         </div>
       </div>
