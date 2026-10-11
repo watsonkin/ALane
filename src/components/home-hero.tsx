@@ -5,10 +5,9 @@ import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   FEE_LABEL,
-  compareByWindow,
   contestThumbPath,
-  deadlineWindow,
   formatContestDate,
+  selectClosingSoon,
   windowChipLabel,
 } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
@@ -20,7 +19,7 @@ export function HomeHero({
   contests: Contest[];
   asOf: string;
 }) {
-  const featured = [...contests].sort((a, b) => compareByWindow(a, b, asOf));
+  const closing = selectClosingSoon(contests, asOf);
 
   return (
     <section className="mb-10 space-y-10">
@@ -47,13 +46,20 @@ export function HomeHero({
 
       <div>
         <h2 className="font-serif text-2xl">即将截止</h2>
-        {featured.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">还没有赛事。</p>
+        {closing.contests.length === 0 ? (
+          <p className="mt-3 text-sm text-muted-foreground">
+            未来 60 天内没有即将截稿的赛事。
+            <Link
+              href="#contest-list"
+              className="ml-2 text-accent underline-offset-4 hover:underline"
+            >
+              查看全部赛事
+            </Link>
+          </p>
         ) : (
-          <ul className="mt-4 flex gap-3 overflow-x-auto pb-1">
-            {featured.map((contest) => {
-              const window = deadlineWindow(contest, asOf);
-              return (
+          <>
+            <ul className="mt-4 flex gap-3 overflow-x-auto pb-1">
+              {closing.contests.map((contest) => (
                 <li key={contest.id} className="w-56 shrink-0">
                   <Link
                     href={`/contests/${contest.slug}`}
@@ -69,34 +75,29 @@ export function HomeHero({
                     <p className="mt-3 line-clamp-2 font-serif text-lg leading-snug">
                       {contest.name}
                     </p>
-                    <p
-                      className={
-                        window === "open"
-                          ? "mt-2 text-sm text-caution"
-                          : "mt-2 text-sm text-muted-foreground"
-                      }
-                    >
-                      {contest.deadline_at
-                        ? formatContestDate(contest.deadline_at)
-                        : "待定"}
+                    <p className="mt-2 text-sm text-caution">
+                      {formatContestDate(contest.deadline_at ?? "")}
                     </p>
                     <div className="mt-2 flex flex-wrap gap-1.5">
-                      <Badge
-                        variant={window === "open" ? "default" : "outline"}
-                        className={
-                          window === "closed" ? "text-muted-foreground" : undefined
-                        }
-                      >
-                        {windowChipLabel(window)}
-                      </Badge>
+                      <Badge>{windowChipLabel("open")}</Badge>
                       <Badge variant="outline">{FEE_LABEL[contest.fee]}</Badge>
                       <RightsChip contest={contest} />
                     </div>
                   </Link>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+            {closing.truncated ? (
+              <p className="mt-3 text-sm text-muted-foreground">
+                <Link
+                  href="/?window=open#contest-list"
+                  className="text-accent underline-offset-4 hover:underline"
+                >
+                  查看全部开放中
+                </Link>
+              </p>
+            ) : null}
+          </>
         )}
       </div>
     </section>

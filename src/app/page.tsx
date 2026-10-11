@@ -14,10 +14,14 @@ export default async function HomePage() {
       <HomeHero contests={contests} asOf={asOf} />
       <Suspense
         fallback={
-          <p className="text-sm text-muted-foreground">正在读取筛选条件。</p>
+          <p id="contest-list" className="text-sm text-muted-foreground">
+            正在读取筛选条件。
+          </p>
         }
       >
-        <ContestBrowser contests={contests} asOf={asOf} />
+        <div id="contest-list">
+          <ContestBrowser contests={contests} asOf={asOf} />
+        </div>
       </Suspense>
     </div>
   );

@@ -147,6 +147,51 @@ export function formatContestDate(iso: string): string {
   return `${Number(match[1])}年${Number(match[2])}月${Number(match[3])}日`;
 }
 
+/** Homepage「即将截止」: open deadlines from now through this many calendar days. */
+export const CLOSING_SOON_DAYS = 60;
+export const CLOSING_SOON_LIMIT = 8;
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+/** UTC midnight of the calendar day written in an ISO timestamp. */
+function writtenUtcDay(iso: string): number {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  if (!match) return Number.NaN;
+  return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+}
+
+/**
+ * Open contests whose deadline falls within the next 60 calendar days, soonest first.
+ * Closed and undated contests are never used to fill the row.
+ */
+export function selectClosingSoon(
+  contests: readonly Contest[],
+  asOfIso: string,
+): { contests: Contest[]; truncated: boolean } {
+  const asOfMs = Date.parse(asOfIso);
+  if (!Number.isFinite(asOfMs)) return { contests: [], truncated: false };
+  const today = writtenUtcDay(new Date(asOfMs).toISOString());
+  const lastDay = today + CLOSING_SOON_DAYS * DAY_MS;
+
+  const matched = contests
+    .filter((contest) => {
+      if (!contest.deadline_at) return false;
+      const deadlineMs = Date.parse(contest.deadline_at);
+      if (!Number.isFinite(deadlineMs)) return false;
+      if (deadlineWindow(contest, asOfIso) !== "open") return false;
+      const deadlineDay = writtenUtcDay(contest.deadline_at);
+      return Number.isFinite(deadlineDay) && deadlineDay <= lastDay;
+    })
+    .sort(
+      (a, b) => Date.parse(a.deadline_at ?? "") - Date.parse(b.deadline_at ?? ""),
+    );
+
+  return {
+    contests: matched.slice(0, CLOSING_SOON_LIMIT),
+    truncated: matched.length > CLOSING_SOON_LIMIT,
+  };
+}
+
 export function windowChipLabel(
   window: Exclude<WindowFilter, "all">,
 ): string {
