@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ContestListCard } from "@/components/contest-list-card";
 import { Button } from "@/components/ui/button";
@@ -41,8 +41,8 @@ function FilterGroup<T extends string>({
   onChange: (value: T) => void;
 }) {
   return (
-    <fieldset className="min-w-0">
-      <legend className="mb-2 text-xs text-muted-foreground">{legend}</legend>
+    <fieldset className="min-w-0 max-w-full">
+      <legend className="mb-2 text-[12px] leading-none text-muted-foreground">{legend}</legend>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => {
           const selected = option.value === value;
@@ -64,6 +64,33 @@ function FilterGroup<T extends string>({
   );
 }
 
+function FilterDisclosure({
+  expanded,
+  controls,
+  onClick,
+  collapsedLabel,
+  expandedLabel,
+}: {
+  expanded: boolean;
+  controls: string;
+  onClick: () => void;
+  collapsedLabel: string;
+  expandedLabel: string;
+}) {
+  return (
+    <button
+      type="button"
+      aria-expanded={expanded}
+      aria-controls={controls}
+      onClick={onClick}
+      className="inline-flex h-7 shrink-0 items-center gap-1 whitespace-nowrap rounded-sm px-1 text-[13px] leading-none text-[#5C5C5C] hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+    >
+      {expanded ? expandedLabel : collapsedLabel}
+      <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
+    </button>
+  );
+}
+
 export function ContestBrowser({
   contests,
   asOf,
@@ -74,6 +101,13 @@ export function ContestBrowser({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [expanded, setExpanded] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+
+  function toggleExpanded() {
+    setExpanded((open) => !open);
+    setMoreOpen(false);
+  }
 
   const status = pick<Exclude<StatusFilter, "all">>(
     searchParams.get("status"),
@@ -147,37 +181,81 @@ export function ContestBrowser({
 
   return (
     <div className="space-y-8">
-      <div className="space-y-4 border border-border bg-card p-4">
-        <FilterGroup
-          legend="开放窗口"
-          options={WINDOW_FILTERS}
-          value={windowFilter}
-          onChange={(value) => write("window", value)}
-        />
-        <FilterGroup
-          legend="费用"
-          options={FEE_FILTERS}
-          value={fee}
-          onChange={(value) => write("fee", value)}
-        />
-        <FilterGroup
-          legend="地区"
-          options={REGION_FILTERS}
-          value={region}
-          onChange={(value) => write("region", value)}
-        />
-        <FilterGroup
-          legend="状态（辅助）"
-          options={STATUS_FILTERS}
-          value={status}
-          onChange={(value) => write("status", value)}
-        />
-        <FilterGroup
-          legend="街拍相关（辅助）"
-          options={RELEVANCE_FILTERS}
-          value={relevance}
-          onChange={(value) => write("relevance", value)}
-        />
+      <div className="border border-border bg-card p-4">
+        <div className="flex flex-wrap items-end gap-x-3 gap-y-3">
+          <FilterGroup
+            legend="开放窗口"
+            options={WINDOW_FILTERS}
+            value={windowFilter}
+            onChange={(value) => write("window", value)}
+          />
+          <FilterGroup
+            legend="费用"
+            options={FEE_FILTERS}
+            value={fee}
+            onChange={(value) => write("fee", value)}
+          />
+          <div className="flex max-w-full flex-wrap items-end gap-3">
+            <FilterGroup
+              legend="地区"
+              options={REGION_FILTERS}
+              value={region}
+              onChange={(value) => write("region", value)}
+            />
+            <FilterDisclosure
+              expanded={expanded}
+              controls="contest-filter-panel"
+              onClick={toggleExpanded}
+              collapsedLabel="展开筛选"
+              expandedLabel="收起"
+            />
+          </div>
+        </div>
+        <div
+          id="contest-filter-panel"
+          className={
+            expanded
+              ? "grid grid-rows-[1fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+              : "grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+          }
+        >
+          <div className="overflow-hidden" inert={!expanded}>
+            <div className="pt-4">
+              <FilterDisclosure
+                expanded={moreOpen}
+                controls="contest-filter-more"
+                onClick={() => setMoreOpen((open) => !open)}
+                collapsedLabel="更多筛选"
+                expandedLabel="更多筛选"
+              />
+              <div
+                id="contest-filter-more"
+                className={
+                  moreOpen
+                    ? "grid grid-rows-[1fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+                    : "grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out motion-reduce:transition-none"
+                }
+              >
+                <div className="overflow-hidden" inert={!moreOpen}>
+                  <div className="flex flex-wrap items-start gap-x-3 gap-y-3 pt-3">
+                    <FilterGroup
+                      legend="状态"
+                      options={STATUS_FILTERS}
+                      value={status}
+                      onChange={(value) => write("status", value)}
+                    />
+                    <FilterGroup
+                      legend="相关度"
+                      options={RELEVANCE_FILTERS}
+                      value={relevance}
+                      onChange={(value) => write("relevance", value)}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="flex items-baseline justify-between gap-3">
