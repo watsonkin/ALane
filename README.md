@@ -68,7 +68,7 @@ npm run dev
 
 `/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。日历说明保持中文，只有一份订阅。
 
-语言是 `zh-CN` 和 `en`。中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。优先级是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。选了英文之后刷新中文根路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`。不看 IP，不用 hash。灰底占位中文用标题，英文用首字母。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。
+语言是 `zh-CN` 和 `en`。中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。优先级是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。`<html lang>` 跟这条路径的语言走：中文根布局写 `zh-CN`，英文根布局写 `en`，进预渲染 HTML，不靠客户端事后改。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。选了英文之后刷新中文根路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`。不看 IP，不用 hash。灰底占位中文用标题，英文用首字母。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。
 
 ## Cloudflare Workers
 
@@ -123,10 +123,13 @@ data/contests/          YAML 真源
 src/lib/contest-schema.ts
 src/lib/contest-files.ts
 src/lib/contests.ts
-src/app/page.tsx        中文列表
+src/app/(zh)/layout.tsx 中文根布局，lang=zh-CN
+src/app/(zh)/page.tsx   中文列表
+src/app/en/layout.tsx   英文根布局，lang=en
 src/app/en/page.tsx     英文列表
 src/proxy.ts            语言跳转
-src/app/contests/[slug]/page.tsx
+src/app/(zh)/contests/[slug]/page.tsx
+src/app/en/contests/[slug]/page.tsx
 .github/workflows/ci.yml
 .github/workflows/ingest.yml
 ```

@@ -4,7 +4,6 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AlaneLockup } from "@/components/brand/alane-lockup";
-import { HtmlLang } from "@/components/html-lang";
 import { LocaleSwitch, LocaleSwitchFallback } from "@/components/locale-switch";
 import { hrefFor, localeFromPathname } from "@/lib/locale";
 import { copy } from "@/lib/messages";
@@ -18,7 +17,6 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <HtmlLang locale={locale} />
       <a
         href="#content"
         className="absolute left-4 top-4 z-10 -translate-y-20 bg-primary px-3 py-2 text-sm text-primary-foreground focus:translate-y-0"
