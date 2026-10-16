@@ -57,6 +57,8 @@ export const geoSchema = z.object({
 export const galleryUrlSchema = z.object({
   url: httpUrlSchema,
   label: z.string().min(1).optional(),
+  label_zh: z.string().min(1).optional(),
+  label_en: z.string().min(1).optional(),
   edition: z.string().min(1).optional(),
   edition_en: z.string().min(1).nullable().optional(),
 });

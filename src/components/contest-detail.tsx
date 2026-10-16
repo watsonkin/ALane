@@ -10,6 +10,7 @@ import {
   deadlineWindow,
   displayEdition,
   displayName,
+  galleryLinkText,
   feeLabel,
   formatContestDate,
   formatPlace,
@@ -195,22 +196,18 @@ export function ContestDetail({
           <p className="mt-2 text-sm text-muted-foreground">{t.noGalleries}</p>
         ) : (
           <ul className="mt-1">
-            {contest.gallery_urls.map((gallery) => {
-              const galleryEdition = displayEdition(gallery, locale);
-              return (
-                <li key={gallery.url} className="border-b border-border py-2 text-sm">
-                  <a
-                    href={gallery.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent underline-offset-4 hover:underline"
-                  >
-                    {gallery.label ?? t.gallery}
-                    {galleryEdition ? ` · ${galleryEdition}` : ""}
-                  </a>
-                </li>
-              );
-            })}
+            {contest.gallery_urls.map((gallery) => (
+              <li key={gallery.url} className="border-b border-border py-2 text-sm">
+                <a
+                  href={gallery.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent underline-offset-4 hover:underline"
+                >
+                  {galleryLinkText(gallery, locale, t.gallery)}
+                </a>
+              </li>
+            ))}
           </ul>
         )}
       </section>

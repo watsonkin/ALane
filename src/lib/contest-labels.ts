@@ -4,6 +4,7 @@ import type {
   ContestHealth,
   ContestStatus,
   FeeTier,
+  GalleryUrl,
   RightsTag,
   SourceAdapterKind,
   StreetPhotoRelevance,
@@ -376,6 +377,70 @@ export function displayEdition(
   }
   const edition = record.edition?.trim();
   return edition || null;
+}
+
+function firstFilled(...values: Array<string | null | undefined>): string {
+  for (const value of values) {
+    const text = value?.trim();
+    if (text) return text;
+  }
+  return "";
+}
+
+function sameGalleryText(left: string, right: string): boolean {
+  return left.localeCompare(right, undefined, { sensitivity: "accent" }) === 0;
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * True when `part` already stands alone inside `whole`.
+ * A year inside a longer number, or a word inside a longer word, does not count.
+ */
+function containsGalleryToken(whole: string, part: string): boolean {
+  if (!part || part.length > whole.length) return false;
+  const pattern = new RegExp(
+    `(?:^|[^0-9A-Za-z])${escapeRegExp(part)}(?:$|[^0-9A-Za-z])`,
+    "i",
+  );
+  return pattern.test(whole);
+}
+
+/**
+ * Join a gallery title and edition with a middle dot only when both add information.
+ * `2025` + `2025` stays `2025`. `2026 Single Photo` + `2026` stays `2026 Single Photo`.
+ */
+export function formatGalleryLinkLabel(
+  title: string,
+  edition: string | null | undefined,
+): string {
+  const name = title.trim().replace(/\s+/g, " ");
+  const year = (edition ?? "").trim().replace(/\s+/g, " ");
+  if (!year) return name;
+  if (!name) return year;
+  if (sameGalleryText(name, year)) return name;
+  if (containsGalleryToken(name, year)) return name;
+  if (containsGalleryToken(year, name)) return year;
+  return `${name} · ${year}`;
+}
+
+/**
+ * Locale label for one gallery link.
+ * English prefers `label_en`, Chinese prefers `label_zh`, then the shared `label`.
+ * A single `label` still works for both locales.
+ */
+export function galleryLinkText(
+  gallery: Pick<GalleryUrl, "label" | "label_zh" | "label_en" | "edition" | "edition_en">,
+  locale: Locale,
+  fallback: string,
+): string {
+  const title =
+    locale === "en"
+      ? firstFilled(gallery.label_en, gallery.label, fallback)
+      : firstFilled(gallery.label_zh, gallery.label, fallback);
+  return formatGalleryLinkLabel(title, displayEdition(gallery, locale));
 }
 
 export function displayName(

@@ -17,7 +17,8 @@ gallery_urls:
   - url: "https://www.leica-oskar-barnack-award.com/en/winners.html"
     label: "Winners"
   - url: "https://www.leica-oskar-barnack-award.com/en/winners/overview-of-the-winners-1980-2026.html"
-    label: "历年总览 / Overview 1980–2026"
+    label: "历年总览 1980–2026"
+    label_en: "Overview 1980–2026"
 gallery_works:
   - source_page_url: "https://www.leica-oskar-barnack-award.com/en/winners/winner-2026-damir-faizulin.html"
     thumb_path: thumbs/leica-oskar-barnack/preserving-nature.jpg
