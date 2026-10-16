@@ -44,6 +44,7 @@ gallery_works:
     title: "Reflecting New York"
     author_name: "Stefan Falke"
     source_site_label: "LensCulture"
+organizer_icon: /icons/organizers/lensculture-street.png
 source_adapters:
   - id: manual-seed
     kind: manual

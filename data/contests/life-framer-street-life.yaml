@@ -17,6 +17,7 @@ gallery_urls:
   - url: "https://www.life-framer.com/street-life/"
     label: "Street Life 获奖"
 gallery_works: []
+organizer_icon: /icons/organizers/life-framer-street-life.svg
 source_adapters:
   - id: manual-seed
     kind: manual

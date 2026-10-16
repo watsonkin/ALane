@@ -30,6 +30,7 @@ gallery_urls:
     edition: "第三届"
     edition_en: "3rd"
 gallery_works: []
+organizer_icon: /icons/organizers/jiepai-shijie.svg
 source_adapters:
   - id: manual-seed
     kind: manual

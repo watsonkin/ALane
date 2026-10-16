@@ -24,6 +24,7 @@ gallery_urls:
     label: "2024 Street Photography"
     edition: "2024"
 gallery_works: []
+organizer_icon: /icons/organizers/siena-ipa-street.png
 source_adapters:
   - id: manual-seed
     kind: manual

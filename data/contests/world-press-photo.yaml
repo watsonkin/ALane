@@ -21,6 +21,7 @@ gallery_urls:
     label: "2025"
     edition: "2025"
 gallery_works: []
+organizer_icon: /icons/organizers/world-press-photo.svg
 source_adapters:
   - id: manual-seed
     kind: manual

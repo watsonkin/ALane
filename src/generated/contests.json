@@ -139,6 +139,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/world-press-photo.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -305,6 +306,7 @@
         "source_site_label": "LensCulture"
       }
     ],
+    "organizer_icon": "/icons/organizers/lensculture-street.png",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -338,6 +340,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/life-framer-street-life.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -475,6 +478,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/jiepai-shijie.svg",
     "source_adapters": [
       {
         "id": "manual-seed",
@@ -1314,6 +1318,7 @@
       }
     ],
     "gallery_works": [],
+    "organizer_icon": "/icons/organizers/siena-ipa-street.png",
     "source_adapters": [
       {
         "id": "manual-seed",
