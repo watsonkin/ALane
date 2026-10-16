@@ -19,6 +19,12 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.streetphotoawards.art/site/winners-gallery"
     label: "获奖廊"
+  - url: "https://www.streetphotoawards.art/site/winners-gallery/spa-2025"
+    label: "2025"
+    edition: "2025"
+  - url: "https://www.streetphotoawards.art/site/winners-gallery/spa-2024"
+    label: "2024"
+    edition: "2024"
 gallery_works:
   - source_page_url: "https://www.streetphotoawards.art/site/winners-gallery/spa-2025/series/show/street-photographer-year"
     thumb_path: thumbs/pispa/street-theatre.jpg

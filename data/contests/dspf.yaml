@@ -20,6 +20,9 @@ gallery_urls:
   - url: "https://www.dspfestival.com/2024/"
     label: "2024 入围与获奖"
     edition: "2024"
+  - url: "https://www.dspfestival.com/2025/"
+    label: "2025"
+    edition: "2025"
 gallery_works: []
 source_adapters:
   - id: manual-seed

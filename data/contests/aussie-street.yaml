@@ -19,6 +19,9 @@ gallery_urls:
   - url: "https://www.aussiestreet.com.au/as2019"
     label: "2019 获奖与入围"
     edition: "2019"
+  - url: "https://www.aussiestreet.com.au/as2023"
+    label: "2023"
+    edition: "2023"
 gallery_works: []
 source_adapters:
   - id: manual-seed

@@ -20,6 +20,9 @@ gallery_urls:
   - url: "https://sipacontest.com/gallery/2025/category/1608"
     label: "2025 Street Photography"
     edition: "2025"
+  - url: "https://sipacontest.com/gallery/2024/category/1608"
+    label: "2024 Street Photography"
+    edition: "2024"
 gallery_works: []
 source_adapters:
   - id: manual-seed

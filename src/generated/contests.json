@@ -54,7 +54,12 @@
     "fee": "unknown",
     "street_photo_relevance": "core",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.lomography.com/competitions/winners",
+        "label": "Winners / Hall of Fame"
+      }
+    ],
     "gallery_works": [],
     "organizer_icon": "/icons/organizers/lomography-street.svg",
     "source_adapters": [
@@ -121,7 +126,18 @@
     "fee": "unknown",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.worldpressphoto.org/collection/photocontest/2026",
+        "label": "2026",
+        "edition": "2026"
+      },
+      {
+        "url": "https://www.worldpressphoto.org/collection/photocontest/2025",
+        "label": "2025",
+        "edition": "2025"
+      }
+    ],
     "gallery_works": [],
     "source_adapters": [
       {
@@ -206,6 +222,11 @@
         "url": "https://www.dspfestival.com/2024/",
         "label": "2024 入围与获奖",
         "edition": "2024"
+      },
+      {
+        "url": "https://www.dspfestival.com/2025/",
+        "label": "2025",
+        "edition": "2025"
       }
     ],
     "gallery_works": [],
@@ -560,8 +581,13 @@
     "rights_tags": [],
     "gallery_urls": [
       {
-        "url": "https://lspf.co.uk/news/",
-        "label": "2026 新闻与获奖",
+        "url": "https://lspf.co.uk/news/lspf-2026-winners-single-photo/",
+        "label": "2026 Single Photo",
+        "edition": "2026"
+      },
+      {
+        "url": "https://lspf.co.uk/news/lspf-2026-winners-photo-series/",
+        "label": "2026 Photo Series",
         "edition": "2026"
       }
     ],
@@ -605,6 +631,11 @@
         "url": "https://www.street-macadam.com/macadam-awards-2025",
         "label": "2025 届",
         "edition": "2025"
+      },
+      {
+        "url": "https://www.street-macadam.com/macadam-awards-2024",
+        "label": "2024",
+        "edition": "2024"
       }
     ],
     "gallery_works": [],
@@ -721,6 +752,11 @@
         "url": "https://www.aussiestreet.com.au/as2019",
         "label": "2019 获奖与入围",
         "edition": "2019"
+      },
+      {
+        "url": "https://www.aussiestreet.com.au/as2023",
+        "label": "2023",
+        "edition": "2023"
       }
     ],
     "gallery_works": [],
@@ -806,6 +842,16 @@
       {
         "url": "https://www.streetphotoawards.art/site/winners-gallery",
         "label": "获奖廊"
+      },
+      {
+        "url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025",
+        "label": "2025",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2024",
+        "label": "2024",
+        "edition": "2024"
       }
     ],
     "gallery_works": [
@@ -930,7 +976,28 @@
     "fee": "free",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.ricoh-imaging.com/en/grphotofestival/2025/result.html",
+        "label": "2025",
+        "edition": "2025"
+      },
+      {
+        "url": "https://www.ricoh-imaging.com/en/grphotofestival/2024/result.html",
+        "label": "2024",
+        "edition": "2024"
+      },
+      {
+        "url": "https://www.ricoh-imaging.com/en/grphotofestival/2023/result.html",
+        "label": "2023",
+        "edition": "2023"
+      },
+      {
+        "url": "https://www.ricoh-imaging.com/en/grphotofestival/2022/result.html",
+        "label": "2022",
+        "edition": "2022"
+      }
+    ],
     "gallery_works": [],
     "organizer_icon": "/icons/organizers/ricoh-gr-photo-festival.svg",
     "source_adapters": [
@@ -1029,6 +1096,11 @@
         "url": "https://www.all-about-photo.com/photography-article/2007/winners-aap-magazine-52-street-photography",
         "label": "AAP Magazine 52 Street",
         "edition": "52"
+      },
+      {
+        "url": "https://www.all-about-photo.com/photography-article/1458/street-symphony-celebrating-the-remarkable-25-winners-of-aap-magazine-36",
+        "label": "AAP Magazine 36 Street",
+        "edition": "36"
       }
     ],
     "gallery_works": [],
@@ -1058,7 +1130,16 @@
     "fee": "unknown",
     "street_photo_relevance": "adjacent",
     "rights_tags": [],
-    "gallery_urls": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.leica-oskar-barnack-award.com/en/winners.html",
+        "label": "Winners"
+      },
+      {
+        "url": "https://www.leica-oskar-barnack-award.com/en/winners/overview-of-the-winners-1980-2026.html",
+        "label": "历年总览 / Overview 1980–2026"
+      }
+    ],
     "gallery_works": [
       {
         "source_page_url": "https://www.leica-oskar-barnack-award.com/en/winners/winner-2026-damir-faizulin.html",
@@ -1224,6 +1305,11 @@
         "url": "https://sipacontest.com/gallery/2025/category/1608",
         "label": "2025 Street Photography",
         "edition": "2025"
+      },
+      {
+        "url": "https://sipacontest.com/gallery/2024/category/1608",
+        "label": "2024 Street Photography",
+        "edition": "2024"
       }
     ],
     "gallery_works": [],

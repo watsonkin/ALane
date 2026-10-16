@@ -13,7 +13,9 @@ online: true
 fee: unknown
 street_photo_relevance: core
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.lomography.com/competitions/winners"
+    label: "Winners / Hall of Fame"
 gallery_works: []
 organizer_icon: /icons/organizers/lomography-street.svg
 source_adapters:

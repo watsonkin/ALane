@@ -13,7 +13,19 @@ online: true
 fee: free
 street_photo_relevance: adjacent
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.ricoh-imaging.com/en/grphotofestival/2025/result.html"
+    label: "2025"
+    edition: "2025"
+  - url: "https://www.ricoh-imaging.com/en/grphotofestival/2024/result.html"
+    label: "2024"
+    edition: "2024"
+  - url: "https://www.ricoh-imaging.com/en/grphotofestival/2023/result.html"
+    label: "2023"
+    edition: "2023"
+  - url: "https://www.ricoh-imaging.com/en/grphotofestival/2022/result.html"
+    label: "2022"
+    edition: "2022"
 gallery_works: []
 organizer_icon: /icons/organizers/ricoh-gr-photo-festival.svg
 source_adapters:
