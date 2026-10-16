@@ -194,8 +194,14 @@ export function ContestBrowser({
             <span aria-hidden="true">{expanded ? "▴" : "▾"}</span>
           </button>
         </div>
-        <div id="contest-filter-panel" hidden={!expanded} className="mt-4">
-          <div className="flex flex-wrap items-start gap-x-3 gap-y-3">
+        <div
+          id="contest-filter-panel"
+          data-expanded={expanded ? "true" : "false"}
+          inert={expanded ? undefined : true}
+          aria-hidden={expanded ? undefined : true}
+          className="contest-filter-panel"
+        >
+          <div className="contest-filter-panel-body flex flex-wrap items-start gap-x-3 gap-y-3">
             <FilterGroup
               legend={t.filterStatus}
               options={statusFilters(locale)}
