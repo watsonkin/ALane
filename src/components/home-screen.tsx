@@ -7,6 +7,7 @@ import { copy } from "@/lib/messages";
 
 export async function HomeScreen({ locale }: { locale: Locale }) {
   const contests = await loadContests();
+  // Build-time snapshot. HomeHero and ContestBrowser recompute after hydration.
   const asOf = new Date().toISOString();
   const t = copy(locale);
 

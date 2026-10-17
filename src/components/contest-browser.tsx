@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ContestListCard } from "@/components/contest-list-card";
 import { Button } from "@/components/ui/button";
@@ -27,6 +27,24 @@ import {
 import type { Contest } from "@/lib/contest-schema";
 import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
+import { useNow } from "@/lib/use-now";
+
+function subscribeHydration() {
+  return () => {};
+}
+
+function hydratedOnClient() {
+  return true;
+}
+
+function hydratedOnServer() {
+  return false;
+}
+
+/** Search params differ from the static HTML. Apply them only after hydration. */
+function useHydrated(): boolean {
+  return useSyncExternalStore(subscribeHydration, hydratedOnClient, hydratedOnServer);
+}
 
 function pick<T extends string>(
   raw: string | null,
@@ -83,24 +101,32 @@ export function ContestBrowser({
   locale: Locale;
 }) {
   const t = copy(locale);
+  const now = useNow(asOf);
+  const hydrated = useHydrated();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [expanded, setExpanded] = useState(false);
 
-  const status = pick<Exclude<StatusFilter, "all">>(
-    searchParams.get("status"),
-    STATUS_FILTERS.filter((option) => option.value !== "all"),
-  );
-  const relevance = pick<Exclude<RelevanceFilter, "all">>(
-    searchParams.get("relevance"),
-    RELEVANCE_FILTERS.filter((option) => option.value !== "all"),
-  );
-  const fee = pick<Exclude<FeeFilter, "all">>(
-    searchParams.get("fee"),
-    FEE_FILTERS.filter((option) => option.value !== "all"),
-  );
-  const windowRaw = searchParams.get("window");
+  const status = hydrated
+    ? pick<Exclude<StatusFilter, "all">>(
+        searchParams.get("status"),
+        STATUS_FILTERS.filter((option) => option.value !== "all"),
+      )
+    : "all";
+  const relevance = hydrated
+    ? pick<Exclude<RelevanceFilter, "all">>(
+        searchParams.get("relevance"),
+        RELEVANCE_FILTERS.filter((option) => option.value !== "all"),
+      )
+    : "all";
+  const fee = hydrated
+    ? pick<Exclude<FeeFilter, "all">>(
+        searchParams.get("fee"),
+        FEE_FILTERS.filter((option) => option.value !== "all"),
+      )
+    : "all";
+  const windowRaw = hydrated ? searchParams.get("window") : null;
   const windowFilter: WindowFilter =
     windowRaw === null
       ? "all"
@@ -108,10 +134,12 @@ export function ContestBrowser({
           windowRaw,
           WINDOW_FILTERS.filter((option) => option.value !== "all"),
         );
-  const region = pick<Exclude<RegionFilter, "all">>(
-    searchParams.get("region"),
-    REGION_FILTERS.filter((option) => option.value !== "all"),
-  );
+  const region = hydrated
+    ? pick<Exclude<RegionFilter, "all">>(
+        searchParams.get("region"),
+        REGION_FILTERS.filter((option) => option.value !== "all"),
+      )
+    : "all";
 
   function write(key: string, value: string) {
     const next = new URLSearchParams(searchParams.toString());
@@ -133,14 +161,14 @@ export function ContestBrowser({
             return false;
           }
           if (fee !== "all" && contest.fee !== fee) return false;
-          if (windowFilter !== "all" && deadlineWindow(contest, asOf) !== windowFilter) {
+          if (windowFilter !== "all" && deadlineWindow(contest, now) !== windowFilter) {
             return false;
           }
           if (!matchesRegion(contest, region)) return false;
           return true;
         })
-        .sort((a, b) => compareByWindow(a, b, asOf, locale)),
-    [asOf, contests, fee, locale, region, relevance, status, windowFilter],
+        .sort((a, b) => compareByWindow(a, b, now, locale)),
+    [contests, fee, locale, now, region, relevance, status, windowFilter],
   );
 
   const filtersActive =
@@ -242,7 +270,7 @@ export function ContestBrowser({
       ) : (
         <ul className="space-y-3">
           {visible.map((contest) => (
-            <ContestListCard key={contest.id} contest={contest} asOf={asOf} locale={locale} />
+            <ContestListCard key={contest.id} contest={contest} now={now} locale={locale} />
           ))}
         </ul>
       )}

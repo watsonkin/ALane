@@ -34,5 +34,6 @@ async function ContestResolved({ locale, params }: { locale: Locale; params: Con
   const { slug } = await params;
   const contest = await loadContestBySlug(slug);
   if (!contest) return <MissingContest slug={slug} locale={locale} />;
+  // Build-time snapshot. The title chip recomputes after hydration.
   return <ContestDetail contest={contest} asOf={new Date().toISOString()} locale={locale} />;
 }

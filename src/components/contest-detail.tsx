@@ -1,13 +1,13 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ContestWindowChip } from "@/components/contest-window-chip";
 import { RightsChip } from "@/components/rights-chip";
 import { WinnerIndexCard } from "@/components/winner-index-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import {
   adapterLabel,
-  deadlineWindow,
   displayEdition,
   displayName,
   galleryLinkText,
@@ -18,7 +18,6 @@ import {
   relevanceLabel,
   rightsTagLabel,
   statusLabel,
-  windowChipLabel,
 } from "@/lib/contest-labels";
 import type { Contest, RightsTag } from "@/lib/contest-schema";
 import { hrefFor, type Locale } from "@/lib/locale";
@@ -79,7 +78,6 @@ export function ContestDetail({
   asOf: string;
   locale: Locale;
 }) {
-  const window = deadlineWindow(contest, asOf);
   const t = copy(locale);
   const name = displayName(contest, locale);
   const edition = displayEdition(contest, locale);
@@ -95,12 +93,7 @@ export function ContestDetail({
       <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-4">
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap gap-2">
-            <Badge
-              variant={window === "open" ? "default" : "outline"}
-              className={window === "closed" ? "text-muted-foreground" : undefined}
-            >
-              {windowChipLabel(window, locale)}
-            </Badge>
+            <ContestWindowChip deadlineAt={contest.deadline_at} asOf={asOf} locale={locale} />
             <Badge variant="secondary">
               {relevanceLabel(contest.street_photo_relevance, locale)}
             </Badge>

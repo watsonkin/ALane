@@ -1,9 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { RightsChip } from "@/components/rights-chip";
 import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
   contestThumbPath,
+  deadlineWindow,
   displayName,
   feeLabel,
   formatContestDate,
@@ -13,6 +16,7 @@ import {
 import type { Contest } from "@/lib/contest-schema";
 import { hrefFor, type Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
+import { useNow } from "@/lib/use-now";
 
 export function HomeHero({
   contests,
@@ -23,7 +27,8 @@ export function HomeHero({
   asOf: string;
   locale: Locale;
 }) {
-  const closing = selectClosingSoon(contests, asOf);
+  const now = useNow(asOf);
+  const closing = selectClosingSoon(contests, now);
   const t = copy(locale);
   const home = hrefFor(locale, "/");
 
@@ -46,6 +51,7 @@ export function HomeHero({
             <ul className="mt-4 flex gap-3 overflow-x-auto pb-1">
               {closing.contests.map((contest) => {
                 const name = displayName(contest, locale);
+                const status = deadlineWindow(contest, now);
                 return (
                   <li key={contest.id} className="flex w-56 shrink-0">
                     <Link
@@ -62,11 +68,22 @@ export function HomeHero({
                         className="h-16 w-full shrink-0"
                       />
                       <p className="mt-3 line-clamp-2 font-serif text-lg leading-snug">{name}</p>
-                      <p className="mt-2 text-sm text-caution">
+                      <p
+                        className={
+                          status === "open"
+                            ? "mt-2 text-sm text-caution"
+                            : "mt-2 text-sm text-muted-foreground"
+                        }
+                      >
                         {formatContestDate(contest.deadline_at ?? "", locale)}
                       </p>
                       <div className="mt-2 flex flex-wrap gap-1.5">
-                        <Badge>{windowChipLabel("open", locale)}</Badge>
+                        <Badge
+                          variant={status === "open" ? "default" : "outline"}
+                          className={status === "closed" ? "text-muted-foreground" : undefined}
+                        >
+                          {windowChipLabel(status, locale)}
+                        </Badge>
                         <Badge variant="outline">{feeLabel(contest.fee, locale)}</Badge>
                         <RightsChip contest={contest} locale={locale} />
                       </div>

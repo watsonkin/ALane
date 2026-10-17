@@ -19,15 +19,15 @@ import { copy } from "@/lib/messages";
 
 export function ContestListCard({
   contest,
-  asOf,
+  now,
   locale,
 }: {
   contest: Contest;
-  asOf: string;
+  now: string;
   locale: Locale;
 }) {
   const thumb = contestThumbPath(contest);
-  const window = deadlineWindow(contest, asOf);
+  const window = deadlineWindow(contest, now);
   const name = displayName(contest, locale);
   const t = copy(locale);
 

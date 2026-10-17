@@ -233,12 +233,22 @@ const EUROPE = new Set([
 const AMERICAS = new Set(["AR", "BR", "CA", "MX", "US"]);
 const OCEANIA = new Set(["AU", "NZ"]);
 
+/**
+ * The written minute stays open through its last millisecond.
+ * `23:59` is open while `now < deadline_at + 60s`, and closed from the
+ * following local `00:00:00`. A missing or unparseable deadline is 待定.
+ */
+export const DEADLINE_GRACE_MS = 60_000;
+
 export function deadlineWindow(
   contest: Pick<Contest, "deadline_at">,
   asOfIso: string,
 ): Exclude<WindowFilter, "all"> {
   if (!contest.deadline_at) return "undated";
-  return Date.parse(contest.deadline_at) >= Date.parse(asOfIso) ? "open" : "closed";
+  const deadlineMs = Date.parse(contest.deadline_at);
+  if (!Number.isFinite(deadlineMs)) return "undated";
+  const asOfMs = Date.parse(asOfIso);
+  return asOfMs < deadlineMs + DEADLINE_GRACE_MS ? "open" : "closed";
 }
 
 /** Online contests also match their country. No country code matches only 含线上. */

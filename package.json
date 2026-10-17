@@ -12,6 +12,7 @@
     "start": "next start --hostname 0.0.0.0 --port 3847",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "test": "tsx --test src/lib/*.test.ts",
     "validate-data": "tsx scripts/validate-contests.ts",
     "postinstall": "node scripts/patch-opennext-load-manifest.mjs"
   },
