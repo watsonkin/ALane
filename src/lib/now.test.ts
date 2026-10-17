@@ -12,14 +12,22 @@ test("tick interval is 60 seconds", () => {
   assert.equal(NOW_TICK_MS, 60_000);
 });
 
-test("debug clock is limited to dev and loopback preview", () => {
+test("debug clock is limited to dev, loopback, and workers.dev preview", () => {
   assert.equal(debugNowAllowed("development", "alane.example"), true);
   assert.equal(debugNowAllowed("test", undefined), true);
   assert.equal(debugNowAllowed("production", "alane.example"), false);
   assert.equal(debugNowAllowed("production", undefined), false);
+  assert.equal(debugNowAllowed("production", ""), false);
   assert.equal(debugNowAllowed("production", "localhost"), true);
   assert.equal(debugNowAllowed("production", "127.0.0.1"), true);
   assert.equal(debugNowAllowed("production", "::1"), true);
+  assert.equal(debugNowAllowed("production", "alane.wangzhun2008.workers.dev"), true);
+  assert.equal(debugNowAllowed("production", "ALANE.WANGZHUN2008.WORKERS.DEV"), true);
+  assert.equal(debugNowAllowed("production", "preview.workers.dev."), true);
+  assert.equal(debugNowAllowed("production", "workers.dev"), false);
+  assert.equal(debugNowAllowed("production", "notworkers.dev"), false);
+  assert.equal(debugNowAllowed("production", "workers.dev.example"), false);
+  assert.equal(debugNowAllowed("production", "alane.workers.dev.example"), false);
 });
 
 test("?now= parses offsets and is ignored in production", () => {
@@ -43,6 +51,15 @@ test("?now= parses offsets and is ignored in production", () => {
       nowMs: device,
       search: "now=2026-10-17T23:59:30 02:00",
       nodeEnv: "development",
+    }),
+    A1_MS,
+  );
+  assert.equal(
+    readNowMs({
+      nowMs: device,
+      search: `?now=${encodeURIComponent(A1)}`,
+      nodeEnv: "production",
+      hostname: "alane.wangzhun2008.workers.dev",
     }),
     A1_MS,
   );

@@ -4,12 +4,16 @@ export const NOW_TICK_MS = 60_000;
 const LOOPBACK_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);
 
 /**
- * `?now=` is a debug clock for dev and local preview.
- * A production build served on a public host ignores it.
+ * `?now=` is a debug clock for dev, loopback, and `*.workers.dev` preview.
+ * OpenNext sets production `NODE_ENV` on the workers.dev preview, so the host
+ * is part of the allowlist. Any other public hostname ignores the parameter.
  */
 export function debugNowAllowed(nodeEnv: string | undefined, hostname?: string): boolean {
   if (nodeEnv !== "production") return true;
-  return hostname !== undefined && LOOPBACK_HOSTS.has(hostname);
+  if (!hostname) return false;
+  const host = hostname.trim().toLowerCase().replace(/\.$/, "");
+  if (LOOPBACK_HOSTS.has(host)) return true;
+  return host.endsWith(".workers.dev");
 }
 
 /** Accept a raw `?now=` value, including a `+` offset that arrived as a space. */
