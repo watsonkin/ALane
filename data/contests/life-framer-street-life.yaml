@@ -16,6 +16,24 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.life-framer.com/street-life/"
     label: "Street Life 获奖"
+  - url: "https://www.life-framer.com/street-life-2017/"
+    label: "Street Life 2017"
+    edition: "2017"
+  - url: "https://www.life-framer.com/street-life-2020/"
+    label: "Street Life 2020"
+    edition: "2020"
+  - url: "https://www.life-framer.com/street-life-2021/"
+    label: "Street Life 2021"
+    edition: "2021"
+  - url: "https://www.life-framer.com/street-life-2022/"
+    label: "Street Life 2022"
+    edition: "2022"
+  - url: "https://www.life-framer.com/street-life-2023/"
+    label: "Street Life 2023"
+    edition: "2023"
+  - url: "https://www.life-framer.com/street-life-2026/"
+    label: "Street Life 2026"
+    edition: "2026"
 gallery_works: []
 organizer_icon: /icons/organizers/life-framer-street-life.svg
 source_adapters:

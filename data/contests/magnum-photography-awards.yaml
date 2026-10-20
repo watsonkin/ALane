@@ -13,7 +13,16 @@ online: true
 fee: unknown
 street_photo_relevance: adjacent
 rights_tags: []
-gallery_urls: []
+gallery_urls:
+  - url: "https://www.magnumphotos.com/theory-and-practice/lensculture-2017-winners/"
+    label: "2017 Winners（Magnum）"
+    edition: "2017"
+  - url: "https://www.lensculture.com/photo-competitions/magnum-awards/2017/winners"
+    label: "2017 Winners（LensCulture）"
+    edition: "2017"
+  - url: "https://www.lensculture.com/photo-competitions/magnum-awards/2016/winners"
+    label: "2016 Winners（LensCulture）"
+    edition: "2016"
 gallery_works: []
 source_adapters:
   - id: manual-seed
