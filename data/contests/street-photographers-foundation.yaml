@@ -1,0 +1,41 @@
+id: street-photographers-foundation
+slug: street-photographers-foundation
+name: "Street Photographers Foundation Awards"
+name_en: "Street Photographers Foundation Awards"
+official_url: "https://streetphotographersfoundation.com/street-photography-awards-2026/"
+status: published
+open_at: null
+deadline_at: "2026-08-24T08:30:00+00:00"
+announce_at: null
+edition: "2026"
+geo: null
+online: true
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://streetphotographersfoundation.com/street-photography-foundation-awards-2026-winner/"
+    label: "2026 Winners"
+    edition: "2026"
+  - url: "https://streetphotographersfoundation.com/street-photography-foundation-awards-2025-winner/"
+    label: "2025 Winners (Oct)"
+    edition: "2025-10"
+  - url: "https://streetphotographersfoundation.com/street-photographers-foundation-awards-2025-winner/"
+    label: "2025 Winners (May)"
+    edition: "2025-05"
+  - url: "https://streetphotographersfoundation.com/street-photographers-foundation-awards-2024-winner/"
+    label: "2024 Winners"
+    edition: "2024"
+  - url: "https://streetphotographersfoundation.com/street-photography-awards-2023/"
+    label: "2023 Winners"
+    edition: "2023"
+  - url: "https://streetphotographersfoundation.com/street-photographers-foundation-awards/"
+    label: "2022 Winners"
+    edition: "2022"
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

@@ -1,0 +1,41 @@
+id: independent-photographer-street
+slug: independent-photographer-street
+name: "The Independent Photographer — Street Award"
+name_en: "The Independent Photographer — Street Award"
+official_url: "https://independent-photo.com/street-photography-competition/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "Street Award (monthly)"
+geo: null
+online: true
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://independent-photo.com/themes/september-2026/"
+    label: "September 2026 Street"
+    edition: "2026-09"
+  - url: "https://independent-photo.com/themes/march-2026/"
+    label: "March 2026 Street"
+    edition: "2026-03"
+  - url: "https://independent-photo.com/themes/september-2025/"
+    label: "September 2025 Street"
+    edition: "2025-09"
+  - url: "https://independent-photo.com/themes/march-2025/"
+    label: "March 2025 Street"
+    edition: "2025-03"
+  - url: "https://independent-photo.com/themes/september-2024/"
+    label: "September 2024 Street"
+    edition: "2024-09"
+  - url: "https://independent-photo.com/themes/march-2024/"
+    label: "March 2024 Street"
+    edition: "2024-03"
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

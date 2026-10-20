@@ -468,6 +468,65 @@
     "health": "ok"
   },
   {
+    "id": "street-photographers-foundation",
+    "slug": "street-photographers-foundation",
+    "name": "Street Photographers Foundation Awards",
+    "name_en": "Street Photographers Foundation Awards",
+    "official_url": "https://streetphotographersfoundation.com/street-photography-awards-2026/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": "2026-08-24T08:30:00+00:00",
+    "announce_at": null,
+    "edition": "2026",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://streetphotographersfoundation.com/street-photography-foundation-awards-2026-winner/",
+        "label": "2026 Winners",
+        "edition": "2026"
+      },
+      {
+        "url": "https://streetphotographersfoundation.com/street-photography-foundation-awards-2025-winner/",
+        "label": "2025 Winners (Oct)",
+        "edition": "2025-10"
+      },
+      {
+        "url": "https://streetphotographersfoundation.com/street-photographers-foundation-awards-2025-winner/",
+        "label": "2025 Winners (May)",
+        "edition": "2025-05"
+      },
+      {
+        "url": "https://streetphotographersfoundation.com/street-photographers-foundation-awards-2024-winner/",
+        "label": "2024 Winners",
+        "edition": "2024"
+      },
+      {
+        "url": "https://streetphotographersfoundation.com/street-photography-awards-2023/",
+        "label": "2023 Winners",
+        "edition": "2023"
+      },
+      {
+        "url": "https://streetphotographersfoundation.com/street-photographers-foundation-awards/",
+        "label": "2022 Winners",
+        "edition": "2022"
+      }
+    ],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
     "id": "jiepai-shijie",
     "slug": "jiepai-shijie",
     "name": "2026第三届「街拍视界」全国街头摄影大展",
@@ -1149,6 +1208,92 @@
     "health": "ok"
   },
   {
+    "id": "apf-magazine-street",
+    "slug": "apf-magazine-street",
+    "name": "APF Magazine — Street Photography",
+    "name_en": "APF Magazine — Street Photography",
+    "official_url": "https://www.apfmagazine.com/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "Monthly themes",
+    "geo": null,
+    "online": true,
+    "fee": "free",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.apfmagazine.com/street-photography/humour-theme-results-street-photography-winners-apf-magazine/",
+        "label": "Humour Theme Winners",
+        "edition": "Humour"
+      },
+      {
+        "url": "https://www.apfmagazine.com/street-photography/street-photography-winners-of-the-dynamism-theme-apf-magazine/",
+        "label": "Dynamism Theme Winners",
+        "edition": "Dynamism"
+      },
+      {
+        "url": "https://www.apfmagazine.com/street-photography/apf-magazine-presents-winners-of-the-poetry-theme/",
+        "label": "Poetry Theme Winners",
+        "edition": "Poetry"
+      },
+      {
+        "url": "https://www.apfmagazine.com/street-photography/top-street-photography-winners-of-the-emotions-theme-challenge/",
+        "label": "Emotions Theme Winners",
+        "edition": "Emotions"
+      },
+      {
+        "url": "https://www.apfmagazine.com/street-photography/winners-of-apf-magazine-street-photography-theme-mystery/",
+        "label": "Mystery Theme Winners",
+        "edition": "Mystery"
+      }
+    ],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "italian-street-photo-festival",
+    "slug": "italian-street-photo-festival",
+    "name": "Italian Street Photo Festival（ISPF）",
+    "name_en": "Italian Street Photo Festival",
+    "official_url": "https://2024.italianstreetphotofestival.com/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2024",
+    "geo": {
+      "label": "Rome, Italy",
+      "country": "IT",
+      "city": "Rome"
+    },
+    "online": false,
+    "fee": "unknown",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
     "id": "leica-oskar-barnack",
     "slug": "leica-oskar-barnack",
     "name": "Leica Oskar Barnack Award（非纯街拍专项 · 人文纪实）",
@@ -1232,6 +1377,45 @@
     "last_fetched_at": null,
     "content_hash": null,
     "health": "ok"
+  },
+  {
+    "id": "lucie-on-the-block",
+    "slug": "lucie-on-the-block",
+    "name": "Lucie Foundation — On The Block",
+    "name_en": "Lucie Foundation — On The Block",
+    "official_url": "https://www.luciefoundation.org/open-call-on-the-block-2nd-edition/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2nd Edition",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://www.luciefoundation.org/open-call-on-the-block-2nd-edition/",
+        "label": "2nd Edition Winners",
+        "edition": "2nd"
+      },
+      {
+        "url": "https://www.houseoflucie.org/exhibitions/on-the-block-street-photography-group-exhibition/",
+        "label": "House of Lucie Budapest 群展",
+        "edition": "2nd"
+      }
+    ],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
   },
   {
     "id": "pure-street",
@@ -1349,6 +1533,113 @@
     ],
     "gallery_works": [],
     "organizer_icon": "/icons/organizers/siena-ipa-street.png",
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "streetfoto-sf",
+    "slug": "streetfoto-sf",
+    "name": "StreetFoto San Francisco",
+    "name_en": "StreetFoto San Francisco",
+    "official_url": "https://streetfoto.org/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "2020",
+    "geo": {
+      "label": "San Francisco, United States",
+      "country": "US",
+      "city": "San Francisco"
+    },
+    "online": false,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://streetfoto.org/sf2019-contest-finalists/",
+        "label": "2019 Contest Finalists",
+        "edition": "2019"
+      },
+      {
+        "url": "https://streetfoto.org/sf2018-contest-finalists/",
+        "label": "2018 Contest Finalists",
+        "edition": "2018"
+      },
+      {
+        "url": "https://streetfoto.org/sf2017-contest-finalists/",
+        "label": "2017 Contest Finalists",
+        "edition": "2017"
+      }
+    ],
+    "gallery_works": [],
+    "source_adapters": [
+      {
+        "id": "manual-seed",
+        "kind": "manual"
+      }
+    ],
+    "last_fetched_at": null,
+    "content_hash": null,
+    "health": "warn"
+  },
+  {
+    "id": "independent-photographer-street",
+    "slug": "independent-photographer-street",
+    "name": "The Independent Photographer — Street Award",
+    "name_en": "The Independent Photographer — Street Award",
+    "official_url": "https://independent-photo.com/street-photography-competition/",
+    "status": "published",
+    "open_at": null,
+    "deadline_at": null,
+    "announce_at": null,
+    "edition": "Street Award (monthly)",
+    "geo": null,
+    "online": true,
+    "fee": "paid",
+    "street_photo_relevance": "core",
+    "rights_tags": [],
+    "gallery_urls": [
+      {
+        "url": "https://independent-photo.com/themes/september-2026/",
+        "label": "September 2026 Street",
+        "edition": "2026-09"
+      },
+      {
+        "url": "https://independent-photo.com/themes/march-2026/",
+        "label": "March 2026 Street",
+        "edition": "2026-03"
+      },
+      {
+        "url": "https://independent-photo.com/themes/september-2025/",
+        "label": "September 2025 Street",
+        "edition": "2025-09"
+      },
+      {
+        "url": "https://independent-photo.com/themes/march-2025/",
+        "label": "March 2025 Street",
+        "edition": "2025-03"
+      },
+      {
+        "url": "https://independent-photo.com/themes/september-2024/",
+        "label": "September 2024 Street",
+        "edition": "2024-09"
+      },
+      {
+        "url": "https://independent-photo.com/themes/march-2024/",
+        "label": "March 2024 Street",
+        "edition": "2024-03"
+      }
+    ],
+    "gallery_works": [],
     "source_adapters": [
       {
         "id": "manual-seed",

@@ -1,0 +1,29 @@
+id: lucie-on-the-block
+slug: lucie-on-the-block
+name: "Lucie Foundation — On The Block"
+name_en: "Lucie Foundation — On The Block"
+official_url: "https://www.luciefoundation.org/open-call-on-the-block-2nd-edition/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2nd Edition"
+geo: null
+online: true
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://www.luciefoundation.org/open-call-on-the-block-2nd-edition/"
+    label: "2nd Edition Winners"
+    edition: "2nd"
+  - url: "https://www.houseoflucie.org/exhibitions/on-the-block-street-photography-group-exhibition/"
+    label: "House of Lucie Budapest 群展"
+    edition: "2nd"
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

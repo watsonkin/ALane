@@ -1,0 +1,38 @@
+id: apf-magazine-street
+slug: apf-magazine-street
+name: "APF Magazine — Street Photography"
+name_en: "APF Magazine — Street Photography"
+official_url: "https://www.apfmagazine.com/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "Monthly themes"
+geo: null
+online: true
+fee: free
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://www.apfmagazine.com/street-photography/humour-theme-results-street-photography-winners-apf-magazine/"
+    label: "Humour Theme Winners"
+    edition: "Humour"
+  - url: "https://www.apfmagazine.com/street-photography/street-photography-winners-of-the-dynamism-theme-apf-magazine/"
+    label: "Dynamism Theme Winners"
+    edition: "Dynamism"
+  - url: "https://www.apfmagazine.com/street-photography/apf-magazine-presents-winners-of-the-poetry-theme/"
+    label: "Poetry Theme Winners"
+    edition: "Poetry"
+  - url: "https://www.apfmagazine.com/street-photography/top-street-photography-winners-of-the-emotions-theme-challenge/"
+    label: "Emotions Theme Winners"
+    edition: "Emotions"
+  - url: "https://www.apfmagazine.com/street-photography/winners-of-apf-magazine-street-photography-theme-mystery/"
+    label: "Mystery Theme Winners"
+    edition: "Mystery"
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

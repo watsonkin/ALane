@@ -1,0 +1,26 @@
+id: italian-street-photo-festival
+slug: italian-street-photo-festival
+name: "Italian Street Photo Festival（ISPF）"
+name_en: "Italian Street Photo Festival"
+official_url: "https://2024.italianstreetphotofestival.com/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2024"
+geo:
+  label: "Rome, Italy"
+  country: IT
+  city: Rome
+online: false
+fee: unknown
+street_photo_relevance: core
+rights_tags: []
+gallery_urls: []
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn

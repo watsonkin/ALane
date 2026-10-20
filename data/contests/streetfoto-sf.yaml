@@ -1,0 +1,35 @@
+id: streetfoto-sf
+slug: streetfoto-sf
+name: "StreetFoto San Francisco"
+name_en: "StreetFoto San Francisco"
+official_url: "https://streetfoto.org/"
+status: published
+open_at: null
+deadline_at: null
+announce_at: null
+edition: "2020"
+geo:
+  label: "San Francisco, United States"
+  country: US
+  city: San Francisco
+online: false
+fee: paid
+street_photo_relevance: core
+rights_tags: []
+gallery_urls:
+  - url: "https://streetfoto.org/sf2019-contest-finalists/"
+    label: "2019 Contest Finalists"
+    edition: "2019"
+  - url: "https://streetfoto.org/sf2018-contest-finalists/"
+    label: "2018 Contest Finalists"
+    edition: "2018"
+  - url: "https://streetfoto.org/sf2017-contest-finalists/"
+    label: "2017 Contest Finalists"
+    edition: "2017"
+gallery_works: []
+source_adapters:
+  - id: manual-seed
+    kind: manual
+last_fetched_at: null
+content_hash: null
+health: warn
