@@ -17,14 +17,21 @@ fee: paid
 street_photo_relevance: core
 rights_tags: []
 gallery_urls:
-  - url: "https://momentstreetphoto.pl/en/article/results-7"
-    label: "结果"
   - url: "https://2024.momentstreetphoto.pl"
     label: "2024 届"
     edition: "2024"
   - url: "https://2023.momentstreetphoto.pl"
     label: "2023 届"
     edition: "2023"
+  - url: "https://2022.momentstreetphoto.pl"
+    label: "2022 届"
+    edition: "2022"
+  - url: "https://2021.momentstreetphoto.pl"
+    label: "2021 届"
+    edition: "2021"
+  - url: "https://2020.momentstreetphoto.pl"
+    label: "2020 届"
+    edition: "2020"
 gallery_works: []
 organizer_icon: /icons/organizers/fujifilm-moment.svg
 source_adapters:

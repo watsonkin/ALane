@@ -23,6 +23,12 @@ gallery_urls:
   - url: "https://lspf.co.uk/news/lspf-2026-winners-photo-series/"
     label: "2026 Photo Series"
     edition: "2026"
+  - url: "https://lspf.co.uk/news/lspf-2026-winners-london-photo/"
+    label: "2026 London photo"
+    edition: "2026"
+  - url: "https://lspf.co.uk/news/lspf-2026-winners-under-21s/"
+    label: "2026 Under 21s"
+    edition: "2026"
 gallery_works:
   - source_page_url: "https://lspf.co.uk/news/bump-books-prize-winner-wenpeng-lu/"
     thumb_path: thumbs/lspf/bump-books.jpg
