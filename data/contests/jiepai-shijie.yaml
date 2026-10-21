@@ -19,14 +19,17 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.cnphotos.net/photographs/show-2494.html"
     label: "投稿精选（一）"
+    label_en: "Selected entries (1)"
     edition: "第三届"
     edition_en: "3rd"
   - url: "https://www.cnphotos.net/photographs/show-2495.html"
     label: "投稿精选（二）"
+    label_en: "Selected entries (2)"
     edition: "第三届"
     edition_en: "3rd"
   - url: "https://www.cnphotos.net/photographs/show-2506.html"
     label: "投稿精选（三）"
+    label_en: "Selected entries (3)"
     edition: "第三届"
     edition_en: "3rd"
 gallery_works: []

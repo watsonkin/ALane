@@ -19,6 +19,7 @@ gallery_urls:
     edition: "2nd"
   - url: "https://www.houseoflucie.org/exhibitions/on-the-block-street-photography-group-exhibition/"
     label: "House of Lucie Budapest 群展"
+    label_en: "House of Lucie Budapest group exhibition"
     edition: "2nd"
 gallery_works: []
 source_adapters:

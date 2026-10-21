@@ -16,6 +16,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.street-macadam.com/macadam-awards-2025"
     label: "2025 届"
+    label_en: "2025"
     edition: "2025"
   - url: "https://www.street-macadam.com/macadam-awards-2024"
     label: "2024"

@@ -19,9 +19,11 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.urbanphotoawards.com/en/winners-2025/single-pictures/"
     label: "2025 单张"
+    label_en: "2025 Single"
     edition: "2025"
   - url: "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/"
     label: "2024 单张"
+    label_en: "2024 Single"
     edition: "2024"
 gallery_works:
   - source_page_url: "https://www.urbanphotoawards.com/en/photonew/?id=271512/luis-olivan-tenorio/porto-in-may"

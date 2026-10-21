@@ -18,6 +18,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.aussiestreet.com.au/as2019"
     label: "2019 获奖与入围"
+    label_en: "2019 winners and finalists"
     edition: "2019"
   - url: "https://www.aussiestreet.com.au/as2023"
     label: "2023"

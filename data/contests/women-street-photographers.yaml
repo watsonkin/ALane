@@ -16,8 +16,10 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.womenstreetphotographers.com/wsp-past-exhibitions"
     label: "往年展览"
+    label_en: "Past exhibitions"
   - url: "https://www.womenstreetphotographers.com/nyc-exhibition-2026"
     label: "纽约 2026 展览"
+    label_en: "New York 2026 exhibition"
     edition: "2026"
 gallery_works:
   - source_page_url: "https://www.womenstreetphotographers.com/adele-chan"

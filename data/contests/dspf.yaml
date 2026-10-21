@@ -19,6 +19,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.dspfestival.com/2024/"
     label: "2024 入围与获奖"
+    label_en: "2024 finalists and winners"
     edition: "2024"
   - url: "https://www.dspfestival.com/2025/"
     label: "2025"

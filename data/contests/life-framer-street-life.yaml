@@ -16,6 +16,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.life-framer.com/street-life/"
     label: "Street Life 获奖"
+    label_en: "Street Life winners"
   - url: "https://www.life-framer.com/street-life-2017/"
     label: "Street Life 2017"
     edition: "2017"

@@ -38,9 +38,21 @@ function fold(line: string): string {
   return parts.join("\r\n ");
 }
 
-export const CALENDAR_ARCHIVED_NOTE = "已归档，不代表正在征稿。";
-export const CALENDAR_NO_DEADLINE_NOTE =
+export const CALENDAR_ARCHIVED_NOTE_ZH = "已归档，不代表正在征稿。";
+export const CALENDAR_ARCHIVED_NOTE_EN = "Archived. This does not mean the call is open.";
+
+export const CALENDAR_NO_DEADLINE_NOTE_ZH =
   "未填写截止时间，日历时间取自开放或公布日期，不是报名截止。";
+export const CALENDAR_NO_DEADLINE_NOTE_EN =
+  "No deadline is listed. The calendar time is taken from the open or announcement date, not the entry deadline.";
+
+export function calendarArchivedNote(locale: Locale): string {
+  return locale === "en" ? CALENDAR_ARCHIVED_NOTE_EN : CALENDAR_ARCHIVED_NOTE_ZH;
+}
+
+export function calendarNoDeadlineNote(locale: Locale): string {
+  return locale === "en" ? CALENDAR_NO_DEADLINE_NOTE_EN : CALENDAR_NO_DEADLINE_NOTE_ZH;
+}
 
 /** Contests with no timestamp at all are left out of the calendar. */
 export function calendarOmitReason(
@@ -58,11 +70,12 @@ export function calendarOmitReason(
     : "没有开放、截止或公布日期，所以没有写入日历。";
 }
 
-export function calendarDescriptionNotes(contest: Contest): string[] {
-  if (calendarOmitReason(contest)) return [];
+/** Defaults to zh-CN: `/calendar.ics` is a single Chinese feed. */
+export function calendarDescriptionNotes(contest: Contest, locale: Locale = "zh-CN"): string[] {
+  if (calendarOmitReason(contest, locale)) return [];
   const notes: string[] = [];
-  if (contest.status === "archived") notes.push(CALENDAR_ARCHIVED_NOTE);
-  if (!contest.deadline_at) notes.push(CALENDAR_NO_DEADLINE_NOTE);
+  if (contest.status === "archived") notes.push(calendarArchivedNote(locale));
+  if (!contest.deadline_at) notes.push(calendarNoDeadlineNote(locale));
   return notes;
 }
 

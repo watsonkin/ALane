@@ -19,7 +19,9 @@ rights_tags: []
 gallery_urls:
   - url: "https://leicastreetphoto.pl/en/competition-results/"
     label: "第15届入围"
+    label_en: "15th edition finalists"
     edition: "15"
+    edition_en: "15th"
 gallery_works: []
 organizer_icon: /icons/organizers/leica-street-photo.svg
 source_adapters:

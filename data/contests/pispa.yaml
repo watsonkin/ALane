@@ -19,6 +19,7 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.streetphotoawards.art/site/winners-gallery"
     label: "获奖廊"
+    label_en: "Winners gallery"
   - url: "https://www.streetphotoawards.art/site/winners-gallery/spa-2025"
     label: "2025"
     edition: "2025"

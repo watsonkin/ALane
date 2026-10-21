@@ -189,28 +189,36 @@ export function ContestBrowser({
   return (
     <div className="space-y-8">
       <div className="border border-border bg-card p-4">
-        <div className="flex flex-nowrap items-end gap-3 overflow-x-auto">
-          <FilterGroup
-            nowrap
-            legend={t.filterWindow}
-            options={windowFilters(locale)}
-            value={windowFilter}
-            onChange={(value) => write("window", value)}
-          />
-          <FilterGroup
-            nowrap
-            legend={t.filterFee}
-            options={feeFilters(locale)}
-            value={fee}
-            onChange={(value) => write("fee", value)}
-          />
-          <FilterGroup
-            nowrap
-            legend={t.filterRegion}
-            options={regionFilters(locale)}
-            value={region}
-            onChange={(value) => write("region", value)}
-          />
+        <div className="flex items-end gap-3">
+          <div className="relative min-w-0 flex-1">
+            <div className="contest-filter-scroller flex flex-nowrap items-end gap-3 overflow-x-auto pr-4">
+              <FilterGroup
+                nowrap
+                legend={t.filterWindow}
+                options={windowFilters(locale)}
+                value={windowFilter}
+                onChange={(value) => write("window", value)}
+              />
+              <FilterGroup
+                nowrap
+                legend={t.filterFee}
+                options={feeFilters(locale)}
+                value={fee}
+                onChange={(value) => write("fee", value)}
+              />
+              <FilterGroup
+                nowrap
+                legend={t.filterRegion}
+                options={regionFilters(locale)}
+                value={region}
+                onChange={(value) => write("region", value)}
+              />
+            </div>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-card to-transparent"
+            />
+          </div>
           <button
             type="button"
             aria-expanded={expanded}

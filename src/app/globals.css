@@ -150,6 +150,17 @@
   }
 }
 
+/* Primary chips scroll inside the card. Expand/Collapse stays pinned beside this box.
+   The bar is hidden so its height does not drop the pinned control off the chip baseline;
+   the card-colored fade on the right edge is the overflow hint. */
+.contest-filter-scroller {
+  scrollbar-width: none;
+}
+
+.contest-filter-scroller::-webkit-scrollbar {
+  display: none;
+}
+
 /* Secondary filters: height only, then fully collapsed (no leftover gap). */
 .contest-filter-panel {
   display: grid;

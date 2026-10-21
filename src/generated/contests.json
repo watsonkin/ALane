@@ -23,7 +23,9 @@
       {
         "url": "https://leicastreetphoto.pl/en/competition-results/",
         "label": "第15届入围",
-        "edition": "15"
+        "label_en": "15th edition finalists",
+        "edition": "15",
+        "edition_en": "15th"
       }
     ],
     "gallery_works": [],
@@ -96,6 +98,7 @@
       {
         "url": "https://www.miamistreetphotographyfestival.org/2022finalistsmiamistreetphotographyfestival",
         "label": "2022 入围与获奖",
+        "label_en": "2022 Finalists and winners",
         "edition": "2022"
       },
       {
@@ -185,6 +188,7 @@
       {
         "url": "https://www.houseoflucie.org/exhibitions/on-the-block-street-photography-group-exhibition/",
         "label": "House of Lucie Budapest 群展",
+        "label_en": "House of Lucie Budapest group exhibition",
         "edition": "2nd"
       }
     ],
@@ -271,6 +275,7 @@
       {
         "url": "https://www.dspfestival.com/2024/",
         "label": "2024 入围与获奖",
+        "label_en": "2024 finalists and winners",
         "edition": "2024"
       },
       {
@@ -309,21 +314,25 @@
     "gallery_urls": [
       {
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards",
-        "label": "历年索引"
+        "label": "历年索引",
+        "label_en": "Index by year"
       },
       {
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2025/winners",
         "label": "2025 获奖",
+        "label_en": "2025 Winners",
         "edition": "2025"
       },
       {
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2024/winners",
         "label": "2024 获奖",
+        "label_en": "2024 Winners",
         "edition": "2024"
       },
       {
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2023/winners",
         "label": "2023 获奖",
+        "label_en": "2023 Winners",
         "edition": "2023"
       }
     ],
@@ -385,7 +394,8 @@
     "gallery_urls": [
       {
         "url": "https://www.life-framer.com/street-life/",
-        "label": "Street Life 获奖"
+        "label": "Street Life 获奖",
+        "label_en": "Street Life winners"
       },
       {
         "url": "https://www.life-framer.com/street-life-2017/",
@@ -454,11 +464,13 @@
       {
         "url": "https://www.urbanphotoawards.com/en/winners-2025/single-pictures/",
         "label": "2025 单张",
+        "label_en": "2025 Single",
         "edition": "2025"
       },
       {
         "url": "https://www.urbanphotoawards.com/en/winners-2024/single-pictures/",
         "label": "2024 单张",
+        "label_en": "2024 Single",
         "edition": "2024"
       }
     ],
@@ -599,18 +611,21 @@
       {
         "url": "https://www.cnphotos.net/photographs/show-2494.html",
         "label": "投稿精选（一）",
+        "label_en": "Selected entries (1)",
         "edition": "第三届",
         "edition_en": "3rd"
       },
       {
         "url": "https://www.cnphotos.net/photographs/show-2495.html",
         "label": "投稿精选（二）",
+        "label_en": "Selected entries (2)",
         "edition": "第三届",
         "edition_en": "3rd"
       },
       {
         "url": "https://www.cnphotos.net/photographs/show-2506.html",
         "label": "投稿精选（三）",
+        "label_en": "Selected entries (3)",
         "edition": "第三届",
         "edition_en": "3rd"
       }
@@ -647,16 +662,19 @@
       {
         "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2025-winners/",
         "label": "2025 获奖",
+        "label_en": "2025 Winners",
         "edition": "2025"
       },
       {
         "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2024-winners/",
         "label": "2024 获奖",
+        "label_en": "2024 Winners",
         "edition": "2024"
       },
       {
         "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2023-winners/",
         "label": "2023 获奖",
+        "label_en": "2023 Winners",
         "edition": "2023"
       }
     ],
@@ -782,6 +800,7 @@
       {
         "url": "https://www.street-macadam.com/macadam-awards-2025",
         "label": "2025 届",
+        "label_en": "2025",
         "edition": "2025"
       },
       {
@@ -897,6 +916,7 @@
       {
         "url": "https://worldstreetphotoawards.com/wspa-winners-2025/",
         "label": "2025 获奖",
+        "label_en": "2025 Winners",
         "edition": "2025"
       }
     ],
@@ -942,6 +962,7 @@
       {
         "url": "https://www.aussiestreet.com.au/as2019",
         "label": "2019 获奖与入围",
+        "label_en": "2019 winners and finalists",
         "edition": "2019"
       },
       {
@@ -985,26 +1006,31 @@
       {
         "url": "https://2024.momentstreetphoto.pl",
         "label": "2024 届",
+        "label_en": "2024",
         "edition": "2024"
       },
       {
         "url": "https://2023.momentstreetphoto.pl",
         "label": "2023 届",
+        "label_en": "2023",
         "edition": "2023"
       },
       {
         "url": "https://2022.momentstreetphoto.pl",
         "label": "2022 届",
+        "label_en": "2022",
         "edition": "2022"
       },
       {
         "url": "https://2021.momentstreetphoto.pl",
         "label": "2021 届",
+        "label_en": "2021",
         "edition": "2021"
       },
       {
         "url": "https://2020.momentstreetphoto.pl",
         "label": "2020 届",
+        "label_en": "2020",
         "edition": "2020"
       }
     ],
@@ -1043,7 +1069,8 @@
     "gallery_urls": [
       {
         "url": "https://www.streetphotoawards.art/site/winners-gallery",
-        "label": "获奖廊"
+        "label": "获奖廊",
+        "label_en": "Winners gallery"
       },
       {
         "url": "https://www.streetphotoawards.art/site/winners-gallery/spa-2025",
@@ -1135,11 +1162,13 @@
     "gallery_urls": [
       {
         "url": "https://www.womenstreetphotographers.com/wsp-past-exhibitions",
-        "label": "往年展览"
+        "label": "往年展览",
+        "label_en": "Past exhibitions"
       },
       {
         "url": "https://www.womenstreetphotographers.com/nyc-exhibition-2026",
         "label": "纽约 2026 展览",
+        "label_en": "New York 2026 exhibition",
         "edition": "2026"
       }
     ],
@@ -1232,16 +1261,19 @@
       {
         "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2026/open/street-photography",
         "label": "2026 Open 街拍",
+        "label_en": "2026 Open Street",
         "edition": "2026"
       },
       {
         "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2025/open/street-photography",
         "label": "2025 Open 街拍",
+        "label_en": "2025 Open Street",
         "edition": "2025"
       },
       {
         "url": "https://www.worldphoto.org/sony-world-photography-awards/winners-galleries/2024/open/street-photography",
         "label": "2024 Open 街拍",
+        "label_en": "2024 Open Street",
         "edition": "2024"
       }
     ],
@@ -1468,11 +1500,13 @@
       {
         "url": "https://www.purestreetphotography.com/street-photography-awards-2026",
         "label": "2026 获奖与入围",
+        "label_en": "2026 winners and finalists",
         "edition": "2026"
       },
       {
         "url": "https://www.purestreetphotography.com/street-photography-awards-2025",
         "label": "2025 获奖与入围",
+        "label_en": "2025 winners and finalists",
         "edition": "2025"
       }
     ],
@@ -1511,11 +1545,13 @@
       {
         "url": "https://www.romephotolab.it/winners-2025/",
         "label": "2025 获奖",
+        "label_en": "2025 Winners",
         "edition": "2025"
       },
       {
         "url": "https://www.romephotolab.it/winners-2024/",
         "label": "2024 获奖",
+        "label_en": "2024 Winners",
         "edition": "2024"
       }
     ],

@@ -19,9 +19,11 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.romephotolab.it/winners-2025/"
     label: "2025 获奖"
+    label_en: "2025 Winners"
     edition: "2025"
   - url: "https://www.romephotolab.it/winners-2024/"
     label: "2024 获奖"
+    label_en: "2024 Winners"
     edition: "2024"
 gallery_works: []
 source_adapters:

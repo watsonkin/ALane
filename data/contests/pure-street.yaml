@@ -16,9 +16,11 @@ rights_tags: []
 gallery_urls:
   - url: "https://www.purestreetphotography.com/street-photography-awards-2026"
     label: "2026 获奖与入围"
+    label_en: "2026 winners and finalists"
     edition: "2026"
   - url: "https://www.purestreetphotography.com/street-photography-awards-2025"
     label: "2025 获奖与入围"
+    label_en: "2025 winners and finalists"
     edition: "2025"
 gallery_works: []
 source_adapters:

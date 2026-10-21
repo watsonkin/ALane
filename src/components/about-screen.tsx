@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { loadContests } from "@/lib/contests";
 import {
-  CALENDAR_ARCHIVED_NOTE,
-  CALENDAR_NO_DEADLINE_NOTE,
+  calendarArchivedNote,
+  calendarNoDeadlineNote,
   calendarOmitReason,
 } from "@/lib/contest-ics";
 import { displayName } from "@/lib/contest-labels";
@@ -32,16 +32,16 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
                 /calendar.ics
               </a>{" "}
               includes an award only when it has at least one date (open, deadline, or announcement).
-              Archived entries that still have a date carry the note 「{CALENDAR_ARCHIVED_NOTE}」.
+              Archived entries that still have a date carry the note 「{calendarArchivedNote(locale)}」.
               Entries with no deadline that use the open or announcement date carry 「
-              {CALENDAR_NO_DEADLINE_NOTE}」.
+              {calendarNoDeadlineNote(locale)}」.
             </p>
           ) : (
             <p>
               <a href="/calendar.ics" className="text-accent underline-offset-4 hover:underline">
                 /calendar.ics
               </a>{" "}
-              只写入至少有一个日期（开放、截止或公布）的赛事。已归档的条目如果仍有日期，事件说明会写「{CALENDAR_ARCHIVED_NOTE}」没有截止时间、但改用开放或公布日期占位的，说明会写「{CALENDAR_NO_DEADLINE_NOTE}」
+              只写入至少有一个日期（开放、截止或公布）的赛事。已归档的条目如果仍有日期，事件说明会写「{calendarArchivedNote(locale)}」没有截止时间、但改用开放或公布日期占位的，说明会写「{calendarNoDeadlineNote(locale)}」
             </p>
           )}
           {omitted.length === 0 ? (
