@@ -1,6 +1,7 @@
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ContestSocialLinks } from "@/components/contest-social-links";
 import { ContestWindowChip } from "@/components/contest-window-chip";
 import { RightsChip } from "@/components/rights-chip";
 import { WinnerIndexCard } from "@/components/winner-index-card";
@@ -166,6 +167,8 @@ export function ContestDetail({
           </ul>
         </details>
       ) : null}
+
+      <ContestSocialLinks contest={contest} locale={locale} />
 
       <section className="mt-4">
         <h2 className="text-base font-semibold text-ink">{t.winnerIndex}</h2>

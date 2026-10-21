@@ -45,6 +45,13 @@ const zh = {
   rightsSummaryCaution: "该条目标成需留意，条款以官网为准。",
   rightsSummaryOk: "未记录版权转让、独家、无报酬或放弃精神权利。",
   rightsSummaryUnknown: "权利尚未评估。",
+  socialOrganizer: "主办社交",
+  socialInstagram: "Instagram",
+  socialX: "X",
+  socialWechatOa: "微信公众号",
+  socialWebsite: "个人站",
+  socialPhotographer: "作者社交",
+  socialWechatName: (name: string) => `公众号：${name}`,
   rightsNotes: {
     transfer_copyright: "条款里出现了版权转让。",
     exclusive: "条款里出现了独家使用。",
@@ -136,6 +143,13 @@ const en = {
   rightsSummaryOk:
     "No recorded copyright transfer, exclusive use, unpaid use, or moral-rights waiver.",
   rightsSummaryUnknown: "Rights not reviewed.",
+  socialOrganizer: "Organizer on social",
+  socialInstagram: "Instagram",
+  socialX: "X",
+  socialWechatOa: "WeChat OA",
+  socialWebsite: "Website",
+  socialPhotographer: "Photographer on social",
+  socialWechatName: (name: string) => `WeChat OA · ${name}`,
   rightsNotes: {
     transfer_copyright: "Terms mention a copyright transfer.",
     exclusive: "Terms mention exclusive use.",

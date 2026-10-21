@@ -301,6 +301,10 @@
     "name": "LensCulture Street Photography Awards",
     "name_en": "LensCulture Street Photography Awards",
     "official_url": "https://www.lensculture.com/photo-competitions/street-photography-awards",
+    "social": {
+      "instagram": "https://www.instagram.com/lensculture",
+      "x": "https://x.com/lensculture"
+    },
     "status": "published",
     "open_at": "2026-04-01T00:00:00+00:00",
     "deadline_at": "2026-06-30T23:59:00+00:00",

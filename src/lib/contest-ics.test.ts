@@ -59,6 +59,36 @@ test("description notes stay Chinese unless a locale is passed", () => {
   ]);
 });
 
+test("the calendar does not read social fields", () => {
+  const body = contestsToIcs(
+    [
+      contest({
+        social: {
+          instagram: "https://www.instagram.com/lensculture",
+          x: "https://x.com/lensculture",
+          wechat_oa: { name: "街拍视界" },
+        },
+        gallery_works: [
+          {
+            source_page_url: "https://example.com/projects/1-work",
+            source_site_label: "Example",
+            social: {
+              instagram: "https://www.instagram.com/example/",
+              x: "https://x.com/example",
+              website: "https://example.com/photographer",
+            },
+          },
+        ],
+      }),
+    ],
+    new Date("2026-10-21T00:00:00Z"),
+  );
+  assert.equal(body.includes("instagram.com"), false);
+  assert.equal(body.includes("x.com/lensculture"), false);
+  assert.equal(body.includes("街拍视界"), false);
+  assert.equal(body.includes("example.com/photographer"), false);
+});
+
 test("the single ics feed keeps the Chinese notes", () => {
   const body = contestsToIcs([contest()], new Date("2026-10-21T00:00:00Z")).replace(/\r\n /g, "");
   assert.equal(body.includes(CALENDAR_ARCHIVED_NOTE_ZH), true);

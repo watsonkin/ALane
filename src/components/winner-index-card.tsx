@@ -2,11 +2,30 @@ import Image from "next/image";
 import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import type { GalleryWork } from "@/lib/contest-schema";
 import type { Locale } from "@/lib/locale";
-import { copy } from "@/lib/messages";
+import { copy, type Copy } from "@/lib/messages";
+
+function authorLabel(work: GalleryWork, locale: Locale): string | undefined {
+  if (locale === "en") return work.author_name_en ?? work.author_name;
+  return work.author_name;
+}
+
+function workSocialLinks(work: GalleryWork, t: Copy): { key: string; href: string; label: string }[] {
+  const social = work.social;
+  if (!social) return [];
+  const links: { key: string; href: string; label: string }[] = [];
+  if (social.instagram) {
+    links.push({ key: "instagram", href: social.instagram, label: t.socialInstagram });
+  }
+  if (social.x) links.push({ key: "x", href: social.x, label: t.socialX });
+  if (social.website) links.push({ key: "website", href: social.website, label: t.socialWebsite });
+  return links;
+}
 
 export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: Locale }) {
   const t = copy(locale);
-  const title = work.title ?? work.author_name ?? work.source_site_label;
+  const authorName = authorLabel(work, locale);
+  const title = work.title ?? authorName ?? work.source_site_label;
+  const socialLinks = workSocialLinks(work, t);
 
   return (
     <article className="flex h-full w-full flex-col overflow-hidden rounded-[4px] border border-border bg-card">
@@ -43,8 +62,8 @@ export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: L
           <p className="text-xs text-accent">{t.visitSource}</p>
         </div>
       </a>
-      {work.author_name ? (
-        <p className="px-3 pt-1 pb-3 text-xs text-muted-foreground">
+      {authorName ? (
+        <p className={`px-3 pt-1 text-xs text-muted-foreground ${socialLinks.length === 0 ? "pb-3" : ""}`}>
           {work.author_homepage_url ? (
             <a
               href={work.author_homepage_url}
@@ -52,13 +71,31 @@ export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: L
               rel="noopener noreferrer"
               className="text-accent underline-offset-4 hover:underline"
             >
-              {work.author_name}
+              {authorName}
             </a>
           ) : (
-            work.author_name
+            authorName
           )}
         </p>
-      ) : (
+      ) : null}
+      {socialLinks.length > 0 ? (
+        <p className="flex flex-wrap items-baseline gap-x-1.5 px-3 pt-1 pb-3 text-xs text-muted-foreground">
+          <span>{t.socialPhotographer}</span>
+          {socialLinks.map((link) => (
+            <span key={link.key} className="inline-flex items-baseline gap-x-1.5">
+              <span aria-hidden="true">·</span>
+              <a
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent underline-offset-4 hover:underline"
+              >
+                {link.label}
+              </a>
+            </span>
+          ))}
+        </p>
+      ) : authorName ? null : (
         <div className="pb-3" />
       )}
     </article>

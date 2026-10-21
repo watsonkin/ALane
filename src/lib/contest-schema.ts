@@ -81,13 +81,58 @@ const organizerIconSchema = z
     "主办方 icon 必须是 /icons/organizers/ 下的本地 svg、png 或 webp，不能是外链",
   );
 
+/** Local WeChat OA QR. Not a remote URL. Assets land in a later visual pass. */
+const wechatQrPathSchema = z
+  .string()
+  .regex(
+    /^\/?icons\/wechat\/[a-z0-9]+(?:-[a-z0-9]+)*\.(?:png|webp|svg)$/,
+    "微信二维码须为 /icons/wechat/ 下本地文件",
+  );
+
+function rejectEmptySocial(social: object, ctx: z.RefinementCtx): void {
+  if (Object.keys(social).length === 0) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "social 不能是空对象；没有平台时请省略整个 social",
+    });
+  }
+}
+
+/** Organizer social. Whole object is optional. Unknown platforms fail. */
+export const contestSocialSchema = z
+  .object({
+    instagram: httpUrlSchema.optional(),
+    x: httpUrlSchema.optional(),
+    wechat_oa: z
+      .object({
+        name: z.string().min(1),
+        qr_path: wechatQrPathSchema.optional(),
+      })
+      .strict()
+      .optional(),
+  })
+  .strict()
+  .superRefine(rejectEmptySocial);
+
+/** Winner social on one work. Not a stand-in for gallery_urls. */
+export const workSocialSchema = z
+  .object({
+    instagram: httpUrlSchema.optional(),
+    x: httpUrlSchema.optional(),
+    website: httpUrlSchema.optional(),
+  })
+  .strict()
+  .superRefine(rejectEmptySocial);
+
 export const galleryWorkSchema = z
   .object({
     source_page_url: httpUrlSchema,
     thumb_path: thumbPathSchema.optional(),
     title: z.string().min(1).optional(),
     author_name: z.string().min(1).optional(),
+    author_name_en: z.string().min(1).optional(),
     author_homepage_url: httpUrlSchema.optional(),
+    social: workSocialSchema.optional(),
     source_site_label: z.string().min(1),
   })
   .strict();
@@ -125,6 +170,7 @@ export const contestSchema = z
     name_zh: z.string().min(1).optional(),
     name_en: z.string().min(1).optional(),
     official_url: httpUrlSchema,
+    social: contestSocialSchema.optional(),
     status: contestStatusSchema,
     open_at: isoDateTimeSchema.nullable(),
     deadline_at: isoDateTimeSchema.nullable(),
@@ -200,3 +246,5 @@ export type RightsTag = z.infer<typeof rightsTagSchema>;
 export type SourceAdapterKind = z.infer<typeof sourceAdapterKindSchema>;
 export type GalleryUrl = z.infer<typeof galleryUrlSchema>;
 export type GalleryWork = z.infer<typeof galleryWorkSchema>;
+export type ContestSocial = z.infer<typeof contestSocialSchema>;
+export type WorkSocial = z.infer<typeof workSocialSchema>;

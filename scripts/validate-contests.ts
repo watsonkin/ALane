@@ -83,6 +83,133 @@ if (indexWork.success) {
   process.exit(1);
 }
 
+function expectFail(
+  result: ReturnType<typeof contestSchema.safeParse>,
+  needle: string,
+  label: string,
+) {
+  if (result.success) {
+    console.error(label);
+    process.exit(1);
+  }
+  const blob = JSON.stringify(result.error.issues);
+  if (!blob.includes(needle)) {
+    console.error(label);
+    console.error(blob);
+    process.exit(1);
+  }
+}
+
+const workPage = {
+  source_page_url: "https://example.com/projects/1-work",
+  title: "Tides of Life",
+  author_name: "张三",
+  author_name_en: "San Zhang",
+  source_site_label: "Example",
+};
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    social: { facebook: "https://www.facebook.com/example" },
+  }),
+  "facebook",
+  "未知主办社交平台应该校验失败。",
+);
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    gallery_works: [{ ...workPage, social: { tiktok: "https://www.tiktok.com/@example" } }],
+  }),
+  "tiktok",
+  "未知获奖者社交平台应该校验失败。",
+);
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    social: {},
+  }),
+  "空对象",
+  "空的主办 social 对象应该校验失败。",
+);
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    gallery_works: [{ ...workPage, social: {} }],
+  }),
+  "空对象",
+  "空的获奖者 social 对象应该校验失败。",
+);
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    social: {
+      wechat_oa: {
+        name: "街拍视界",
+        qr_path: "https://cdn.example.com/qr.png",
+      },
+    },
+  }),
+  "qr_path",
+  "外链微信二维码应该校验失败。",
+);
+
+expectFail(
+  contestSchema.safeParse({
+    ...sample,
+    social: {
+      wechat_oa: {
+        name: "街拍视界",
+        qr_path: "/icons/organizers/lensculture-street.png",
+      },
+    },
+  }),
+  "qr_path",
+  "错误目录的微信二维码应该校验失败。",
+);
+
+const validSocial = contestSchema.safeParse({
+  ...sample,
+  social: {
+    instagram: "https://www.instagram.com/lensculture",
+    x: "https://x.com/lensculture",
+    wechat_oa: {
+      name: "街拍视界",
+      qr_path: "/icons/wechat/jiepai-shijie.png",
+    },
+  },
+  gallery_works: [
+    {
+      ...workPage,
+      social: {
+        instagram: "https://www.instagram.com/example/",
+        x: "https://x.com/example",
+        website: "https://example.com/photographer",
+      },
+    },
+  ],
+});
+if (!validSocial.success) {
+  console.error("合法的主办与获奖者社交应该通过校验。");
+  console.error(JSON.stringify(validSocial.error.issues));
+  process.exit(1);
+}
+if (
+  validSocial.data.social?.instagram !== "https://www.instagram.com/lensculture" ||
+  validSocial.data.social.x !== "https://x.com/lensculture" ||
+  validSocial.data.social.wechat_oa?.name !== "街拍视界" ||
+  validSocial.data.social.wechat_oa.qr_path !== "/icons/wechat/jiepai-shijie.png" ||
+  validSocial.data.gallery_works[0]?.social?.website !== "https://example.com/photographer" ||
+  validSocial.data.gallery_works[0]?.author_name_en !== "San Zhang"
+) {
+  console.error("合法社交字段不应该在校验后被丢掉。");
+  process.exit(1);
+}
+
 function imageSize(buf: Buffer): { width: number; height: number } {
   if (buf.length >= 24 && buf[0] === 0x89 && buf.toString("ascii", 1, 4) === "PNG") {
     return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
