@@ -83,10 +83,10 @@ function ChineseAbout() {
       <p>
         对已核对的官方获奖页，站点可保留最长边不超过 400 像素的小图，方便认出作品；点击小图会新标签打开源站该作品页。权利标签与部分日期仅供参考，一律以官网为准。勘误、缩略图下架或希望移出索引，请邮件{" "}
         <a
-          href="mailto:wzhun2012@icloud.com"
+          href="mailto:AlaneStreetPhotos@icloud.com"
           className="text-accent underline-offset-4 hover:underline"
         >
-          wzhun2012@icloud.com
+          AlaneStreetPhotos@icloud.com
         </a>
         。
       </p>
@@ -107,10 +107,10 @@ function EnglishAbout() {
           "For verified official winner pages, the site may keep a small index thumbnail (longest edge \u2264 400px) so you can recognize the work. Clicking it opens that work\u2019s page on the source site in a new tab. Rights labels and some dates are for reference only\u2014always trust the official site. For corrections, thumbnail takedown, or removal from the index, email "
         }
         <a
-          href="mailto:wzhun2012@icloud.com"
+          href="mailto:AlaneStreetPhotos@icloud.com"
           className="text-accent underline-offset-4 hover:underline"
         >
-          wzhun2012@icloud.com
+          AlaneStreetPhotos@icloud.com
         </a>
         .
       </p>
