@@ -276,7 +276,7 @@ export function ContestBrowser({
           <p className="mt-2">{t.noMatchesHint}</p>
         </div>
       ) : (
-        <ul className="space-y-3">
+        <ul className="border-t border-line">
           {visible.map((contest) => (
             <ContestListCard key={contest.id} contest={contest} now={now} locale={locale} />
           ))}

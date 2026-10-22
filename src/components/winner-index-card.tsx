@@ -1,7 +1,10 @@
-import { ThumbPlaceholder } from "@/components/thumb-placeholder";
+import { ExternalLink } from "lucide-react";
 import type { GalleryWork } from "@/lib/contest-schema";
 import type { Locale } from "@/lib/locale";
 import { copy, type Copy } from "@/lib/messages";
+
+const sourceLinkClass =
+  "inline-flex items-center gap-1.5 text-[15px] text-accent underline decoration-line underline-offset-4 outline-none hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
 
 function authorLabel(work: GalleryWork, locale: Locale): string | undefined {
   if (locale === "en") return work.author_name_en ?? work.author_name;
@@ -20,42 +23,33 @@ function workSocialLinks(work: GalleryWork, t: Copy): { key: string; href: strin
   return links;
 }
 
-export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: Locale }) {
+export function WinnerIndexRow({ work, locale }: { work: GalleryWork; locale: Locale }) {
   const t = copy(locale);
   const authorName = authorLabel(work, locale);
-  const title = work.title ?? authorName ?? work.source_site_label;
+  const titled = work.title?.trim() || "";
+  const heading = titled || authorName || work.source_site_label;
   const socialLinks = workSocialLinks(work, t);
   const sourceUrl = work.source_page_url.trim();
+  const showAuthor = Boolean(authorName && titled);
 
   return (
-    <article className="flex h-full w-full flex-col overflow-hidden rounded-[4px] border border-border bg-card">
-      <div className="relative h-36 w-full shrink-0 overflow-hidden bg-[#E8E4DC]">
-        <ThumbPlaceholder
-          title={title}
-          locale={locale}
-          className="absolute inset-0 h-full w-full rounded-none bg-[#E8E4DC]"
-          textClassName="text-base text-[#8A8A8A]"
-        />
-      </div>
-      <div className="space-y-1 px-3 pt-3">
-        <p className="font-serif text-base leading-snug text-ink">{title}</p>
-        <p className="text-xs leading-5 text-muted-foreground">
-          {t.fromSource}
-          {work.source_site_label ? ` · ${work.source_site_label}` : ""}
-        </p>
-        {sourceUrl ? (
-          <a
-            href={sourceUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block text-xs text-accent underline-offset-4 hover:underline"
-          >
-            {t.visitSource}
-          </a>
-        ) : null}
-      </div>
-      {authorName ? (
-        <p className={`px-3 pt-1 text-xs text-muted-foreground ${socialLinks.length === 0 ? "pb-3" : ""}`}>
+    <article className="border-b border-line py-4">
+      <h3 className="font-serif text-[20px] leading-snug text-ink">{heading}</h3>
+      <div aria-hidden="true" className="mt-3 h-px w-12 bg-line" />
+      <p className="mt-3 text-xs leading-5 text-soft">
+        {t.fromSource}
+        {work.source_site_label ? ` · ${work.source_site_label}` : ""}
+      </p>
+      {sourceUrl ? (
+        <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className={`mt-3 ${sourceLinkClass}`}>
+          {t.visitSource}
+          <ExternalLink aria-hidden="true" className="size-3.5" />
+        </a>
+      ) : null}
+      {showAuthor && authorName ? (
+        <p className="mt-3 text-sm text-soft">
+          {t.artist}
+          {locale === "en" ? ": " : "："}
           {work.author_homepage_url ? (
             <a
               href={work.author_homepage_url}
@@ -71,7 +65,7 @@ export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: L
         </p>
       ) : null}
       {socialLinks.length > 0 ? (
-        <p className="flex flex-wrap items-baseline gap-x-1.5 px-3 pt-1 pb-3 text-xs text-muted-foreground">
+        <p className="mt-1 flex flex-wrap items-baseline gap-x-1.5 text-xs text-soft">
           <span>{t.socialPhotographer}</span>
           {socialLinks.map((link) => (
             <span key={link.key} className="inline-flex items-baseline gap-x-1.5">
@@ -87,9 +81,7 @@ export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: L
             </span>
           ))}
         </p>
-      ) : authorName ? null : (
-        <div className="pb-3" />
-      )}
+      ) : null}
     </article>
   );
 }

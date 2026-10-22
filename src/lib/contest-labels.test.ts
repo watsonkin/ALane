@@ -5,6 +5,7 @@ import {
   CLOSING_SOON_LIMIT,
   DEADLINE_GRACE_MS,
   compareByWindow,
+  contestYear,
   deadlineWindow,
   selectClosingSoon,
   windowChipLabel,
@@ -216,6 +217,33 @@ test("catalog follows the WSPA, Aussie, Fujifilm, and PISPA acceptance cases", (
     assert.equal(ranked[0] && deadlineWindow(ranked[0], after), "open");
     assert.ok(ranked.some((item) => item.id === "world-street-photo-awards" && deadlineWindow(item, after) === "closed"));
   }
+});
+
+test("contestYear keeps a written date and skips an edition that is not a year", () => {
+  assert.equal(contestYear(contest("dated", "2026-10-25T23:59:00+11:00"), "en"), "2026");
+  const datedEdition = contest("dated-edition", "2026-10-25T23:59:00Z");
+  datedEdition.edition = "2019";
+  assert.equal(contestYear(datedEdition, "zh-CN"), "2026");
+
+  const opened = contest("opened", null);
+  opened.open_at = "2024-01-01T00:00:00Z";
+  opened.edition = "1999";
+  assert.equal(contestYear(opened, "en"), "2024");
+
+  const editionOnly = contest("edition", null);
+  editionOnly.edition = "2026";
+  assert.equal(contestYear(editionOnly, "zh-CN"), "2026");
+
+  const prose = contest("prose", null);
+  prose.edition = "第十二届";
+  assert.equal(contestYear(prose, "zh-CN"), null);
+  assert.equal(contestYear(contest("blank", null), "en"), null);
+
+  const english = contest("english", null);
+  english.edition = "第十二届";
+  english.edition_en = "2019 winners";
+  assert.equal(contestYear(english, "en"), "2019");
+  assert.equal(contestYear(english, "zh-CN"), null);
 });
 
 test("compareByWindow keeps a grace-minute contest with the open group", () => {

@@ -1,13 +1,9 @@
-import { ExternalLink } from "lucide-react";
+import { Calendar, ExternalLink } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ContestDetailChips } from "@/components/contest-detail-chips";
 import { ContestSocialLinks } from "@/components/contest-social-links";
-import { ContestWindowChip } from "@/components/contest-window-chip";
-import { RightsChip } from "@/components/rights-chip";
-import { ThumbPlaceholder } from "@/components/thumb-placeholder";
-import { WinnerIndexCard } from "@/components/winner-index-card";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
+import { WinnerIndexRow } from "@/components/winner-index-card";
 import {
   adapterLabel,
   displayEdition,
@@ -17,36 +13,22 @@ import {
   formatContestDate,
   formatPlace,
   healthLabel,
-  relevanceLabel,
   rightsTagLabel,
   statusLabel,
 } from "@/lib/contest-labels";
+import { calendarOmitReason } from "@/lib/contest-ics";
 import type { Contest, RightsTag } from "@/lib/contest-schema";
 import { hrefFor, type Locale } from "@/lib/locale";
 import { copy, type Copy } from "@/lib/messages";
-import { cn } from "@/lib/utils";
 
-function MetaItem({
-  label,
-  children,
-  emphasize = false,
-}: {
-  label: string;
-  children: ReactNode;
-  emphasize?: boolean;
-}) {
+const textLinkClass =
+  "inline-flex items-center gap-1.5 text-[15px] text-accent underline decoration-line underline-offset-4 outline-none hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
+
+function MetaItem({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex items-baseline justify-between gap-3 border-b border-border py-2 text-[13px]">
       <dt className="shrink-0 text-muted-foreground">{label}</dt>
-      <dd
-        className={
-          emphasize
-            ? "text-right text-sm font-medium text-caution"
-            : "text-right text-ink"
-        }
-      >
-        {children}
-      </dd>
+      <dd className="text-right text-ink">{children}</dd>
     </div>
   );
 }
@@ -71,6 +53,19 @@ function placeValue(contest: Contest, locale: Locale): string {
     : `${place}（${extra.join(" · ")}）`;
 }
 
+function detailMeta(contest: Contest, locale: Locale, t: Copy): string | null {
+  const parts: string[] = [t.officialSite, feeLabel(contest.fee, locale)];
+  if (contest.open_at) parts.push(`${t.opens} ${formatContestDate(contest.open_at, locale)}`);
+  if (contest.announce_at) {
+    parts.push(`${t.announced} ${formatContestDate(contest.announce_at, locale)}`);
+  }
+  if (contest.geo || contest.online) parts.push(placeValue(contest, locale));
+  const edition = displayEdition(contest, locale);
+  if (edition) parts.push(edition);
+  const line = parts.map((part) => part.trim()).filter(Boolean).join(" · ");
+  return line || null;
+}
+
 export function ContestDetail({
   contest,
   asOf,
@@ -83,6 +78,12 @@ export function ContestDetail({
   const t = copy(locale);
   const name = displayName(contest, locale);
   const edition = displayEdition(contest, locale);
+  const meta = detailMeta(contest, locale, t);
+  const officialUrl = contest.official_url.trim();
+  const calendarHref = calendarOmitReason(contest)
+    ? null
+    : hrefFor(locale, `/contests/${contest.slug}/calendar`);
+  const dated = Boolean(contest.deadline_at);
 
   return (
     <article className="max-w-[760px]">
@@ -92,62 +93,66 @@ export function ContestDetail({
         </Link>
       </p>
 
-      <header className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between md:gap-4">
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap gap-2">
-            <ContestWindowChip deadlineAt={contest.deadline_at} asOf={asOf} locale={locale} />
-            <Badge variant="secondary">
-              {relevanceLabel(contest.street_photo_relevance, locale)}
-            </Badge>
-            <Badge variant="outline">{feeLabel(contest.fee, locale)}</Badge>
-          </div>
-          <h1 className="mt-2 font-serif text-[30px] font-semibold leading-tight text-ink">{name}</h1>
-        </div>
-        <a
-          href={contest.official_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cn(
-            buttonVariants({ size: "lg" }),
-            "h-10 w-full shrink-0 px-4 text-sm md:w-auto",
-          )}
+      <header className="border-b border-line pb-6">
+        <ContestDetailChips
+          contest={{
+            deadline_at: contest.deadline_at,
+            status: contest.status,
+            street_photo_relevance: contest.street_photo_relevance,
+            fee: contest.fee,
+            health: contest.health,
+            rights_tags: contest.rights_tags,
+          }}
+          asOf={asOf}
+          locale={locale}
+        />
+        <h1 className="mt-2 font-serif text-[28px] font-semibold leading-tight text-ink sm:text-[32px]">
+          {name}
+        </h1>
+        <p
+          className={
+            dated
+              ? "mt-3 flex items-center gap-1.5 text-[15px] leading-6 text-caution"
+              : "mt-3 flex items-center gap-1.5 text-[15px] leading-6 text-soft"
+          }
         >
-          {t.openOfficial}
-          <ExternalLink aria-hidden="true" />
-        </a>
-      </header>
-      {contest.health === "dead" ? (
-        <p className="mt-2 text-sm text-caution">{t.linkMayBeDead}</p>
-      ) : null}
-
-      <div className="mt-3 grid grid-cols-1 gap-x-8 sm:grid-cols-2">
-        <dl>
-          <MetaItem label={t.deadline} emphasize>
+          <Calendar aria-hidden="true" className="size-4 shrink-0" />
+          <span>
+            {t.deadline}{" "}
             {contest.deadline_at ? formatContestDate(contest.deadline_at, locale) : t.dateTbd}
-          </MetaItem>
-          {contest.open_at ? (
-            <MetaItem label={t.opens}>{formatContestDate(contest.open_at, locale)}</MetaItem>
-          ) : null}
-          {contest.announce_at ? (
-            <MetaItem label={t.announced}>{formatContestDate(contest.announce_at, locale)}</MetaItem>
-          ) : null}
-          {contest.geo || contest.online ? (
-            <MetaItem label={t.place}>
-              {contest.geo ? placeValue(contest, locale) : formatPlace(contest, locale)}
-            </MetaItem>
-          ) : null}
-          <MetaItem label={t.fee}>{feeLabel(contest.fee, locale)}</MetaItem>
-        </dl>
-        <dl>
-          <MetaItem label={t.relevance}>
-            {relevanceLabel(contest.street_photo_relevance, locale)}
-          </MetaItem>
-          {edition ? <MetaItem label={t.edition}>{edition}</MetaItem> : null}
-          <MetaItem label={t.rights}>
-            <RightsChip contest={contest} locale={locale} />
-          </MetaItem>
-        </dl>
-      </div>
+          </span>
+        </p>
+        {meta ? <p className="mt-2 text-[13px] leading-5 text-soft">{meta}</p> : null}
+        {contest.health === "dead" ? (
+          <p className="mt-2 text-sm text-caution">{t.linkMayBeDead}</p>
+        ) : null}
+        {officialUrl || calendarHref ? (
+          <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+            {officialUrl ? (
+              <a
+                href={officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={textLinkClass}
+              >
+                {t.openOfficial}
+                <ExternalLink aria-hidden="true" className="size-3.5" />
+              </a>
+            ) : null}
+            {officialUrl && calendarHref ? (
+              <span aria-hidden="true" className="text-line">
+                |
+              </span>
+            ) : null}
+            {calendarHref ? (
+              <a href={calendarHref} download={`${contest.slug}.ics`} className={textLinkClass}>
+                {t.addToCalendar}
+                <Calendar aria-hidden="true" className="size-3.5" />
+              </a>
+            ) : null}
+          </p>
+        ) : null}
+      </header>
 
       {contest.rights_tags.length > 0 ? (
         <details className="group mt-4 text-sm leading-snug text-muted-foreground">
@@ -171,56 +176,47 @@ export function ContestDetail({
 
       <ContestSocialLinks contest={contest} locale={locale} />
 
-      <section className="mt-4">
-        <h2 className="text-base font-semibold text-ink">{t.winnerIndex}</h2>
-        <p className="mt-1 text-sm leading-snug text-muted-foreground">{t.winnerHint}</p>
+      <section className="mt-8">
+        <h2 className="font-serif text-xl text-ink">{t.winnerIndex}</h2>
+        <p className="mt-1 text-sm leading-snug text-soft">{t.winnerHint}</p>
         {contest.gallery_works.length === 0 ? (
-          <p className="mt-3 text-sm text-muted-foreground">{t.noWorks}</p>
+          <p className="mt-3 text-sm text-soft">{t.noWorks}</p>
         ) : (
-          <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-            {contest.gallery_works.map((work) => (
-              <li key={work.source_page_url}>
-                <WinnerIndexCard work={work} locale={locale} />
+          <ul className="mt-4 border-t border-line">
+            {contest.gallery_works.map((work, index) => (
+              <li key={work.source_page_url || work.title || String(index)}>
+                <WinnerIndexRow work={work} locale={locale} />
               </li>
             ))}
           </ul>
         )}
       </section>
 
-      <section className="mt-4">
-        <h2 className="text-base font-semibold text-ink">{t.galleries}</h2>
+      <section className="mt-8">
+        <h2 className="font-serif text-xl text-ink">{t.galleries}</h2>
         {contest.gallery_urls.length === 0 ? (
-          <p className="mt-2 text-sm text-muted-foreground">{t.noGalleries}</p>
+          <p className="mt-3 text-sm text-soft">{t.noGalleries}</p>
         ) : (
-          <ul className="mt-2 space-y-2">
+          <ul className="mt-4 border-t border-line">
             {contest.gallery_urls.map((gallery) => {
               const label = galleryLinkText(gallery, locale, t.gallery);
               const sourceUrl = gallery.url.trim();
               return (
-                <li
-                  key={gallery.url}
-                  className="flex gap-3 border-b border-border py-2 text-sm"
-                >
-                  <ThumbPlaceholder
-                    title={label}
-                    locale={locale}
-                    className="h-16 w-24 shrink-0 rounded-[4px]"
-                    textClassName="text-sm text-[#8A8A8A]"
-                  />
-                  <div className="min-w-0 space-y-1">
-                    <p className="font-serif text-base leading-snug text-ink">{label}</p>
-                    <p className="text-xs leading-5 text-muted-foreground">{t.fromSource}</p>
-                    {sourceUrl ? (
-                      <a
-                        href={sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block text-xs text-accent underline-offset-4 hover:underline"
-                      >
-                        {t.visitSource}
-                      </a>
-                    ) : null}
-                  </div>
+                <li key={gallery.url} className="border-b border-line py-3">
+                  {sourceUrl ? (
+                    <a
+                      href={sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-serif text-lg text-accent underline decoration-line underline-offset-4 outline-none hover:decoration-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                    >
+                      {label}
+                      <ExternalLink aria-hidden="true" className="size-3.5" />
+                    </a>
+                  ) : (
+                    <p className="font-serif text-lg leading-snug text-ink">{label}</p>
+                  )}
+                  <p className="mt-1 text-xs leading-5 text-soft">{t.fromSource}</p>
                 </li>
               );
             })}

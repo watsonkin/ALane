@@ -351,29 +351,27 @@ export function windowChipLabel(
   return locale === "en" ? WINDOW_FILTER_EN[window] : window === "open" ? "开放中" : window === "closed" ? "已截止" : "待定";
 }
 
-export function isChineseUi(locale: string): boolean {
-  return locale.toLowerCase().startsWith("zh");
-}
-
-/** English UI: initials such as WSPA. Falls back to the title when the name has no Latin words. */
-export function englishInitials(name: string): string {
-  const stripped = name.replace(/[（(][^）)]*[）)]/g, " ");
-  const words = stripped.match(/[A-Za-z0-9]+/g) ?? [];
-  const initials = words.map((word) => word[0]!.toUpperCase()).join("");
-  if (initials) return initials.slice(0, 8);
-  const title = name.trim();
-  return title.slice(0, 12) || "·";
-}
+const WRITTEN_YEAR = /(?:^|[^0-9])((?:19|20)\d{2})(?![0-9])/;
 
 /**
- * Gray-placeholder caption.
- * zh: the contest or work title (CSS clamps it when the box is small).
- * en: name initials.
+ * Year printed beside a deadline. A written timestamp wins.
+ * Otherwise an edition that actually contains a four-digit year.
+ * No reliable year returns null so the row is not reserved.
  */
-export function thumbPlaceholderText(title: string, locale: string): string {
-  const name = title.trim() || (isChineseUi(locale) ? "赛事" : "Award");
-  if (isChineseUi(locale)) return name;
-  return englishInitials(name);
+export function contestYear(
+  contest: Pick<Contest, "deadline_at" | "open_at" | "announce_at" | "edition"> & {
+    edition_en?: string | null;
+  },
+  locale: Locale,
+): string | null {
+  const dated = contest.deadline_at || contest.open_at || contest.announce_at;
+  if (dated) {
+    const match = /^(\d{4})/.exec(dated);
+    if (match) return match[1];
+  }
+  const edition = displayEdition(contest, locale);
+  if (!edition) return null;
+  return WRITTEN_YEAR.exec(edition)?.[1] ?? null;
 }
 
 /** English UI prefers edition_en. Chinese UI reads edition only. */
