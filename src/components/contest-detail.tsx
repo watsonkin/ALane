@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { ContestSocialLinks } from "@/components/contest-social-links";
 import { ContestWindowChip } from "@/components/contest-window-chip";
 import { RightsChip } from "@/components/rights-chip";
+import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import { WinnerIndexCard } from "@/components/winner-index-card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
@@ -191,19 +192,38 @@ export function ContestDetail({
         {contest.gallery_urls.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">{t.noGalleries}</p>
         ) : (
-          <ul className="mt-1">
-            {contest.gallery_urls.map((gallery) => (
-              <li key={gallery.url} className="border-b border-border py-2 text-sm">
-                <a
-                  href={gallery.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent underline-offset-4 hover:underline"
+          <ul className="mt-2 space-y-2">
+            {contest.gallery_urls.map((gallery) => {
+              const label = galleryLinkText(gallery, locale, t.gallery);
+              const sourceUrl = gallery.url.trim();
+              return (
+                <li
+                  key={gallery.url}
+                  className="flex gap-3 border-b border-border py-2 text-sm"
                 >
-                  {galleryLinkText(gallery, locale, t.gallery)}
-                </a>
-              </li>
-            ))}
+                  <ThumbPlaceholder
+                    title={label}
+                    locale={locale}
+                    className="h-16 w-24 shrink-0 rounded-[4px]"
+                    textClassName="text-sm text-[#8A8A8A]"
+                  />
+                  <div className="min-w-0 space-y-1">
+                    <p className="font-serif text-base leading-snug text-ink">{label}</p>
+                    <p className="text-xs leading-5 text-muted-foreground">{t.fromSource}</p>
+                    {sourceUrl ? (
+                      <a
+                        href={sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block text-xs text-accent underline-offset-4 hover:underline"
+                      >
+                        {t.visitSource}
+                      </a>
+                    ) : null}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>

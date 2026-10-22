@@ -5,7 +5,6 @@ import { RightsChip } from "@/components/rights-chip";
 import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
-  contestThumbPath,
   deadlineWindow,
   displayName,
   feeLabel,
@@ -61,8 +60,6 @@ export function HomeHero({
                       <ContestThumb
                         name={name}
                         locale={locale}
-                        thumbPath={contestThumbPath(contest)}
-                        organizerIcon={contest.organizer_icon}
                         width={200}
                         height={64}
                         className="h-16 w-full shrink-0"

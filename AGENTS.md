@@ -10,7 +10,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## 街拍摄影赛事聚合站
 
-M0: Zod schema, `data/contests/*.yaml`, list and detail pages, small winner thumbs. Do not add ingest crawlers. Thumbs live only under `public/thumbs/{contest-id}/` with longest edge ≤ 400. `gallery_works[].source_page_url` is that work’s own page, and the thumb link uses it directly. Do not store or hotlink originals.
+M0: Zod schema, `data/contests/*.yaml`, list and detail pages. Do not add ingest crawlers. Do not render work photos or organizer marks: no `/thumbs/` images and no `/icons/organizers/` (or YAML `organizer_icon`) in the UI. Winner, gallery, list, and closing-soon slots use a gray title/initials placeholder. A source CTA opens `gallery_works[].source_page_url` or the `gallery_urls` edition link in a new tab; omit the CTA when that URL is missing. Do not store or hotlink originals. Do not label a contest Trusted, verified official, or 官方可信.
 
 - Validate data with `npm run validate-data` before trusting a YAML edit.
 - `prebuild` snapshots `data/contests` into `src/generated/contests.json`. Production reads that snapshot, not the YAML directory. Do not turn Cache Components back on; Next 16.4 plus OpenNext throws on `preview-props.json` unless the postinstall glob patch is present.

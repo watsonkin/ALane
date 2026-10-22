@@ -1,14 +1,11 @@
-"use client";
-
-import { useState } from "react";
-import Image from "next/image";
 import { isChineseUi, thumbPlaceholderText } from "@/lib/contest-labels";
 import type { Locale } from "@/lib/locale";
 import { cn } from "@/lib/utils";
 
 /**
- * Gray stand-in when a card has no official thumbnail.
+ * Neutral stand-in for a contest or work slot.
  * Chinese UI prints the title. English UI prints initials.
+ * Not a work photo and not an organizer mark.
  */
 export function ThumbPlaceholder({
   title,
@@ -47,65 +44,24 @@ export function ThumbPlaceholder({
   );
 }
 
+/** List and closing-soon slot. Always the neutral title/initials block. */
 export function ContestThumb({
   name,
   locale,
-  thumbPath,
-  organizerIcon = null,
   className,
   width,
   height,
-  grayscale = false,
 }: {
   name: string;
   locale: Locale;
-  thumbPath: string | null;
-  organizerIcon?: string | null;
   className?: string;
   width: number;
   height: number;
-  grayscale?: boolean;
 }) {
-  const [iconFailed, setIconFailed] = useState(false);
-  const slot = cn("relative shrink-0 overflow-hidden rounded-[4px]", className);
-  const slotSize = `${width}x${height}`;
-
-  if (thumbPath) {
-    return (
-      <div className={slot} data-thumb-slot={slotSize}>
-        <Image
-          src={`/${thumbPath}`}
-          alt=""
-          fill
-          sizes={`${width}px`}
-          unoptimized
-          className={cn("object-cover object-center", grayscale && "grayscale")}
-        />
-      </div>
-    );
-  }
-
-  if (organizerIcon && !iconFailed) {
-    const src = organizerIcon.startsWith("/") ? organizerIcon : `/${organizerIcon}`;
-    return (
-      <div className={cn(slot, "bg-[#F1EEE7]")} data-thumb-slot={slotSize}>
-        <div
-          data-thumb="organizer-icon"
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <img
-            src={src}
-            alt=""
-            className="max-h-[60%] max-w-[60%] object-contain"
-            onError={() => setIconFailed(true)}
-          />
-        </div>
-      </div>
-    );
-  }
+  const slot = cn("relative shrink-0 overflow-hidden rounded-[4px] bg-[#E8E4DC]", className);
 
   return (
-    <div className={cn(slot, "bg-[#E8E4DC]")} data-thumb-slot={slotSize}>
+    <div className={slot} data-thumb-slot={`${width}x${height}`}>
       <ThumbPlaceholder
         title={name}
         locale={locale}

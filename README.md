@@ -54,10 +54,10 @@ npm run dev
 | `online` | 是否含线上。纯线下时 `geo` 必填 |
 | `fee` | `free` / `paid` / `mixed` / `unknown` |
 | `street_photo_relevance` | `core` / `adjacent` / `unreviewed`（人工初标） |
-| `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组表示**未评估**，不是“安全” |
+| `rights_tags` | `transfer_copyright`、`exclusive`、`no_payment`、`moral_rights_waived`。空数组不是“安全”，页面也不写 Trusted。`health: ok` 且没有这些标签时，芯片写「主办方官网 / Organizer site」 |
 | `gallery_urls` | `{ url, label?, label_zh?, label_en?, edition?, edition_en? }`。整届获奖列表的外链。英文界面优先 `label_en` 和 `edition_en`，中文界面优先 `label_zh`，缺了再用共用的 `label` / `edition`。只写一个 `label` 时中英都用它。展示时标题和届次用间隔号连接；两边相同，或一边已经包含另一边，就只留信息更多的那一侧 |
-| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可选，是 `public/` 下的 `thumbs/{id}/…`，最长边 ≤ 400。列表和即将截止优先用这张作品小图。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
-| `organizer_icon` | 可选。本地路径 `/icons/organizers/{slug}.svg`（也可不写开头的斜线），不能是外链。没有作品小图时，缩略槽用浅底 `#F1EEE7` 居中 contain，最大边约占槽的 60%。没有标，或标加载失败，才用灰底 `#E8E4DC` 字 `#8A8A8A`（中文 title，英文首字母） |
+| `gallery_works` | 单件作品索引。`source_page_url` 必填，且必须是这一件作品的页面，不能是获奖列表或原图文件。`thumb_path` 可留在 YAML 里，页面不展示这张图。作品位是灰底占位；有源链时「查看原图 / View on official site」新标签打开 `source_page_url`。可选 `title`、`author_name`、`author_homepage_url`。`source_site_label` 必填。流水线见 [TECH.md](TECH.md) |
+| `organizer_icon` | 可选遗留字段，页面不渲染。路径若填写，仍须是 `/icons/organizers/{slug}.svg`（也可不写开头的斜线），不能是外链。主办识别是文字名；详情上的官网按钮链到 `official_url` |
 | `source_adapters` | `{ id, kind? }`。`kind` 为 `manual` / `jsonld` / `html` / `api`，缺省 `manual`。M0 不会执行它们 |
 | `last_fetched_at`, `content_hash` | 抓取后才填。现在保持 `null` |
 | `health` | `ok` / `warn` / `dead`。M0 只展示，不探测 |

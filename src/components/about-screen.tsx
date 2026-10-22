@@ -76,44 +76,36 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
 
 function ChineseAbout() {
   return (
-    <>
-      <p>
-        ALane 是街头摄影与纪实向摄影赛事的索引站。你在这里查看征稿是否仍开放、截止与费用，再点进主办方官网报名或看规则。我们不托管参赛作品，也不提供高清下载。
-      </p>
-      <p>
-        对已核对的官方获奖页，站点可保留最长边不超过 400 像素的小图，方便认出作品；点击小图会新标签打开源站该作品页。权利标签与部分日期仅供参考，一律以官网为准。勘误、缩略图下架或希望移出索引，请邮件{" "}
-        <a
-          href="mailto:AlaneStreetPhotos@icloud.com"
-          className="text-accent underline-offset-4 hover:underline"
-        >
-          AlaneStreetPhotos@icloud.com
-        </a>
-        。
-      </p>
-    </>
+    <p>
+      ALane 是街头摄影与纪实向摄影赛事的索引站。你在这里查看征稿是否仍开放、截止与费用，再点进主办方官网报名或看规则。本站<strong>不保存</strong>参赛作品，也不提供图片下载；作品相关入口仅链接至主办方官网。权利标签与部分日期仅供参考，一律以官网为准。勘误或希望移出索引，请邮件{" "}
+      <a
+        href="mailto:AlaneStreetPhotos@icloud.com"
+        className="text-accent underline-offset-4 hover:underline"
+      >
+        AlaneStreetPhotos@icloud.com
+      </a>
+      。
+    </p>
   );
 }
 
 function EnglishAbout() {
   return (
-    <>
-      <p>
-        {
-          "ALane is an index of street and documentary-leaning photography awards. Check whether a call is still open, its deadline and fees, then go to the organizer\u2019s site to enter or read the rules. We do not host entries and we do not offer high-resolution downloads."
-        }
-      </p>
-      <p>
-        {
-          "For verified official winner pages, the site may keep a small index thumbnail (longest edge \u2264 400px) so you can recognize the work. Clicking it opens that work\u2019s page on the source site in a new tab. Rights labels and some dates are for reference only\u2014always trust the official site. For corrections, thumbnail takedown, or removal from the index, email "
-        }
-        <a
-          href="mailto:AlaneStreetPhotos@icloud.com"
-          className="text-accent underline-offset-4 hover:underline"
-        >
-          AlaneStreetPhotos@icloud.com
-        </a>
-        .
-      </p>
-    </>
+    <p>
+      {
+        "ALane is an index of street and documentary-leaning photography awards. Check whether a call is still open, its deadline and fees, then go to the organizer\u2019s site to enter or read the rules. This site "
+      }
+      <strong>does not store</strong>
+      {
+        " competition entries and does not offer image downloads; work-related links go to the organizer\u2019s official site. Rights labels and some dates are for reference only\u2014always trust the official site. For corrections or removal from the index, email "
+      }
+      <a
+        href="mailto:AlaneStreetPhotos@icloud.com"
+        className="text-accent underline-offset-4 hover:underline"
+      >
+        AlaneStreetPhotos@icloud.com
+      </a>
+      .
+    </p>
   );
 }

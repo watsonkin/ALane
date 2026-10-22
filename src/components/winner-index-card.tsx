@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { ThumbPlaceholder } from "@/components/thumb-placeholder";
 import type { GalleryWork } from "@/lib/contest-schema";
 import type { Locale } from "@/lib/locale";
@@ -26,42 +25,35 @@ export function WinnerIndexCard({ work, locale }: { work: GalleryWork; locale: L
   const authorName = authorLabel(work, locale);
   const title = work.title ?? authorName ?? work.source_site_label;
   const socialLinks = workSocialLinks(work, t);
+  const sourceUrl = work.source_page_url.trim();
 
   return (
     <article className="flex h-full w-full flex-col overflow-hidden rounded-[4px] border border-border bg-card">
-      <a
-        href={work.source_page_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block outline-none focus-visible:bg-muted"
-      >
-        <div className="relative h-36 w-full shrink-0 overflow-hidden bg-[#E8E4DC]">
-          {work.thumb_path ? (
-            <Image
-              src={`/${work.thumb_path}`}
-              alt={title}
-              fill
-              sizes="240px"
-              unoptimized
-              className="object-cover object-center"
-            />
-          ) : (
-            <ThumbPlaceholder
-              title={title}
-              locale={locale}
-              className="absolute inset-0 h-full w-full rounded-none bg-[#E8E4DC]"
-              textClassName="text-base text-[#8A8A8A]"
-            />
-          )}
-        </div>
-        <div className="space-y-1 px-3 pt-3">
-          <p className="font-serif text-base leading-snug text-ink">{title}</p>
-          <p className="text-xs leading-5 text-muted-foreground">
-            {t.fromSource} · {work.source_site_label}
-          </p>
-          <p className="text-xs text-accent">{t.visitSource}</p>
-        </div>
-      </a>
+      <div className="relative h-36 w-full shrink-0 overflow-hidden bg-[#E8E4DC]">
+        <ThumbPlaceholder
+          title={title}
+          locale={locale}
+          className="absolute inset-0 h-full w-full rounded-none bg-[#E8E4DC]"
+          textClassName="text-base text-[#8A8A8A]"
+        />
+      </div>
+      <div className="space-y-1 px-3 pt-3">
+        <p className="font-serif text-base leading-snug text-ink">{title}</p>
+        <p className="text-xs leading-5 text-muted-foreground">
+          {t.fromSource}
+          {work.source_site_label ? ` · ${work.source_site_label}` : ""}
+        </p>
+        {sourceUrl ? (
+          <a
+            href={sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block text-xs text-accent underline-offset-4 hover:underline"
+          >
+            {t.visitSource}
+          </a>
+        ) : null}
+      </div>
       {authorName ? (
         <p className={`px-3 pt-1 text-xs text-muted-foreground ${socialLinks.length === 0 ? "pb-3" : ""}`}>
           {work.author_homepage_url ? (

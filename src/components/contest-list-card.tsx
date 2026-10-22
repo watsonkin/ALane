@@ -3,7 +3,6 @@ import { RightsChip } from "@/components/rights-chip";
 import { ContestThumb } from "@/components/thumb-placeholder";
 import { Badge } from "@/components/ui/badge";
 import {
-  contestThumbPath,
   deadlineWindow,
   displayEdition,
   displayName,
@@ -26,7 +25,6 @@ export function ContestListCard({
   now: string;
   locale: Locale;
 }) {
-  const thumb = contestThumbPath(contest);
   const window = deadlineWindow(contest, now);
   const name = displayName(contest, locale);
   const t = copy(locale);
@@ -40,11 +38,8 @@ export function ContestListCard({
         <ContestThumb
           name={name}
           locale={locale}
-          thumbPath={thumb}
-          organizerIcon={contest.organizer_icon}
           width={96}
           height={72}
-          grayscale
           className="h-[72px] w-24 shrink-0"
         />
         <div className="min-w-0 flex-1">

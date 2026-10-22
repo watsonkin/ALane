@@ -487,16 +487,16 @@ export function compareByWindow(
   );
 }
 
-export type RightsChip = "trusted" | "caution" | "unevaluated";
+export type RightsChip = "source" | "caution" | "unevaluated";
 
 export const RIGHTS_CHIP_LABEL: Record<RightsChip, string> = {
-  trusted: "Trusted",
+  source: "主办方官网",
   caution: "需留意",
   unevaluated: "未评估",
 };
 
 const RIGHTS_CHIP_LABEL_EN: Record<RightsChip, string> = {
-  trusted: "Trusted",
+  source: "Organizer site",
   caution: "Check rights",
   unevaluated: "Not reviewed",
 };
@@ -509,8 +509,8 @@ export function rightsChipLabel(kind: RightsChip, locale: Locale): string {
  * Public rights chip.
  * health warn is the seed caution flag (often a rights caution) → 需留意.
  * Any recorded rights tag is also 需留意, even when health is ok.
- * health dead is not Trusted.
- * health ok with no caution tag → Trusted. That is the seed flag, not a finished legal review.
+ * health dead stays 需留意.
+ * health ok with no caution tag names the organizer site. It is not a trust verdict.
  */
 export function rightsChip(
   contest: Pick<Contest, "health" | "rights_tags">,
@@ -522,14 +522,8 @@ export function rightsChip(
   ) {
     return "caution";
   }
-  if (contest.health === "ok") return "trusted";
+  if (contest.health === "ok") return "source";
   return "unevaluated";
-}
-
-export function contestThumbPath(
-  contest: Pick<Contest, "gallery_works">,
-): string | null {
-  return contest.gallery_works.find((work) => work.thumb_path)?.thumb_path ?? null;
 }
 
 export function formatPlace(
