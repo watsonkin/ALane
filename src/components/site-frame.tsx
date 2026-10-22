@@ -14,6 +14,8 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
   const t = copy(locale);
   const home = hrefFor(locale, "/");
   const about = hrefFor(locale, "/about");
+  const terms = hrefFor(locale, "/terms");
+  const privacy = hrefFor(locale, "/privacy");
 
   return (
     <>
@@ -74,11 +76,19 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       <footer className="border-t border-border">
-        <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 text-xs text-muted-foreground sm:px-8">
+        <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-4 text-xs text-muted-foreground sm:px-8">
           <p>© 2026 ALane</p>
-          <Link href={about} className="hover:text-ink">
-            {t.about}
-          </Link>
+          <nav aria-label={t.footerNav} className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link href={about} className="hover:text-ink">
+              {t.about}
+            </Link>
+            <Link href={terms} className="hover:text-ink">
+              {t.terms}
+            </Link>
+            <Link href={privacy} className="hover:text-ink">
+              {t.privacy}
+            </Link>
+          </nav>
         </div>
       </footer>
     </>

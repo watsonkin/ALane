@@ -22,6 +22,33 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
       <h1 className="font-serif text-4xl leading-tight">{t.aboutTitle}</h1>
       <div className="mt-6 space-y-4 text-base leading-7">
         {locale === "en" ? <EnglishAbout /> : <ChineseAbout />}
+        <p>
+          {locale === "en" ? (
+            <>
+              See also{" "}
+              <Link href="/en/terms" className="text-accent underline-offset-4 hover:underline">
+                Terms of Use
+              </Link>{" "}
+              and{" "}
+              <Link href="/en/privacy" className="text-accent underline-offset-4 hover:underline">
+                Privacy Policy
+              </Link>
+              .
+            </>
+          ) : (
+            <>
+              另见
+              <Link href="/terms" className="text-accent underline-offset-4 hover:underline">
+                使用条款
+              </Link>
+              、
+              <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+                隐私政策
+              </Link>
+              。
+            </>
+          )}
+        </p>
       </div>
       <details className="mt-8 border-t border-border pt-4 text-sm leading-6 text-muted-foreground">
         <summary className="cursor-pointer text-ink">{t.calendarNotes}</summary>
