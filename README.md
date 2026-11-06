@@ -68,7 +68,7 @@ npm run dev
 
 `/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。日历说明保持中文，只有一份订阅。
 
-语言是 `zh-CN` 和 `en`。中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。优先级是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。`<html lang>` 跟这条路径的语言走：中文根布局写 `zh-CN`，英文根布局写 `en`，进预渲染 HTML，不靠客户端事后改。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。选了英文之后刷新中文根路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`。不看 IP，不用 hash。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。列表、即将截止和筛选结果没有缩略槽：芯片、赛名、截止，有可靠年份时右侧写年份。详情没有头图。有日期的详情提供单场日历 `/contests/[slug]/calendar`（英文 `/en/contests/[slug]/calendar`）。
+语言是 `zh-CN` 和 `en`。默认中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。`/zh` 与 `/en` 同级，是显式中文路径（`/zh`、`/zh/about`、`/zh/contests/[slug]`）：页面里的站内链接留在 `/zh` 下。代理不会把 `/zh` 套进 `/en/zh`。优先级仍是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。`<html lang>` 跟这条路径的语言走：无前缀和 `/zh` 根布局写 `zh-CN`，英文根布局写 `en`，进预渲染 HTML，不靠客户端事后改。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。**中** 去无前缀中文，**EN** 去 `/en/…`。选了英文之后刷新无前缀中文路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`，访问 `/zh` 会写成 `zh-CN`。不看 IP，不用 hash。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。列表、即将截止和筛选结果没有缩略槽：芯片、赛名、截止，有可靠年份时右侧写年份。详情没有头图。有日期的详情提供单场日历 `/contests/[slug]/calendar`（英文 `/en/contests/[slug]/calendar`，显式中文 `/zh/contests/[slug]/calendar`）。
 
 ## Cloudflare Workers
 
@@ -125,10 +125,13 @@ src/lib/contest-files.ts
 src/lib/contests.ts
 src/app/(zh)/layout.tsx 中文根布局，lang=zh-CN
 src/app/(zh)/page.tsx   中文列表
+src/app/zh/layout.tsx   显式中文根布局，lang=zh-CN
+src/app/zh/page.tsx     /zh 列表
 src/app/en/layout.tsx   英文根布局，lang=en
 src/app/en/page.tsx     英文列表
 src/proxy.ts            语言跳转
 src/app/(zh)/contests/[slug]/page.tsx
+src/app/zh/contests/[slug]/page.tsx
 src/app/en/contests/[slug]/page.tsx
 .github/workflows/ci.yml
 .github/workflows/ingest.yml

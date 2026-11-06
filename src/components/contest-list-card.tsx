@@ -1,6 +1,6 @@
 import { Calendar } from "lucide-react";
-import Link from "next/link";
 import { ContestFactChips } from "@/components/contest-fact-chips";
+import { LocaleLink } from "@/components/locale-link";
 import {
   contestYear,
   deadlineWindow,
@@ -8,7 +8,7 @@ import {
   formatContestDate,
 } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
-import { hrefFor, type Locale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
 
 export function ContestMasthead({
@@ -71,9 +71,9 @@ export function ContestListCard({
 }) {
   return (
     <li>
-      <Link href={hrefFor(locale, `/contests/${contest.slug}`)} className={listRowClass}>
+      <LocaleLink href={`/contests/${contest.slug}`} className={listRowClass}>
         <ContestMasthead contest={contest} now={now} locale={locale} />
-      </Link>
+      </LocaleLink>
     </li>
   );
 }

@@ -1,7 +1,7 @@
 import { Calendar, ExternalLink } from "lucide-react";
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { ContestDetailChips } from "@/components/contest-detail-chips";
+import { LocaleAnchor, LocaleLink } from "@/components/locale-link";
 import { ContestSocialLinks } from "@/components/contest-social-links";
 import { WinnerIndexRow } from "@/components/winner-index-card";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@/lib/contest-labels";
 import { calendarOmitReason } from "@/lib/contest-ics";
 import type { Contest, RightsTag } from "@/lib/contest-schema";
-import { hrefFor, type Locale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { copy, type Copy } from "@/lib/messages";
 
 const textLinkClass =
@@ -82,15 +82,15 @@ export function ContestDetail({
   const officialUrl = contest.official_url.trim();
   const calendarHref = calendarOmitReason(contest)
     ? null
-    : hrefFor(locale, `/contests/${contest.slug}/calendar`);
+    : `/contests/${contest.slug}/calendar`;
   const dated = Boolean(contest.deadline_at);
 
   return (
     <article className="max-w-[760px]">
       <p className="mb-4 text-sm">
-        <Link href={hrefFor(locale, "/")} className="text-accent underline-offset-4 hover:underline">
+        <LocaleLink href="/" className="text-accent underline-offset-4 hover:underline">
           {t.backToAll}
-        </Link>
+        </LocaleLink>
       </p>
 
       <header className="border-b border-line pb-6">
@@ -145,10 +145,14 @@ export function ContestDetail({
               </span>
             ) : null}
             {calendarHref ? (
-              <a href={calendarHref} download={`${contest.slug}.ics`} className={textLinkClass}>
+              <LocaleAnchor
+                href={calendarHref}
+                download={`${contest.slug}.ics`}
+                className={textLinkClass}
+              >
                 {t.addToCalendar}
                 <Calendar aria-hidden="true" className="size-3.5" />
-              </a>
+              </LocaleAnchor>
             ) : null}
           </p>
         ) : null}

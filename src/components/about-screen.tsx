@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { LocaleLink } from "@/components/locale-link";
 import { loadContests } from "@/lib/contests";
 import {
   calendarArchivedNote,
@@ -6,7 +6,7 @@ import {
   calendarOmitReason,
 } from "@/lib/contest-ics";
 import { displayName } from "@/lib/contest-labels";
-import { hrefFor, type Locale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
 
 export async function AboutScreen({ locale }: { locale: Locale }) {
@@ -26,25 +26,25 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
           {locale === "en" ? (
             <>
               See also{" "}
-              <Link href="/en/terms" className="text-accent underline-offset-4 hover:underline">
+              <LocaleLink href="/terms" className="text-accent underline-offset-4 hover:underline">
                 Terms of Use
-              </Link>{" "}
+              </LocaleLink>{" "}
               and{" "}
-              <Link href="/en/privacy" className="text-accent underline-offset-4 hover:underline">
+              <LocaleLink href="/privacy" className="text-accent underline-offset-4 hover:underline">
                 Privacy Policy
-              </Link>
+              </LocaleLink>
               .
             </>
           ) : (
             <>
               另见
-              <Link href="/terms" className="text-accent underline-offset-4 hover:underline">
+              <LocaleLink href="/terms" className="text-accent underline-offset-4 hover:underline">
                 使用条款
-              </Link>
+              </LocaleLink>
               、
-              <Link href="/privacy" className="text-accent underline-offset-4 hover:underline">
+              <LocaleLink href="/privacy" className="text-accent underline-offset-4 hover:underline">
                 隐私政策
-              </Link>
+              </LocaleLink>
               。
             </>
           )}
@@ -87,9 +87,9 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
             </>
           )}
           <p>
-            <Link href={hrefFor(locale, "/")} className="text-accent underline-offset-4 hover:underline">
+            <LocaleLink href="/" className="text-accent underline-offset-4 hover:underline">
               {t.calendarBack}
-            </Link>
+            </LocaleLink>
             <span aria-hidden="true"> · </span>
             <a href="/calendar.ics" className="text-accent underline-offset-4 hover:underline">
               {t.downloadCalendar}

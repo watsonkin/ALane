@@ -1,21 +1,17 @@
 "use client";
 
 import { Suspense } from "react";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AlaneLockup } from "@/components/brand/alane-lockup";
+import { LocaleLink } from "@/components/locale-link";
 import { LocaleSwitch, LocaleSwitchFallback } from "@/components/locale-switch";
-import { hrefFor, localeFromPathname } from "@/lib/locale";
+import { localeFromPathname } from "@/lib/locale";
 import { copy } from "@/lib/messages";
 
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "/";
   const locale = localeFromPathname(pathname);
   const t = copy(locale);
-  const home = hrefFor(locale, "/");
-  const about = hrefFor(locale, "/about");
-  const terms = hrefFor(locale, "/terms");
-  const privacy = hrefFor(locale, "/privacy");
 
   return (
     <>
@@ -28,14 +24,14 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
       <header className="border-b border-border">
         <div className="mx-auto flex w-full max-w-5xl items-start justify-between gap-3 px-5 py-4 sm:items-center sm:px-8">
           <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-4 gap-y-3 sm:flex-nowrap">
-            <Link
-              href={home}
+            <LocaleLink
+              href="/"
               className="shrink-0 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
             >
               <AlaneLockup />
-            </Link>
-            <Link
-              href={home}
+            </LocaleLink>
+            <LocaleLink
+              href="/"
               className="flex min-w-0 basis-full items-center gap-4 rounded-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:basis-auto sm:flex-1"
             >
               <span aria-hidden="true" className="hidden h-12 w-px shrink-0 bg-border sm:block" />
@@ -47,7 +43,7 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
                   {t.subtitle}
                 </span>
               </span>
-            </Link>
+            </LocaleLink>
           </div>
           <nav className="flex shrink-0 items-center gap-4 pt-2 text-xs text-muted-foreground sm:pt-0">
             <Suspense fallback={<LocaleSwitchFallback locale={locale} />}>
@@ -63,9 +59,9 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
                 </a>
               </div>
             </details>
-            <Link href={about} className="hover:text-ink">
+            <LocaleLink href="/about" className="hover:text-ink">
               {t.about}
-            </Link>
+            </LocaleLink>
             <a href="/calendar.ics" className="hidden hover:text-ink sm:inline">
               {t.calendar}
             </a>
@@ -79,15 +75,15 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
         <div className="mx-auto flex w-full max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-4 text-xs text-muted-foreground sm:px-8">
           <p>© 2026 ALane</p>
           <nav aria-label={t.footerNav} className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <Link href={about} className="hover:text-ink">
+            <LocaleLink href="/about" className="hover:text-ink">
               {t.about}
-            </Link>
-            <Link href={terms} className="hover:text-ink">
+            </LocaleLink>
+            <LocaleLink href="/terms" className="hover:text-ink">
               {t.terms}
-            </Link>
-            <Link href={privacy} className="hover:text-ink">
+            </LocaleLink>
+            <LocaleLink href="/privacy" className="hover:text-ink">
               {t.privacy}
-            </Link>
+            </LocaleLink>
           </nav>
         </div>
       </footer>

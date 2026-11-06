@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LocaleLink } from "@/components/locale-link";
 import { buttonVariants } from "@/components/ui/button";
-import { hrefFor, localeFromPathname, type Locale } from "@/lib/locale";
+import { localeFromPathname, type Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
 import { cn } from "@/lib/utils";
 
@@ -42,9 +42,9 @@ export function MissingContest({ slug, locale }: { slug?: string; locale?: Local
           </>
         )}
       </p>
-      <Link href={hrefFor(active, "/")} className={cn(buttonVariants({ size: "lg" }), "mt-6")}>
+      <LocaleLink href="/" className={cn(buttonVariants({ size: "lg" }), "mt-6")}>
         {t.backToIndex}
-      </Link>
+      </LocaleLink>
     </div>
   );
 }

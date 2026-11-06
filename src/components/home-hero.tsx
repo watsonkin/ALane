@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { ContestMasthead } from "@/components/contest-list-card";
+import { LocaleLink } from "@/components/locale-link";
 import { selectClosingSoon } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
-import { hrefFor, type Locale } from "@/lib/locale";
+import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
 import { useNow } from "@/lib/use-now";
 
@@ -23,7 +23,6 @@ export function HomeHero({
   const now = useNow(asOf);
   const closing = selectClosingSoon(contests, now);
   const t = copy(locale);
-  const home = hrefFor(locale, "/");
 
   return (
     <section className="mb-6 border-b border-border pb-6">
@@ -32,35 +31,35 @@ export function HomeHero({
         {closing.contests.length === 0 ? (
           <p className="mt-3 text-sm text-muted-foreground">
             {t.closingEmpty}
-            <Link
+            <LocaleLink
               href="#contest-list"
               className="ml-2 text-accent underline-offset-4 hover:underline"
             >
               {t.viewAll}
-            </Link>
+            </LocaleLink>
           </p>
         ) : (
           <>
             <ul className="mt-4 flex gap-3 overflow-x-auto py-1">
               {closing.contests.map((contest) => (
                 <li key={contest.id} className="flex w-72 shrink-0">
-                  <Link
-                    href={hrefFor(locale, `/contests/${contest.slug}`)}
+                  <LocaleLink
+                    href={`/contests/${contest.slug}`}
                     className={closingCardClass}
                   >
                     <ContestMasthead contest={contest} now={now} locale={locale} heading="h3" />
-                  </Link>
+                  </LocaleLink>
                 </li>
               ))}
             </ul>
             {closing.truncated ? (
               <p className="mt-3 text-sm text-muted-foreground">
-                <Link
-                  href={`${home}?window=open#contest-list`}
+                <LocaleLink
+                  href="/?window=open#contest-list"
                   className="text-accent underline-offset-4 hover:underline"
                 >
                   {t.viewOpen}
-                </Link>
+                </LocaleLink>
               </p>
             ) : null}
           </>

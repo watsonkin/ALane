@@ -49,26 +49,70 @@ function splitPath(path: string): { pathname: string; suffix: string } {
   return { pathname: path.slice(0, cut) || "/", suffix: path.slice(cut) };
 }
 
+export function isEnPath(pathname: string): boolean {
+  return pathname === "/en" || pathname.startsWith("/en/");
+}
+
+export function isZhPath(pathname: string): boolean {
+  return pathname === "/zh" || pathname.startsWith("/zh/");
+}
+
 export function localeFromPathname(pathname: string): Locale {
-  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "zh-CN";
+  return isEnPath(pathname) ? "en" : "zh-CN";
+}
+
+/** Drop one or two `/en` or `/zh` prefixes. `/zh/about` and `/en/zh/about` both become `/about`. */
+function stripLocalePrefix(pathname: string): string {
+  let path = pathname || "/";
+  for (let i = 0; i < 2; i += 1) {
+    if (path === "/en" || path === "/zh") return "/";
+    if (path.startsWith("/en/") || path.startsWith("/zh/")) {
+      path = path.slice(3) || "/";
+      continue;
+    }
+    break;
+  }
+  return path || "/";
+}
+
+function withPrefix(prefix: "" | "/en" | "/zh", path: string): string {
+  const { pathname, suffix } = splitPath(path);
+  const bare = stripLocalePrefix(pathname);
+  if (prefix === "") return `${bare}${suffix}`;
+  if (bare === "/") return `${prefix}${suffix}`;
+  return `${prefix}${bare}${suffix}`;
 }
 
 export function toEnPath(path: string): string {
-  const { pathname, suffix } = splitPath(path);
-  if (pathname === "/en" || pathname.startsWith("/en/")) return `${pathname}${suffix}`;
-  if (pathname === "/") return `/en${suffix}`;
-  return `/en${pathname}${suffix}`;
+  return withPrefix("/en", path);
 }
 
+/** Cookie Chinese: unprefixed, including when the source path was `/zh` or `/en`. */
 export function toZhPath(path: string): string {
-  const { pathname, suffix } = splitPath(path);
-  if (pathname === "/en") return `/${suffix}`;
-  if (pathname.startsWith("/en/")) return `${pathname.slice(3)}${suffix}`;
-  return `${pathname}${suffix}`;
+  return withPrefix("", path);
+}
+
+/** Explicit `/zh` path locale. In-page links stay under `/zh`. */
+export function toZhPrefixedPath(path: string): string {
+  return withPrefix("/zh", path);
 }
 
 export function hrefFor(locale: Locale, path: string): string {
   return locale === "en" ? toEnPath(path) : toZhPath(path);
+}
+
+/**
+ * Keep the current path locale. `/zh/...` stays under `/zh`, `/en/...` under `/en`,
+ * and unprefixed Chinese stays unprefixed. Hash-only, protocol-relative, and file
+ * URLs (a dot in the path, such as `/calendar.ics`) are returned unchanged.
+ */
+export function localizeHref(pathname: string, href: string): string {
+  if (!href.startsWith("/") || href.startsWith("//")) return href;
+  const { pathname: target } = splitPath(href);
+  if (target.includes(".")) return href;
+  if (isEnPath(pathname)) return toEnPath(href);
+  if (isZhPath(pathname)) return toZhPrefixedPath(href);
+  return toZhPath(href);
 }
 
 /** Same-origin path only. Rejects protocol-relative and backslash tricks. */

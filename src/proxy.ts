@@ -3,7 +3,9 @@ import type { NextRequest } from "next/server";
 import {
   LOCALE_COOKIE,
   LOCALE_MAX_AGE,
+  isEnPath,
   isLocale,
+  isZhPath,
   localeFromAcceptLanguage,
   toEnPath,
 } from "@/lib/locale";
@@ -24,19 +26,26 @@ function skip(pathname: string): boolean {
 
 /**
  * URL wins, then the alane_locale cookie, then Accept-Language.
- * Visiting /en sets the cookie. An English cookie on an unprefixed path
- * redirects to the /en equivalent. A first visit with no cookie and a
- * non-Chinese Accept-Language also redirects, without setting the cookie
- * until the /en response.
+ * `/en` and `/zh` are both explicit path locales: visiting either sets the
+ * cookie and is never nested under the other (`/zh` must not 307 to `/en/zh`).
+ * An English cookie on an unprefixed path redirects to the /en equivalent.
+ * A first visit with no cookie and a non-Chinese Accept-Language also
+ * redirects, without setting the cookie until the /en response.
+ * Unprefixed paths stay the cookie-Chinese surface.
  */
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
   if (skip(pathname)) return NextResponse.next();
 
-  const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
-  if (isEnglish) {
+  if (isEnPath(pathname)) {
     const response = NextResponse.next();
     response.cookies.set(LOCALE_COOKIE, "en", COOKIE);
+    return response;
+  }
+
+  if (isZhPath(pathname)) {
+    const response = NextResponse.next();
+    response.cookies.set(LOCALE_COOKIE, "zh-CN", COOKIE);
     return response;
   }
 
