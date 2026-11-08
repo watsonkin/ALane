@@ -14,6 +14,10 @@ fee: unknown
 street_photo_relevance: core
 rights_tags: []
 gallery_urls:
+  - url: "https://www.street-macadam.com/macadam-awards-2026"
+    label: "2026"
+    label_en: "2026"
+    edition: "2026"
   - url: "https://www.street-macadam.com/macadam-awards-2025"
     label: "2025 届"
     label_en: "2025"

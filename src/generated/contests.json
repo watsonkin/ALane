@@ -225,6 +225,12 @@
     "rights_tags": [],
     "gallery_urls": [
       {
+        "url": "https://www.bspfestival.org/years/2026",
+        "label": "2026",
+        "label_en": "2026",
+        "edition": "2026"
+      },
+      {
         "url": "https://www.bspfestival.org/years/2025",
         "label": "2025",
         "edition": "2025"
@@ -273,6 +279,12 @@
     "rights_tags": [],
     "gallery_urls": [
       {
+        "url": "https://www.dspfestival.com/2026/",
+        "label": "2026",
+        "label_en": "2026",
+        "edition": "2026"
+      },
+      {
         "url": "https://www.dspfestival.com/2024/",
         "label": "2024 入围与获奖",
         "label_en": "2024 finalists and winners",
@@ -320,6 +332,12 @@
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards",
         "label": "历年索引",
         "label_en": "Index by year"
+      },
+      {
+        "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2026/winners",
+        "label": "2026 获奖",
+        "label_en": "2026 Winners",
+        "edition": "2026"
       },
       {
         "url": "https://www.lensculture.com/photo-competitions/street-photography-awards/2025/winners",
@@ -814,6 +832,12 @@
     "rights_tags": [],
     "gallery_urls": [
       {
+        "url": "https://www.street-macadam.com/macadam-awards-2026",
+        "label": "2026",
+        "label_en": "2026",
+        "edition": "2026"
+      },
+      {
         "url": "https://www.street-macadam.com/macadam-awards-2025",
         "label": "2025 届",
         "label_en": "2025",
@@ -853,6 +877,12 @@
     "street_photo_relevance": "core",
     "rights_tags": [],
     "gallery_urls": [
+      {
+        "url": "https://www.all-about-photo.com/photography-article/2232/street-photography-winners-aap-magazine-61",
+        "label": "AAP Magazine 61 Street",
+        "label_en": "AAP Magazine 61 Street",
+        "edition": "2026"
+      },
       {
         "url": "https://www.all-about-photo.com/photography-article/2007/winners-aap-magazine-52-street-photography",
         "label": "AAP Magazine 52 Street",
