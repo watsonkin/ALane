@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   // The preview browser opens 127.0.0.1. Without this, Next blocks dev
   // assets and the list filters never hydrate.
   allowedDevOrigins: ["127.0.0.1"],
+  experimental: { agentUpgrade: "security" },
   turbopack: {
     rules: {
       "*.css": {
