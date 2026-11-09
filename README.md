@@ -88,7 +88,25 @@ npm run dev
 | Node.js | `22` |
 | Root directory | 仓库根目录 |
 
-非生产分支的预览命令可以用 `npx opennextjs-cloudflare upload`。M0 没有密钥，不要在构建里打印 token。本地预览需要把 `.dev.vars.example` 复制成 `.dev.vars`（只有 `NEXTJS_ENV=development`）。这个文件已忽略，不要提交，Wrangler 部署也不会带上它。
+非生产分支的预览命令可以用 `npx opennextjs-cloudflare upload`。不要在构建里打印 token。本地预览需要把 `.dev.vars.example` 复制成 `.dev.vars`。这个文件已忽略，不要提交，Wrangler 部署也不会带上它。
+
+## 邮件提醒
+
+可选的整站邮件提醒（`/reminders`、`/zh/reminders`、`/en/reminders`）。验证码确认后，有新赛开幕、截止落入未来 14 天、或获奖廊入库时，才发一封合并摘要。未验证的邮箱不进入发送列表。页脚、关于页和首页有入口；首页那条是弱文字链，不替换「日历」或 `/calendar.ics`。
+
+发信选用 Resend，From 固定为 `ALane <reminders@alane.photography>`。密钥只通过 Wrangler 写入，不要写进仓库或构建日志：
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put REMINDERS_UNSUBSCRIBE_SECRET
+npx wrangler secret put REMINDERS_CRON_SECRET
+```
+
+`wrangler.jsonc` 里 `REMINDERS_ENABLED` 默认为 `"0"`。验证码、欢迎信和业务摘要的模板仍标着 `PLACEHOLDER`，`DIGEST_COPY_CONFIRMED` 为 false（待 Watson 确认）。在那之前，每日 cron **不会**发出业务摘要，接口也不会把验证码或欢迎信交给 Resend。把环境变量改成 `"1"` 也不能越过这个代码闸。
+
+订阅存在 Cloudflare D1 绑定 `REMINDERS_DB`（库名 `alane-reminders`）。`database_id` 目前是占位。迁移文件是 `migrations/0001_reminders.sql`。Cron 是 `15 0 * * *`（00:15 UTC，08:15 Asia/Shanghai）。`scheduled` 经 `WORKER_SELF_REFERENCE` POST `/api/internal/reminders/digest`。
+
+`reminders@alane.photography` 的 SPF、DKIM、DMARC 由 Resend 在接入域名时给出，不写进这个仓库。勘误仍是 `AlaneStreetPhotos@icloud.com`。
 
 ## 把 Origin 仓库接到 Vercel
 
@@ -143,3 +161,4 @@ src/app/en/contests/[slug]/page.tsx
 - 不生成 ICS
 - 不下载、不镜像、不热链作品图片
 - 没有后台，改数据就是改 YAML 再部署
+- 邮件正文仍是占位，未对真实用户发验证码、欢迎信或业务摘要

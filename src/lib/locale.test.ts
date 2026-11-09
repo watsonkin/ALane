@@ -56,6 +56,9 @@ test("localizeHref follows the page prefix and leaves files alone", () => {
   assert.equal(localizeHref("/zh", "/calendar.ics"), "/calendar.ics");
   assert.equal(localizeHref("/zh", "#contest-list"), "#contest-list");
   assert.equal(localizeHref("/zh/about", "https://example.com/terms"), "https://example.com/terms");
+  assert.equal(localizeHref("/zh/about", "/reminders"), "/zh/reminders");
+  assert.equal(localizeHref("/en/about", "/reminders"), "/en/reminders");
+  assert.equal(localizeHref("/about", "/reminders"), "/reminders");
 });
 
 function respond(path: string, cookie?: string, acceptLanguage?: string) {
@@ -93,6 +96,19 @@ test("proxy still sends unprefixed English cookie traffic to /en", () => {
   assert.equal(firstVisit.status, 307);
   assert.equal(new URL(firstVisit.headers.get("location") ?? "", "http://alane.local").pathname, "/en");
   assert.equal(firstVisit.cookies.get("alane_locale"), undefined);
+});
+
+test("proxy leaves reminder APIs on their own path", () => {
+  for (const path of [
+    "/api/reminders/code",
+    "/api/reminders/verify",
+    "/api/reminders/unsubscribe",
+    "/api/internal/reminders/digest",
+  ]) {
+    const response = respond(path, "en", "en");
+    assert.equal(response.status, 200, path);
+    assert.equal(response.headers.get("location"), null, path);
+  }
 });
 
 test("proxy sets the English cookie on /en and does not nest it", () => {

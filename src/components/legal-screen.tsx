@@ -94,13 +94,16 @@ function ChinesePrivacy() {
         <h2 className="font-serif text-xl leading-snug">1. 我们收集什么</h2>
         <ul className="list-disc space-y-3 pl-5">
           <li>
-            本站本季<strong>不提供</strong>邮件订阅，<strong>不收集</strong>订阅邮箱，<strong>不提供</strong>账号注册，<strong>不收集</strong>密码。
+            <strong>邮件提醒（可选）</strong>：若您订阅邮件提醒，我们会在您提交并验证邮箱后，保存<strong>邮箱地址、邮件语言（中文或英文）、同意时间、验证/订阅/退订时间</strong>等最小必要字段。用途仅限于发送：① 新赛开幕 ② 招募期临近截止（与站内「即将截止」同源，默认未来 14 天）③ 获奖公布 的合并摘要；<strong>有变化才发，无变化不发</strong>。未通过验证码确认的邮箱<strong>不会</strong>进入业务发送列表。您可随时退订；退订后立即停止业务摘要。退订记录保留 <strong>90 天</strong>（防误发与留痕），期满删除或匿名化。验证码邮件仅用于确认订阅，不算业务推送。
           </li>
           <li>
-            若您手动切换语言，浏览器可能保存 Cookie <strong><code className={codeText}>alane_locale</code></strong>（值为 <code className={codeText}>zh-CN</code> 或 <code className={codeText}>en</code>），仅用于记住界面语言。
+            本站<strong>不提供</strong>账号注册，<strong>不收集</strong>密码。
           </li>
           <li>
-            您若主动发邮件至 <MailLink />（勘误、移出索引、权利主张等），邮件内容由该邮箱接收与处理。
+            若您手动切换语言，浏览器可能保存 Cookie <strong><code className={codeText}>alane_locale</code></strong>（值为 <code className={codeText}>zh-CN</code> 或 <code className={codeText}>en</code>），仅用于记住界面语言；该 Cookie <strong>不</strong>决定邮件语言（邮件语言以订阅时选择为准）。
+          </li>
+          <li>
+            您若主动发邮件至 <MailLink />（勘误、移出索引、权利主张、隐私询问等），邮件内容由该邮箱接收与处理。
           </li>
         </ul>
       </section>
@@ -111,6 +114,9 @@ function ChinesePrivacy() {
           <li>
             Cloudflare 作为托管平台可能保留<strong>访问日志与边缘分析</strong>（例如请求时间、URL 路径、HTTP 状态、大致地理区域、User-Agent 等），用于服务运行、安全与故障排查。本站运营者不另建面向营销的用户档案。
           </li>
+          <li>
+            邮件发送经专业发信服务商 <strong>Resend</strong> 处理，限于投递验证码、欢迎信与上述三类摘要。
+          </li>
         </ul>
       </section>
       <section className="space-y-3">
@@ -118,13 +124,19 @@ function ChinesePrivacy() {
         <ul className="list-disc space-y-3 pl-5">
           <li>不出售个人信息。</li>
           <li>不要求账号密码。</li>
-          <li>不把 ICS 日历订阅当作邮件采集通道。</li>
+          <li>不把 ICS 日历订阅（<a href="/calendar.ics" className={textLink}>/calendar.ics</a>）当作邮件采集通道。</li>
+          <li>
+            <strong>不把订阅邮箱用于上述三类提醒以外的营销、广告或向第三方出售/租用名单。</strong>
+          </li>
         </ul>
       </section>
       <section className="space-y-3">
-        <h2 className="font-serif text-xl leading-snug">4. 联系</h2>
+        <h2 className="font-serif text-xl leading-snug">4. 联系与发信身份</h2>
         <ul className="list-disc space-y-3 pl-5">
-          <li>隐私相关询问：<MailLink />。</li>
+          <li>隐私询问、勘误、移出索引、权利主张：<MailLink />。</li>
+          <li>
+            验证码、欢迎信与业务摘要的发件地址：<strong>reminders@alane.photography</strong>（与勘误邮箱分工不同；<strong>不用</strong>勘误邮箱群发）。
+          </li>
         </ul>
       </section>
     </>
@@ -138,13 +150,16 @@ function EnglishPrivacy() {
         <h2 className="font-serif text-xl leading-snug">1. What we collect</h2>
         <ul className="list-disc space-y-3 pl-5">
           <li>
-            This season the site <strong>does not</strong> offer email subscription, <strong>does not</strong> collect subscriber emails, <strong>does not</strong> offer account sign-up, and <strong>does not</strong> collect passwords.
+            <strong>Email alerts (optional):</strong> If you subscribe, after you submit and verify your email we store the <strong>minimum needed fields</strong>: email address, alert language (中文 or English), consent time, and verification / subscribe / unsubscribe timestamps. We use them only to send digests when: (1) new contests open, (2) open calls enter the closing window (aligned with on-site “closing soon”, default <strong>14</strong> days), or (3) winners are published. Digests go out <strong>only when something changed</strong>—never empty mail. Unverified addresses are <strong>not</strong> added to the digest list. You may unsubscribe anytime; digests stop immediately. We keep the unsubscribe record for <strong>90 days</strong> (to prevent mistaken resends and for audit), then delete or anonymize it. Verification emails are for confirming subscription only, not contest digests.
           </li>
           <li>
-            If you switch language manually, your browser may store the Cookie <strong><code className={codeText}>alane_locale</code></strong> (<code className={codeText}>zh-CN</code> or <code className={codeText}>en</code>) only to remember UI language.
+            The site <strong>does not</strong> offer account sign-up and <strong>does not</strong> collect passwords.
           </li>
           <li>
-            If you email <MailLink /> (corrections, removal, rights notices), that message is received in that mailbox.
+            If you switch language manually, your browser may store the Cookie <strong><code className={codeText}>alane_locale</code></strong> (<code className={codeText}>zh-CN</code> or <code className={codeText}>en</code>) only to remember UI language; it does <strong>not</strong> set email language (that follows your subscription choice).
+          </li>
+          <li>
+            If you email <MailLink /> (corrections, removal, rights notices, privacy questions), that message is received in that mailbox.
           </li>
         </ul>
       </section>
@@ -157,6 +172,9 @@ function EnglishPrivacy() {
           <li>
             As the host, Cloudflare may keep <strong>access logs and edge analytics</strong> (e.g. request time, URL path, HTTP status, coarse region, User-Agent) for operations, security, and troubleshooting. The operator does not build a marketing profile database on top of this site.
           </li>
+          <li>
+            Outbound mail is processed by <strong>Resend</strong>, limited to verification codes, the welcome message, and the three digest types above.
+          </li>
         </ul>
       </section>
       <section className="space-y-3">
@@ -167,12 +185,18 @@ function EnglishPrivacy() {
           <li>
             Calendar ICS (<a href="/calendar.ics" className={textLink}>/calendar.ics</a>) is a file download/subscribe path, not an email collection form.
           </li>
+          <li>
+            <strong>We do not use subscriber emails for marketing or ads beyond the three alert types above, and we do not sell or rent the list.</strong>
+          </li>
         </ul>
       </section>
       <section className="space-y-3">
-        <h2 className="font-serif text-xl leading-snug">4. Contact</h2>
+        <h2 className="font-serif text-xl leading-snug">4. Contact and From addresses</h2>
         <ul className="list-disc space-y-3 pl-5">
-          <li>Privacy questions: <MailLink />.</li>
+          <li>Privacy questions, corrections, removal, and rights notices: <MailLink />.</li>
+          <li>
+            Verification, welcome, and digest mail is sent from <strong>reminders@alane.photography</strong> (separate from the corrections mailbox; the corrections address is <strong>not</strong> used for bulk send).
+          </li>
         </ul>
       </section>
     </>

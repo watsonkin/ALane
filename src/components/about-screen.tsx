@@ -8,6 +8,7 @@ import {
 import { displayName } from "@/lib/contest-labels";
 import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
+import { reminderCopy } from "@/lib/reminders/copy";
 
 export async function AboutScreen({ locale }: { locale: Locale }) {
   const contests = await loadContests();
@@ -48,6 +49,14 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
               。
             </>
           )}
+        </p>
+        <p>
+          <LocaleLink href="/reminders" className="text-accent underline-offset-4 hover:underline">
+            {reminderCopy(locale).link}
+          </LocaleLink>
+          {locale === "en"
+            ? " send a short digest when new contests open, deadlines fall within 14 days, or winners are published. They do not replace calendar subscribe. Unsubscribe anytime."
+            : "在有新赛开幕、临近截止或获奖公布时发送摘要，不替代日历订阅，可随时退订。"}
         </p>
       </div>
       <details className="mt-8 border-t border-border pt-4 text-sm leading-6 text-muted-foreground">

@@ -19,6 +19,7 @@ const COOKIE = {
 
 function skip(pathname: string): boolean {
   if (pathname.startsWith("/_next")) return true;
+  if (pathname === "/api" || pathname.startsWith("/api/")) return true;
   if (pathname === "/locale" || pathname.startsWith("/locale/")) return true;
   if (pathname.includes(".")) return true;
   return false;

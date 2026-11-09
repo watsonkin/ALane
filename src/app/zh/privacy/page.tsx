@@ -6,7 +6,7 @@ export const dynamic = "force-static";
 export const metadata: Metadata = {
   title: "隐私政策",
   description:
-    "ALane 本季不收集订阅邮箱或账号密码。站点部署于 Cloudflare Workers，语言偏好使用 alane_locale Cookie。",
+    "ALane 提供可选邮件提醒。验证通过后保存邮箱与语种等最小字段，经 Resend 发送摘要；未验证不进入发送列表。",
 };
 
 export default function ZhPrivacyPage() {

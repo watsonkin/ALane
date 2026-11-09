@@ -7,11 +7,13 @@ import { LocaleLink } from "@/components/locale-link";
 import { LocaleSwitch, LocaleSwitchFallback } from "@/components/locale-switch";
 import { localeFromPathname } from "@/lib/locale";
 import { copy } from "@/lib/messages";
+import { reminderCopy } from "@/lib/reminders/copy";
 
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() ?? "/";
   const locale = localeFromPathname(pathname);
   const t = copy(locale);
+  const reminders = reminderCopy(locale);
 
   return (
     <>
@@ -77,6 +79,9 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
           <nav aria-label={t.footerNav} className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <LocaleLink href="/about" className="hover:text-ink">
               {t.about}
+            </LocaleLink>
+            <LocaleLink href="/reminders" className="hover:text-ink">
+              {reminders.link}
             </LocaleLink>
             <LocaleLink href="/terms" className="hover:text-ink">
               {t.terms}

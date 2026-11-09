@@ -21,5 +21,6 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 
-// Local `next dev` only. No-ops during `next build`. The site does not use bindings.
+// Local `next dev` only. No-ops during `next build`.
+// Dev can see wrangler vars and the REMINDERS_DB binding.
 initOpenNextCloudflareForDev();
