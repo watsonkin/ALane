@@ -694,6 +694,12 @@
     "rights_tags": [],
     "gallery_urls": [
       {
+        "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2026/",
+        "label": "2026 获奖",
+        "label_en": "2026 Winners",
+        "edition": "2026"
+      },
+      {
         "url": "https://www.eyeshotstreetphotography.com/eyeshot-open-call-2025-winners/",
         "label": "2025 获奖",
         "label_en": "2025 Winners",
@@ -959,6 +965,12 @@
     "street_photo_relevance": "core",
     "rights_tags": [],
     "gallery_urls": [
+      {
+        "url": "https://worldstreetphotoawards.com/winners-2026/",
+        "label": "2026 获奖",
+        "label_en": "2026 Winners",
+        "edition": "2026"
+      },
       {
         "url": "https://worldstreetphotoawards.com/wspa-winners-2025/",
         "label": "2025 获奖",
