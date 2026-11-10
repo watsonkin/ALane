@@ -1,258 +1,298 @@
-import { codeExpiresAt, evaluateSend, evaluateVerify, randomSixDigitCode } from "@/lib/reminders/codes";
-import { PENDING_PURGE_MS, UNSUBSCRIBE_RETAIN_MS } from "@/lib/reminders/constants";
-import { createUnsubscribeToken, hashVerificationCode, readUnsubscribeToken, safeEqual } from "@/lib/reminders/crypto";
+import { isLocale, type Locale } from "@/lib/locale";
+import { generateOtpCode, hashOtp, readUnsubscribeToken, safeEqual, signUnsubscribe } from "@/lib/reminders/crypto";
+import type { ReminderCode, ReminderResult } from "@/lib/reminders/codes";
 import {
-  catalogContests,
-  diffCatalog,
-  parseSnapshot,
-  type DigestContest,
-} from "@/lib/reminders/digest";
+  DIGEST_COPY_CONFIRMED,
+  OTP_COOLDOWN_MS,
+  OTP_HOUR_MS,
+  OTP_LOCK_MS,
+  OTP_MAX_SENDS_PER_HOUR,
+  OTP_MAX_WRONG,
+  OTP_TTL_MS,
+  PENDING_VERIFY_TTL_MS,
+  UNSUBSCRIBED_RETAIN_MS,
+} from "@/lib/reminders/constants";
+import { planDigest, type DigestItem } from "@/lib/reminders/digest";
 import { normalizeEmail } from "@/lib/reminders/email";
+import type { Mailer } from "@/lib/reminders/mailer";
 import {
-  businessDigestAllowed,
-  publicOrigin,
-  readRemindersEnv,
-  subscriberMailAllowed,
-  type RemindersEnv,
-} from "@/lib/reminders/env";
-import { createResendMailer, type Mailer } from "@/lib/reminders/mailer";
-import type { ReminderLocale } from "@/lib/reminders/schema";
-import { createD1RemindersStore, type RemindersStore, type SubscriberRow } from "@/lib/reminders/store";
-import { digestTemplate, otpTemplate, welcomeTemplate } from "@/lib/reminders/templates";
+  activateSubscriber,
+  cleanup,
+  deleteOtp,
+  ensureSchema,
+  getOtp,
+  getSubscriber,
+  insertPending,
+  listActive,
+  loadSeen,
+  markDigestSent,
+  markUnsubscribed,
+  saveOtp,
+  saveSeen,
+  updateConsent,
+  type OtpRow,
+} from "@/lib/reminders/store";
+import type { SqlDatabase } from "@/lib/reminders/sql";
+import {
+  calendarFeedUrl,
+  renderDigest,
+  renderOtp,
+  renderWelcome,
+  shanghaiDate,
+  unsubscribeUrl,
+} from "@/lib/reminders/templates";
+import type { Contest } from "@/lib/contest-schema";
 
 export type ReminderDeps = {
-  store: RemindersStore;
-  mailer: Mailer;
-  env: RemindersEnv;
+  db: SqlDatabase;
   now: () => Date;
-  randomCode?: () => string;
-  contests?: readonly DigestContest[];
+  secret: string;
+  siteOrigin: string;
+  mail: Mailer | null;
+  enabled: boolean;
 };
-
-export type SendCodeResult =
-  | { ok: true; status: "sent" | "already_subscribed" }
-  | { ok: false; error: "invalid_email" | "invalid_locale" | "consent_required" | "disabled" | "cooldown" | "rate_limited" | "locked" };
-
-export type VerifyResult =
-  | { ok: true; status: "subscribed"; welcome: "sent" | "skipped" }
-  | { ok: true; status: "locale_updated" }
-  | { ok: false; error: "invalid_email" | "expired" | "incorrect" | "locked" };
-
-export type UnsubscribeResult =
-  | { ok: true; status: "unsubscribed" }
-  | { ok: false; error: "invalid_email" | "invalid_token" };
 
 export type DigestRunResult = {
-  sent: false;
-  reason: "digest_copy_unconfirmed" | "disabled" | "baseline" | "no_change" | "no_recipients" | "not_delivered";
-  delivered: number;
-} | {
-  sent: true;
-  delivered: number;
-  items: number;
+  result: "baseline" | "no_change" | "withheld" | "no_recipients" | "mail_not_configured" | "sent";
+  pendingItems: number;
+  sent: number;
+  failed: number;
 };
 
-export function existingSubscriberAction(
-  existing: SubscriberRow | null,
-  locale: ReminderLocale,
-): "already_subscribed" | "issue_code" {
-  if (existing?.status === "active" && existing.locale === locale) return "already_subscribed";
-  return "issue_code";
+function result(code: ReminderCode): ReminderResult {
+  const ok =
+    code === "sent" ||
+    code === "subscribed" ||
+    code === "subscribed_welcome_failed" ||
+    code === "already_subscribed" ||
+    code === "locale_updated" ||
+    code === "unsubscribed";
+  return { ok, code };
+}
+
+function iso(date: Date): string {
+  return date.toISOString();
+}
+
+async function sweep(deps: ReminderDeps, now: Date): Promise<void> {
+  await cleanup(deps.db, {
+    pendingBefore: iso(new Date(now.getTime() - PENDING_VERIFY_TTL_MS)),
+    unsubscribedBefore: iso(new Date(now.getTime() - UNSUBSCRIBED_RETAIN_MS)),
+    nowIso: iso(now),
+  });
+}
+
+function locked(otp: OtpRow | null, nowMs: number): boolean {
+  if (!otp?.locked_until) return false;
+  return Date.parse(otp.locked_until) > nowMs;
 }
 
 export async function sendCode(
   deps: ReminderDeps,
-  input: { email: string; locale: ReminderLocale; consent: boolean },
-): Promise<SendCodeResult> {
+  input: { email: string; locale: string; consent: boolean },
+): Promise<ReminderResult> {
+  if (!deps.enabled) return result("disabled");
   const email = normalizeEmail(input.email);
-  if (!email) return { ok: false, error: "invalid_email" };
-  if (input.locale !== "zh-CN" && input.locale !== "en") return { ok: false, error: "invalid_locale" };
-  if (input.consent !== true) return { ok: false, error: "consent_required" };
-  if (!subscriberMailAllowed(deps.env)) return { ok: false, error: "disabled" };
+  if (!email) return result("invalid_email");
+  if (!isLocale(input.locale)) return result("invalid_locale");
+  if (input.consent !== true) return result("consent_required");
 
-  const secret = deps.env.REMINDERS_UNSUBSCRIBE_SECRET ?? "";
+  await ensureSchema(deps.db);
   const now = deps.now();
-  const existing = await deps.store.getSubscriber(email);
-  if (existingSubscriberAction(existing, input.locale) === "already_subscribed") {
-    return { ok: true, status: "already_subscribed" };
+  await sweep(deps, now);
+  const nowMs = now.getTime();
+  const subscriber = await getSubscriber(deps.db, email);
+  if (subscriber?.status === "active" && subscriber.locale === input.locale) {
+    return result("already_subscribed");
   }
 
-  const decision = evaluateSend(await deps.store.getCode(email), now.getTime());
-  if (!decision.ok) return { ok: false, error: decision.error };
+  const otp = await getOtp(deps.db, email);
+  if (locked(otp, nowMs)) return result("locked");
 
-  const code = deps.randomCode?.() ?? randomSixDigitCode();
-  const template = otpTemplate(code);
-  if (template.placeholder) return { ok: false, error: "disabled" };
+  let sendCount = otp?.send_count ?? 0;
+  let windowStart = otp ? Date.parse(otp.send_window_start) : nowMs;
+  if (!otp || !Number.isFinite(windowStart) || nowMs - windowStart >= OTP_HOUR_MS) {
+    sendCount = 0;
+    windowStart = nowMs;
+  }
+  if (sendCount >= OTP_MAX_SENDS_PER_HOUR) return result("rate_limited");
+  if (otp && nowMs - Date.parse(otp.last_sent_at) < OTP_COOLDOWN_MS) return result("cooldown");
+  if (!deps.secret || !deps.mail) return result("mail_not_configured");
 
-  const mailed = await deps.mailer.send({ ...template, to: email });
-  if (!mailed.delivered) return { ok: false, error: "disabled" };
+  const code = generateOtpCode();
+  const message = renderOtp(input.locale, code, deps.siteOrigin);
+  const sent = await deps.mail.send({ to: email, subject: message.subject, text: message.text });
+  if (!sent.ok) return result("mail_failed");
 
-  const timestamp = now.toISOString();
-  const subscriber: SubscriberRow = {
+  const at = iso(now);
+  if (!subscriber) {
+    await insertPending(deps.db, { email, locale: input.locale, consentAt: at });
+  } else if (subscriber.status === "pending_verify") {
+    await updateConsent(deps.db, { email, consentAt: at, locale: input.locale });
+  } else {
+    await updateConsent(deps.db, { email, consentAt: at, locale: null });
+  }
+  await saveOtp(deps.db, {
     email,
+    code_hash: await hashOtp(email, code, deps.secret),
+    expires_at: iso(new Date(nowMs + OTP_TTL_MS)),
     locale: input.locale,
-    status: existing?.status === "active" ? "active" : "pending_verify",
-    verified_at: existing?.verified_at ?? null,
-    subscribed_at: existing?.status === "active" ? existing.subscribed_at : null,
-    unsubscribed_at: existing?.status === "active" ? null : existing?.unsubscribed_at ?? null,
-    last_digest_at: existing?.last_digest_at ?? null,
-    consent_at: timestamp,
-    created_at: existing?.created_at ?? timestamp,
-    updated_at: timestamp,
-  };
-  await deps.store.upsertSubscriber(subscriber);
-  await deps.store.upsertCode({
-    email,
-    code_hash: await hashVerificationCode(code, secret),
-    expires_at: codeExpiresAt(now.getTime()),
     wrong_attempts: 0,
     locked_until: null,
-    send_count: decision.sendCount,
-    send_window_started_at: decision.windowStartedAt,
-    last_sent_at: timestamp,
-    pending_locale: input.locale,
+    send_count: sendCount + 1,
+    send_window_start: iso(new Date(windowStart)),
+    last_sent_at: at,
   });
-  return { ok: true, status: "sent" };
+  return result("sent");
 }
 
 export async function verifyCode(
   deps: ReminderDeps,
-  input: { email: string; code: string },
-): Promise<VerifyResult> {
+  input: { email: string; code: string; locale: string },
+): Promise<ReminderResult> {
+  if (!deps.enabled) return result("disabled");
   const email = normalizeEmail(input.email);
-  if (!email) return { ok: false, error: "invalid_email" };
-  const secret = deps.env.REMINDERS_UNSUBSCRIBE_SECRET ?? "";
+  if (!email) return result("invalid_email");
+  const code = input.code.replace(/\s+/g, "");
+  if (!/^\d{6}$/.test(code)) return result("invalid_code");
+  if (!deps.secret) return result("mail_not_configured");
+
+  await ensureSchema(deps.db);
   const now = deps.now();
-  const row = await deps.store.getCode(email);
-  const submitted = input.code.trim();
-  const matches =
-    /^\d{6}$/.test(submitted) && row
-      ? safeEqual(await hashVerificationCode(submitted, secret), row.code_hash)
-      : false;
-  const decision = evaluateVerify(row, matches, now.getTime());
-  if (!decision.ok) {
-    if (decision.next) await deps.store.upsertCode(decision.next);
-    return { ok: false, error: decision.error };
+  await sweep(deps, now);
+  const nowMs = now.getTime();
+  const otp = await getOtp(deps.db, email);
+  if (!otp) return result("expired");
+  if (locked(otp, nowMs)) return result("locked");
+  if (Date.parse(otp.expires_at) <= nowMs) return result("expired");
+
+  const expected = await hashOtp(email, code, deps.secret);
+  if (!safeEqual(otp.code_hash, expected)) {
+    const attempts = otp.wrong_attempts + 1;
+    const lock = attempts >= OTP_MAX_WRONG;
+    await saveOtp(deps.db, {
+      ...otp,
+      wrong_attempts: attempts,
+      locked_until: lock ? iso(new Date(nowMs + OTP_LOCK_MS)) : otp.locked_until,
+    });
+    return result(lock ? "locked" : "incorrect");
   }
 
-  const existing = await deps.store.getSubscriber(email);
-  if (!existing || !row) return { ok: false, error: "expired" };
-  const wasActive = existing.status === "active";
-  const timestamp = now.toISOString();
-  await deps.store.upsertSubscriber({
-    ...existing,
-    locale: row.pending_locale,
-    status: "active",
-    verified_at: existing.verified_at ?? timestamp,
-    subscribed_at: wasActive ? existing.subscribed_at : timestamp,
-    unsubscribed_at: null,
-    updated_at: timestamp,
+  const subscriber = await getSubscriber(deps.db, email);
+  if (!subscriber) return result("expired");
+  const locale: Locale = isLocale(input.locale) ? input.locale : otp.locale;
+  const at = iso(now);
+  const alreadyActive = subscriber.status === "active";
+  await activateSubscriber(deps.db, {
+    email,
+    locale,
+    at,
+    keepSubscribedAt: alreadyActive,
   });
-  await deps.store.deleteCode(email);
+  await deleteOtp(deps.db, email);
 
-  if (wasActive) return { ok: true, status: "locale_updated" };
-
-  const origin = publicOrigin(deps.env);
-  const token = secret ? await createUnsubscribeToken(email, secret) : "";
-  const unsubscribeUrl = token ? `${origin}/api/reminders/unsubscribe?token=${encodeURIComponent(token)}` : "";
-  const template = welcomeTemplate(row.pending_locale, unsubscribeUrl);
-  if (template.placeholder || !subscriberMailAllowed(deps.env)) {
-    return { ok: true, status: "subscribed", welcome: "skipped" };
+  if (alreadyActive) {
+    return result(subscriber.locale === locale ? "already_subscribed" : "locale_updated");
   }
-  const mailed = await deps.mailer.send({ ...template, to: email });
-  return { ok: true, status: "subscribed", welcome: mailed.delivered ? "sent" : "skipped" };
+  if (!deps.mail) return result("subscribed_welcome_failed");
+  const token = await signUnsubscribe(email, deps.secret);
+  const welcome = renderWelcome(locale, {
+    unsubscribeUrl: unsubscribeUrl(deps.siteOrigin, locale, token),
+    calendarUrl: calendarFeedUrl(deps.siteOrigin),
+  });
+  const sent = await deps.mail.send({ to: email, subject: welcome.subject, text: welcome.text });
+  return result(sent.ok ? "subscribed" : "subscribed_welcome_failed");
 }
 
-export async function unsubscribeEmail(deps: ReminderDeps, emailRaw: string): Promise<UnsubscribeResult> {
+export async function unsubscribeEmail(deps: ReminderDeps, emailRaw: string): Promise<ReminderResult> {
   const email = normalizeEmail(emailRaw);
-  if (!email) return { ok: false, error: "invalid_email" };
-  const existing = await deps.store.getSubscriber(email);
-  if (!existing || existing.status === "unsubscribed") {
-    return { ok: true, status: "unsubscribed" };
-  }
-  const timestamp = deps.now().toISOString();
-  await deps.store.upsertSubscriber({
-    ...existing,
-    status: "unsubscribed",
-    unsubscribed_at: timestamp,
-    updated_at: timestamp,
-  });
-  await deps.store.deleteCode(email);
-  return { ok: true, status: "unsubscribed" };
+  if (!email) return result("invalid_email");
+  await ensureSchema(deps.db);
+  const now = deps.now();
+  await sweep(deps, now);
+  await markUnsubscribed(deps.db, email, iso(now));
+  return result("unsubscribed");
 }
 
-export async function openReminderDeps(): Promise<{
-  env: RemindersEnv;
-  store: RemindersStore | null;
-  mailer: Mailer;
-}> {
-  const env = await readRemindersEnv();
-  return {
-    env,
-    store: env.REMINDERS_DB ? createD1RemindersStore(env.REMINDERS_DB) : null,
-    mailer: createResendMailer(env),
-  };
-}
-
-export async function unsubscribeWithToken(deps: ReminderDeps, token: string): Promise<UnsubscribeResult> {
-  const secret = deps.env.REMINDERS_UNSUBSCRIBE_SECRET;
-  if (!secret) return { ok: false, error: "invalid_token" };
-  const email = await readUnsubscribeToken(token, secret);
-  if (!email) return { ok: false, error: "invalid_token" };
+export async function unsubscribeToken(deps: ReminderDeps, token: string): Promise<ReminderResult> {
+  if (!deps.secret) return result("mail_not_configured");
+  const email = await readUnsubscribeToken(token, deps.secret);
+  if (!email) return result("invalid_token");
   return unsubscribeEmail(deps, email);
 }
 
 /**
- * Daily job. Retention runs even while copy is unconfirmed.
- * Business digests do not: DIGEST_COPY_CONFIRMED is false and the template is a placeholder.
+ * Daily scan. Confirmed digest copy is sent only when reminders are enabled.
+ * Cleanup and the no-send baseline still run while the switch is off.
  */
-export async function runDailyDigest(deps: ReminderDeps): Promise<DigestRunResult> {
+export async function runDigest(
+  deps: ReminderDeps,
+  contests: readonly Contest[],
+): Promise<DigestRunResult> {
+  await ensureSchema(deps.db);
   const now = deps.now();
-  await deps.store.purgePendingUnverified(new Date(now.getTime() - PENDING_PURGE_MS).toISOString());
-  await deps.store.purgeUnsubscribed(new Date(now.getTime() - UNSUBSCRIBE_RETAIN_MS).toISOString());
-
-  if (!businessDigestAllowed(deps.env)) {
-    return { sent: false, reason: "digest_copy_unconfirmed", delivered: 0 };
+  await sweep(deps, now);
+  const seen = await loadSeen(deps.db);
+  const plan = planDigest(contests, seen, iso(now));
+  if (plan.kind === "baseline") {
+    await saveSeen(deps.db, plan.seen);
+    return { result: "baseline", pendingItems: 0, sent: 0, failed: 0 };
   }
-
-  const catalog = catalogContests(deps.contests ?? [], now.toISOString());
-  const diff = diffCatalog(parseSnapshot(await deps.store.getSnapshot()), catalog);
-  if (diff.baseline) {
-    await deps.store.saveSnapshot(JSON.stringify(diff.next), null);
-    return { sent: false, reason: "baseline", delivered: 0 };
+  if (plan.items.length === 0) {
+    await saveSeen(deps.db, plan.retainSeen);
+    return { result: "no_change", pendingItems: 0, sent: 0, failed: 0 };
   }
-  if (diff.items.length === 0) {
-    return { sent: false, reason: "no_change", delivered: 0 };
+  if (!deps.enabled || !DIGEST_COPY_CONFIRMED) {
+    await saveSeen(deps.db, plan.retainSeen);
+    return { result: "withheld", pendingItems: plan.items.length, sent: 0, failed: 0 };
   }
+  return sendDigest(deps, plan.items, plan.overflow, plan.nextSeen, now);
+}
 
-  const recipients = await deps.store.listActive();
-  if (recipients.length === 0) {
-    return { sent: false, reason: "no_recipients", delivered: 0 };
+async function sendDigest(
+  deps: ReminderDeps,
+  items: readonly DigestItem[],
+  overflow: boolean,
+  nextSeen: Awaited<ReturnType<typeof loadSeen>>,
+  now: Date,
+): Promise<DigestRunResult> {
+  const active = await listActive(deps.db);
+  if (active.length === 0) {
+    return { result: "no_recipients", pendingItems: items.length, sent: 0, failed: 0 };
   }
-
-  const secret = deps.env.REMINDERS_UNSUBSCRIBE_SECRET ?? "";
-  const origin = publicOrigin(deps.env);
-  let delivered = 0;
-  for (const locale of ["zh-CN", "en"] as const) {
-    const group = recipients.filter((row) => row.locale === locale);
-    if (group.length === 0) continue;
-    for (const recipient of group) {
-      const token = secret ? await createUnsubscribeToken(recipient.email, secret) : "";
-      const template = digestTemplate(locale, diff.items, {
-        truncated: diff.truncated,
-        unsubscribeUrl: token ? `${origin}/api/reminders/unsubscribe?token=${encodeURIComponent(token)}` : "",
-      });
-      if (template.placeholder) {
-        return { sent: false, reason: "digest_copy_unconfirmed", delivered: 0 };
-      }
-      const mailed = await deps.mailer.send({ ...template, to: recipient.email });
-      if (mailed.delivered) delivered += 1;
+  if (!deps.mail || !deps.secret) {
+    return { result: "mail_not_configured", pendingItems: items.length, sent: 0, failed: 0 };
+  }
+  const date = shanghaiDate(now);
+  let sent = 0;
+  let failed = 0;
+  const succeeded: string[] = [];
+  for (const subscriber of active) {
+    const token = await signUnsubscribe(subscriber.email, deps.secret);
+    const message = renderDigest({
+      locale: subscriber.locale,
+      date,
+      items,
+      overflow,
+      unsubscribeUrl: unsubscribeUrl(deps.siteOrigin, subscriber.locale, token),
+      calendarUrl: calendarFeedUrl(deps.siteOrigin),
+      origin: deps.siteOrigin,
+    });
+    const delivery = await deps.mail.send({
+      to: subscriber.email,
+      subject: message.subject,
+      text: message.text,
+    });
+    if (delivery.ok) {
+      sent += 1;
+      succeeded.push(subscriber.email);
+    } else {
+      failed += 1;
     }
   }
-
-  if (delivered === 0) return { sent: false, reason: "not_delivered", delivered: 0 };
-  const sentAt = now.toISOString();
-  await deps.store.saveSnapshot(JSON.stringify(diff.next), sentAt);
-  await deps.store.touchActiveDigest(sentAt);
-  return { sent: true, delivered, items: diff.items.length };
+  if (sent > 0) {
+    await saveSeen(deps.db, nextSeen);
+    await markDigestSent(deps.db, succeeded, iso(now));
+  }
+  return { result: "sent", pendingItems: items.length, sent, failed };
 }

@@ -68,7 +68,7 @@ npm run dev
 
 `/calendar.ics` 略过三个日期都空的赛事，名单写在关于页。已归档、或没有截止时间但仍有其他日期的条目，会在事件说明里注明。日历说明保持中文，只有一份订阅。
 
-语言是 `zh-CN` 和 `en`。默认中文路径不带前缀（`/`、`/about`、`/contests/[slug]`），英文加 `/en`。`/zh` 与 `/en` 同级，是显式中文路径（`/zh`、`/zh/about`、`/zh/contests/[slug]`）：页面里的站内链接留在 `/zh` 下。代理不会把 `/zh` 套进 `/en/zh`。优先级仍是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。`<html lang>` 跟这条路径的语言走：无前缀和 `/zh` 根布局写 `zh-CN`，英文根布局写 `en`，进预渲染 HTML，不靠客户端事后改。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。**中** 去无前缀中文，**EN** 去 `/en/…`。选了英文之后刷新无前缀中文路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`，访问 `/zh` 会写成 `zh-CN`。不看 IP，不用 hash。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。列表、即将截止和筛选结果没有缩略槽：芯片、赛名、截止，有可靠年份时右侧写年份。详情没有头图。有日期的详情提供单场日历 `/contests/[slug]/calendar`（英文 `/en/contests/[slug]/calendar`，显式中文 `/zh/contests/[slug]/calendar`）。
+语言是 `zh-CN` 和 `en`。中文有两套地址：Cookie 中文不带前缀（`/`、`/about`、`/contests/[slug]`），路径中文加 `/zh`（`/zh`、`/zh/about`、`/zh/contests/[slug]`），和英文 `/en` 并列。`/zh` 不会被改写成 `/en/zh`。优先级是地址、再是 Cookie `alane_locale`、再是 `Accept-Language` 里 q 最高的那一个标签：以 `zh` 开头（含 `zh-TW`）归 `zh-CN`，否则归 `en`。`<html lang>` 跟这条路径的语言走：中文根布局和 `/zh` 布局写 `zh-CN`，英文根布局写 `en`，进预渲染 HTML，不靠客户端事后改。顶栏 **中 | EN** 走 `/locale` 写入 Cookie（一年以上，`Path=/`，`SameSite=Lax`）再跳到对等路径，并带上筛选 query。点「中」去不带前缀的中文路径；点「EN」去 `/en`。选了英文之后刷新中文根路径会去 `/en`。访问 `/en` 会把 Cookie 写成 `en`，访问 `/zh` 会写成 `zh-CN`。不看 IP，不用 hash。日期中文是 `2026年10月10日`，英文是 `10 Oct 2026`，都取时间戳里的日期前缀。列表、即将截止和筛选结果没有缩略槽：芯片、赛名、截止，有可靠年份时右侧写年份。详情没有头图。有日期的详情提供单场日历 `/contests/[slug]/calendar`（英文 `/en/contests/[slug]/calendar`，路径中文 `/zh/contests/[slug]/calendar`）。
 
 ## Cloudflare Workers
 
@@ -88,13 +88,24 @@ npm run dev
 | Node.js | `22` |
 | Root directory | 仓库根目录 |
 
-非生产分支的预览命令可以用 `npx opennextjs-cloudflare upload`。不要在构建里打印 token。本地预览需要把 `.dev.vars.example` 复制成 `.dev.vars`。这个文件已忽略，不要提交，Wrangler 部署也不会带上它。
+非生产分支的预览命令可以用 `npx opennextjs-cloudflare upload`。不要在构建里打印 token。本地预览需要把 `.dev.vars.example` 复制成 `.dev.vars`。这个文件已忽略，不要提交，Wrangler 部署也不会带上它。赛事 YAML 没有密钥。邮件提醒用到的密钥见下一节，未配置前表单默认关闭。
 
 ## 邮件提醒
 
-可选的整站邮件提醒（`/reminders`、`/zh/reminders`、`/en/reminders`）。验证码确认后，有新赛开幕、截止落入未来 14 天、或获奖廊入库时，才发一封合并摘要。未验证的邮箱不进入发送列表。页脚、关于页和首页有入口；首页那条是弱文字链，不替换「日历」或 `/calendar.ics`。
+可选的整站邮件提醒（`/reminders`、`/en/reminders`、`/zh/reminders`）。验证码确认后才进入发送名单。发信用 **Resend**，From 固定 `reminders@alane.photography`。勘误邮箱 `AlaneStreetPhotos@icloud.com` 不作为发件人。
 
-发信选用 Resend，From 固定为 `ALane <reminders@alane.photography>`。密钥只通过 Wrangler 写入，不要写进仓库或构建日志：
+验证码信、欢迎信和业务摘要的正文已按 PR-SUBSCRIBE-01 §7.4–§7.6 定稿。`DIGEST_COPY_CONFIRMED` 为 `true`。三封信都不放隐私链接。欢迎信和摘要信在正文之后附日历订阅链和勘误邮箱；摘要信页脚另有退订链接。验证码信不加这两行。
+
+`wrangler.jsonc` 里 `REMINDERS_ENABLED` 仍是 `"0"`，表单和发信都不打开。设成 `"1"` 之前需要：DNS 生效，并且下面三个 secret 已写入。打开之后，日扫有变化才会发出已定稿的摘要。
+
+存储是 D1 绑定 `REMINDERS_DB`（库名 `alane-reminders`）。`database_id` 目前是占位符，部署前换成真实 id：
+
+```bash
+npx wrangler d1 create alane-reminders
+npx wrangler d1 migrations apply alane-reminders --remote
+```
+
+Secret（不要写进仓库）：
 
 ```bash
 npx wrangler secret put RESEND_API_KEY
@@ -102,11 +113,23 @@ npx wrangler secret put REMINDERS_UNSUBSCRIBE_SECRET
 npx wrangler secret put REMINDERS_CRON_SECRET
 ```
 
-`wrangler.jsonc` 里 `REMINDERS_ENABLED` 默认为 `"0"`。验证码、欢迎信和业务摘要的模板仍标着 `PLACEHOLDER`，`DIGEST_COPY_CONFIRMED` 为 false（待 Watson 确认）。在那之前，每日 cron **不会**发出业务摘要，接口也不会把验证码或欢迎信交给 Resend。把环境变量改成 `"1"` 也不能越过这个代码闸。
+`REMINDERS_UNSUBSCRIBE_SECRET` 用来哈希验证码和签名退订链接。`REMINDERS_CRON_SECRET` 保护 `POST /api/internal/reminders/digest`。Cron 为 `15 0 * * *`（UTC 00:15，上海 08:15），由 `cf:build` 在 OpenNext worker 上补上 `scheduled`，再经 `WORKER_SELF_REFERENCE` 调这个路由。无变化不发信。`REMINDERS_ENABLED` 为 `"0"` 时，日扫即使发现变化也不发摘要。
 
-订阅存在 Cloudflare D1 绑定 `REMINDERS_DB`（库名 `alane-reminders`）。`database_id` 目前是占位。迁移文件是 `migrations/0001_reminders.sql`。Cron 是 `15 0 * * *`（00:15 UTC，08:15 Asia/Shanghai）。`scheduled` 经 `WORKER_SELF_REFERENCE` POST `/api/internal/reminders/digest`。
+`pending_verify` 超过 7 天删除。`unsubscribed` 保留 90 天后删除，不另留长期抑制哈希。
 
-`reminders@alane.photography` 的 SPF、DKIM、DMARC 由 Resend 在接入域名时给出，不写进这个仓库。勘误仍是 `AlaneStreetPhotos@icloud.com`。
+### DNS（Watson）
+
+在 Resend 添加域名 `alane.photography`，按控制台给出的记录原样添加。DKIM 公钥每次不同，不要手写 `p=` 值。常见三条如下，主机名和区域以 Resend 页面为准：
+
+| 类型 | 主机名 | 值 |
+| --- | --- | --- |
+| TXT | `resend._domainkey` | Resend 显示的 DKIM 公钥 |
+| MX | `send` | `feedback-smtp.<region>.amazonses.com`，优先级 10（区域从 Resend 复制，常见 `us-east-1`） |
+| TXT | `send` | `v=spf1 include:amazonses.com ~all` |
+
+DMARC：若还没有 `_dmarc` TXT，可先加 `v=DMARC1; p=none; rua=mailto:AlaneStreetPhotos@icloud.com; fo=1`。已有更严格策略时只补充 rua，不要把它改松。DKIM 对齐通过后再考虑 `p=quarantine`。
+
+不要改用 iCloud 勘误邮箱做 SPF/发件人。根域上如果已经有别的 SPF，不要删掉；Resend 的 SPF 在 `send` 子域。
 
 ## 把 Origin 仓库接到 Vercel
 
@@ -142,9 +165,9 @@ src/lib/contest-schema.ts
 src/lib/contest-files.ts
 src/lib/contests.ts
 src/app/(zh)/layout.tsx 中文根布局，lang=zh-CN
-src/app/(zh)/page.tsx   中文列表
-src/app/zh/layout.tsx   显式中文根布局，lang=zh-CN
-src/app/zh/page.tsx     /zh 列表
+src/app/(zh)/page.tsx   中文列表（无前缀）
+src/app/zh/layout.tsx   路径中文根布局，lang=zh-CN
+src/app/zh/page.tsx     路径中文列表
 src/app/en/layout.tsx   英文根布局，lang=en
 src/app/en/page.tsx     英文列表
 src/proxy.ts            语言跳转
@@ -161,4 +184,3 @@ src/app/en/contests/[slug]/page.tsx
 - 不生成 ICS
 - 不下载、不镜像、不热链作品图片
 - 没有后台，改数据就是改 YAML 再部署
-- 邮件正文仍是占位，未对真实用户发验证码、欢迎信或业务摘要

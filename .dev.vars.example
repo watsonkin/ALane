@@ -1,10 +1,9 @@
 NEXTJS_ENV=development
-# Copy to .dev.vars for local Wrangler. Do not commit .dev.vars.
-# Leave these empty. Production secrets are set with Wrangler, not in git:
-#   npx wrangler secret put RESEND_API_KEY
-#   npx wrangler secret put REMINDERS_UNSUBSCRIBE_SECRET
-#   npx wrangler secret put REMINDERS_CRON_SECRET
+# Keep 0 until DNS and Resend are ready. 1 collects addresses and can send digests.
 REMINDERS_ENABLED=0
-RESEND_API_KEY=
-REMINDERS_UNSUBSCRIBE_SECRET=
-REMINDERS_CRON_SECRET=
+# SITE_ORIGIN=https://alane.photography
+# RESEND_API_KEY=
+# REMINDERS_UNSUBSCRIBE_SECRET=
+# REMINDERS_CRON_SECRET=
+# Local next dev only. Ignored when NODE_ENV=production. Never set this on the Worker.
+# REMINDERS_MAIL_SINK=memory

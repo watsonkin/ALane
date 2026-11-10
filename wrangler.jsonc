@@ -17,20 +17,19 @@
       "service": "alane"
     }
   ],
-  // Kill switch. "1" still cannot send while email copy is unconfirmed in code.
   "vars": {
-    "REMINDERS_ENABLED": "0"
+    "REMINDERS_ENABLED": "0",
+    "SITE_ORIGIN": "https://alane.photography"
   },
   "d1_databases": [
     {
       "binding": "REMINDERS_DB",
       "database_name": "alane-reminders",
-      // Placeholder until the D1 database is created. Not a secret.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "00000000-0000-0000-0000-000000000001",
       "migrations_dir": "migrations"
     }
   ],
-  // 00:15 UTC = 08:15 Asia/Shanghai. scheduled POSTs /api/internal/reminders/digest.
+  // 00:15 UTC = 08:15 Asia/Shanghai. Scan runs; digest mail stays off while REMINDERS_ENABLED is "0".
   "triggers": {
     "crons": ["15 0 * * *"]
   }
