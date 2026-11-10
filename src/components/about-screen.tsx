@@ -8,7 +8,7 @@ import {
 import { displayName } from "@/lib/contest-labels";
 import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
-import { reminderCopy } from "@/lib/reminders/copy";
+import { pageCopy } from "@/lib/reminders/copy";
 
 export async function AboutScreen({ locale }: { locale: Locale }) {
   const contests = await loadContests();
@@ -52,7 +52,7 @@ export async function AboutScreen({ locale }: { locale: Locale }) {
         </p>
         <p>
           <LocaleLink href="/reminders" className="text-accent underline-offset-4 hover:underline">
-            {reminderCopy(locale).link}
+            {pageCopy(locale).title}
           </LocaleLink>
           {locale === "en"
             ? " send a short digest when new contests open, deadlines fall within 14 days, or winners are published. They do not replace calendar subscribe. Unsubscribe anytime."

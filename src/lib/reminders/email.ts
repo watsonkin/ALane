@@ -1,11 +1,9 @@
-const EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-/** Lower-case mailbox, or null when it is not a single ordinary address. */
-export function normalizeEmail(raw: string | null | undefined): string | null {
-  if (typeof raw !== "string") return null;
+/** Lowercase mailbox, or null when the address is not usable as a key. */
+export function normalizeEmail(raw: string): string | null {
   const email = raw.trim().toLowerCase();
-  if (email.length < 3 || email.length > 254) return null;
-  if (email.includes(" ") || email.includes("..")) return null;
+  if (email.length > 254 || email.length < 3) return null;
   if (!EMAIL_PATTERN.test(email)) return null;
   return email;
 }

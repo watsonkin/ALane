@@ -6,7 +6,7 @@ import { selectClosingSoon } from "@/lib/contest-labels";
 import type { Contest } from "@/lib/contest-schema";
 import type { Locale } from "@/lib/locale";
 import { copy } from "@/lib/messages";
-import { reminderCopy } from "@/lib/reminders/copy";
+import { pageCopy } from "@/lib/reminders/copy";
 import { useNow } from "@/lib/use-now";
 
 const closingCardClass =
@@ -67,7 +67,7 @@ export function HomeHero({
         )}
         <p className="mt-4 text-xs text-muted-foreground">
           <LocaleLink href="/reminders" className="hover:text-ink">
-            {reminderCopy(locale).link}
+            {pageCopy(locale).title}
           </LocaleLink>
         </p>
       </div>

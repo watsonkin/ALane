@@ -1,30 +1,15 @@
-import { errorStatus, json, readJson, unsubscribePage } from "@/lib/reminders/http";
-import { unsubscribeBodySchema } from "@/lib/reminders/schema";
-import { openReminderDeps, unsubscribeEmail, unsubscribeWithToken } from "@/lib/reminders/service";
+import { httpStatus } from "@/lib/reminders/codes";
+import { loadReminderDeps } from "@/lib/reminders/env";
+import { isSameOrigin, json, jsonCode, readJson, readString } from "@/lib/reminders/http";
+import { unsubscribeEmail } from "@/lib/reminders/service";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  const parsed = unsubscribeBodySchema.safeParse(await readJson(request));
-  if (!parsed.success) return json({ ok: false, error: "invalid_email" }, 400);
-
-  const deps = await openReminderDeps();
-  if (!deps.store) return json({ ok: false, error: "disabled" }, 503);
-  const result = await unsubscribeEmail(
-    { ...deps, store: deps.store, now: () => new Date() },
-    parsed.data.email,
-  );
-  if (!result.ok) return json(result, errorStatus(result.error));
-  return json(result);
-}
-
-export async function GET(request: Request) {
-  const token = new URL(request.url).searchParams.get("token") ?? "";
-  const deps = await openReminderDeps();
-  if (!deps.store || !token) return unsubscribePage(false);
-  const result = await unsubscribeWithToken(
-    { ...deps, store: deps.store, now: () => new Date() },
-    token,
-  );
-  return unsubscribePage(result.ok);
+  if (!isSameOrigin(request)) return jsonCode("forbidden", false);
+  const loaded = await loadReminderDeps();
+  if (!loaded.ok) return jsonCode("storage_unavailable", false);
+  const body = await readJson(request);
+  const outcome = await unsubscribeEmail(loaded.deps, readString(body, "email"));
+  return json({ ok: outcome.ok, code: outcome.code }, httpStatus(outcome.code));
 }

@@ -1,65 +1,49 @@
-import { safeEqual } from "@/lib/reminders/crypto";
-import { reminderCopy } from "@/lib/reminders/copy";
+import { NextResponse } from "next/server";
+import { httpStatus, type ReminderCode } from "@/lib/reminders/codes";
 
-export function json(body: unknown, status = 200): Response {
-  return Response.json(body, {
+export function json(body: unknown, status = 200): NextResponse {
+  return NextResponse.json(body, {
     status,
     headers: { "cache-control": "no-store" },
   });
 }
 
-export async function readJson(request: Request): Promise<unknown> {
+export function jsonCode(code: ReminderCode, ok: boolean): NextResponse {
+  return json({ ok, code }, httpStatus(code));
+}
+
+export async function readJson(request: Request): Promise<Record<string, unknown> | null> {
+  const type = request.headers.get("content-type") ?? "";
+  if (!type.includes("application/json")) return null;
   try {
-    return await request.json();
+    const value: unknown = await request.json();
+    if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+    return value as Record<string, unknown>;
   } catch {
     return null;
   }
 }
 
-export function errorStatus(error: string): number {
-  switch (error) {
-    case "disabled":
-    case "no_database":
-      return 503;
-    case "cooldown":
-    case "rate_limited":
-    case "locked":
-      return 429;
-    case "unauthorized":
-      return 401;
-    default:
-      return 400;
+export function readString(body: Record<string, unknown> | null, key: string): string {
+  const value = body?.[key];
+  return typeof value === "string" ? value : "";
+}
+
+export function isSameOrigin(request: Request): boolean {
+  const origin = request.headers.get("origin");
+  if (!origin) return true;
+  let originHost: string;
+  try {
+    originHost = new URL(origin).host;
+  } catch {
+    return false;
   }
-}
-
-export function authorizeCron(request: Request, secret: string | undefined): boolean {
-  if (!secret) return false;
-  const header = request.headers.get("authorization") ?? "";
-  const match = /^Bearer\s+(\S+)\s*$/i.exec(header);
-  if (!match?.[1]) return false;
-  return safeEqual(match[1], secret);
-}
-
-/** Static bilingual page. No request data is interpolated. */
-export function unsubscribePage(ok: boolean): Response {
-  const zh = reminderCopy("zh-CN");
-  const en = reminderCopy("en");
-  const title = "ALane";
-  const english = ok ? en.unsubscribed : "This unsubscribe link is not valid. Enter your email on the alerts page.";
-  const chinese = ok ? zh.unsubscribed : "这个退订链接无效。请到邮件提醒页输入邮箱退订。";
-  const html = `<!doctype html>
-<html lang="zh-CN">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title}</title>
-<main>
-<p>${chinese}</p>
-<p>${english}</p>
-<p><a href="/reminders">${zh.link}</a> · <a href="/en/reminders">${en.link}</a></p>
-</main>
-`;
-  return new Response(html, {
-    status: ok ? 200 : 400,
-    headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" },
-  });
+  // Next dev binds 0.0.0.0, so request.url's host can differ from the browser Host.
+  const host = request.headers.get("host") ?? request.headers.get("x-forwarded-host")?.split(",")[0]?.trim();
+  if (host && originHost === host) return true;
+  try {
+    return originHost === new URL(request.url).host;
+  } catch {
+    return false;
+  }
 }

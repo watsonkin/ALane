@@ -1,254 +1,254 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { LocaleLink } from "@/components/locale-link";
-import type { Locale } from "@/lib/locale";
-import { reminderCopy, reminderStatusText } from "@/lib/reminders/copy";
+import { useState, useTransition, type FormEvent } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { pageCopy, statusCopy, statusOk } from "@/lib/reminders/copy";
+import type { ReminderCode } from "@/lib/reminders/codes";
+import { localizeHref, type Locale } from "@/lib/locale";
 
-type Phase = "email" | "code" | "done";
+type Feedback = { tone: "ok" | "err"; text: string };
 
-type ApiBody = {
-  ok?: boolean;
-  status?: string;
-  error?: string;
-  welcome?: "sent" | "skipped";
-};
-
-const fieldClass =
-  "mt-2 w-full border border-border bg-background px-3 py-2 text-sm text-foreground outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent";
-const primaryButtonClass =
+const fieldClass = "mt-2 w-full max-w-md border border-border bg-background px-3 py-2 text-sm";
+const buttonClass =
   "border border-transparent bg-primary px-3 py-2 text-sm text-primary-foreground disabled:opacity-50";
-const quietButtonClass =
-  "border border-border bg-background px-3 py-2 text-sm text-foreground disabled:opacity-50";
+const linkClass = "text-accent underline-offset-4 hover:underline";
 
-async function postJson(path: string, body: unknown): Promise<ApiBody | null> {
-  try {
-    const response = await fetch(path, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    const data: unknown = await response.json();
-    if (!data || typeof data !== "object") return null;
-    return data as ApiBody;
-  } catch {
-    return null;
-  }
+function FeedbackLine({ item }: { item: Feedback | null }) {
+  if (!item) return null;
+  return (
+    <p role={item.tone === "err" ? "alert" : "status"} className="text-sm leading-6">
+      {item.text}
+    </p>
+  );
 }
 
-export function RemindersScreen({ locale }: { locale: Locale }) {
-  const t = reminderCopy(locale);
+async function post(path: string, body: unknown): Promise<{ ok: boolean; code: ReminderCode }> {
+  const response = await fetch(path, {
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data: unknown = await response.json();
+  if (!data || typeof data !== "object" || !("code" in data) || typeof data.code !== "string") {
+    return { ok: false, code: "storage_unavailable" };
+  }
+  return { ok: "ok" in data && data.ok === true, code: data.code as ReminderCode };
+}
+
+export function RemindersScreen({
+  locale,
+  enabled,
+  notice,
+}: {
+  locale: Locale;
+  enabled: boolean;
+  notice: Feedback | null;
+}) {
+  const copy = pageCopy(locale);
+  const pathname = usePathname() ?? "/";
+  const privacy = localizeHref(pathname, "/privacy");
   const [email, setEmail] = useState("");
-  const [mailLocale, setMailLocale] = useState<Locale>(locale);
+  const [language, setLanguage] = useState<Locale>(locale);
   const [consent, setConsent] = useState(false);
   const [code, setCode] = useState("");
-  const [phase, setPhase] = useState<Phase>("email");
-  const [message, setMessage] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
+  const [phase, setPhase] = useState<"request" | "code" | "done">("request");
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [unsubEmail, setUnsubEmail] = useState("");
-  const [unsubMessage, setUnsubMessage] = useState<string | null>(null);
-  const [unsubPending, setUnsubPending] = useState(false);
+  const [pending, startTransition] = useTransition();
 
-  async function requestCode() {
-    setPending(true);
-    const result = await postJson("/api/reminders/code", {
-      email,
-      locale: mailLocale,
-      consent: true,
-    });
-    setPending(false);
-    if (!result) {
-      setMessage(t.unavailable);
-      return;
-    }
-    if (result.ok && result.status === "sent") {
-      setPhase("code");
-      setCode("");
-      setMessage(reminderStatusText(locale, "sent"));
-      return;
-    }
-    if (result.ok && result.status === "already_subscribed") {
-      setMessage(reminderStatusText(locale, "already_subscribed"));
-      return;
-    }
-    setMessage(reminderStatusText(locale, result.error ?? "unavailable"));
-  }
-
-  async function confirmCode() {
-    setPending(true);
-    const result = await postJson("/api/reminders/verify", { email, code });
-    setPending(false);
-    if (!result) {
-      setMessage(t.unavailable);
-      return;
-    }
-    if (result.ok && (result.status === "subscribed" || result.status === "locale_updated")) {
+  function apply(result: { ok: boolean; code: ReminderCode }) {
+    setFeedback({ tone: statusOk(result.code) ? "ok" : "err", text: statusCopy(locale, result.code) });
+    if (result.code === "sent") setPhase("code");
+    if (result.code === "subscribed" || result.code === "subscribed_welcome_failed" || result.code === "locale_updated") {
       setPhase("done");
-      setMessage(reminderStatusText(locale, result.status, result.welcome));
-      return;
     }
-    setMessage(reminderStatusText(locale, result.error ?? "unavailable"));
   }
 
-  async function unsubscribe(event: FormEvent<HTMLFormElement>) {
+  function send(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setUnsubPending(true);
-    const result = await postJson("/api/reminders/unsubscribe", { email: unsubEmail });
-    setUnsubPending(false);
-    if (!result) {
-      setUnsubMessage(t.unavailable);
-      return;
-    }
-    if (result.ok && result.status === "unsubscribed") {
-      setUnsubMessage(reminderStatusText(locale, "unsubscribed"));
-      return;
-    }
-    setUnsubMessage(reminderStatusText(locale, result.error ?? "unavailable"));
+    startTransition(async () => {
+      try {
+        const result = await post("/api/reminders/send-code", {
+          email,
+          locale: language,
+          consent,
+        });
+        apply(result);
+      } catch {
+        setFeedback({ tone: "err", text: statusCopy(locale, "storage_unavailable") });
+      }
+    });
+  }
+
+  function verify(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    startTransition(async () => {
+      try {
+        const result = await post("/api/reminders/verify", { email, code, locale: language });
+        apply(result);
+      } catch {
+        setFeedback({ tone: "err", text: statusCopy(locale, "storage_unavailable") });
+      }
+    });
+  }
+
+  function unsubscribe(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    startTransition(async () => {
+      try {
+        const result = await post("/api/reminders/unsubscribe", { email: unsubEmail });
+        setFeedback({
+          tone: statusOk(result.code) ? "ok" : "err",
+          text: statusCopy(locale, result.code),
+        });
+      } catch {
+        setFeedback({ tone: "err", text: statusCopy(locale, "storage_unavailable") });
+      }
+    });
   }
 
   return (
     <article className="max-w-2xl">
-      <h1 className="font-serif text-4xl leading-tight">{t.title}</h1>
-      <p className="mt-6 text-base leading-7">{t.blurb}</p>
-
-      {phase === "done" ? (
-        <p className="mt-6 text-sm leading-6" role="status">
-          {message}
-        </p>
-      ) : (
-        <form
-          className="mt-6 space-y-4"
-          onSubmit={(event) => {
-            event.preventDefault();
-            if (phase === "code") {
-              void confirmCode();
-              return;
-            }
-            void requestCode();
-          }}
-        >
+      <h1 className="font-serif text-4xl leading-tight">{copy.title}</h1>
+      <div className="mt-6 space-y-6 text-base leading-7">
+        <p>{copy.blurb}</p>
+        <FeedbackLine item={notice} />
+        <FeedbackLine item={feedback} />
+        {enabled ? (
+          phase === "done" ? null : (
+            <form onSubmit={phase === "code" ? verify : send} className="space-y-4">
+              <div>
+                <label htmlFor="reminders-email" className="text-sm">
+                  {copy.emailLabel}
+                </label>
+                <input
+                  id="reminders-email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  autoCapitalize="none"
+                  spellCheck={false}
+                  inputMode="email"
+                  required
+                  placeholder={copy.emailPlaceholder}
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  readOnly={phase === "code"}
+                  className={fieldClass}
+                />
+              </div>
+              <div>
+                <label htmlFor="reminders-locale" className="text-sm">
+                  {copy.localeLabel}
+                </label>
+                <select
+                  id="reminders-locale"
+                  name="locale"
+                  value={language}
+                  onChange={(event) => setLanguage(event.target.value === "en" ? "en" : "zh-CN")}
+                  className={fieldClass}
+                >
+                  <option value="zh-CN">{copy.localeZh}</option>
+                  <option value="en">{copy.localeEn}</option>
+                </select>
+              </div>
+              <label htmlFor="reminders-consent" className="flex items-start gap-3 text-sm leading-6">
+                <input
+                  id="reminders-consent"
+                  name="consent"
+                  type="checkbox"
+                  checked={consent}
+                  onChange={(event) => setConsent(event.target.checked)}
+                  className="mt-1"
+                  required
+                />
+                <span>
+                  {copy.consentBefore}
+                  <Link href={privacy} className={linkClass}>
+                    {copy.consentLink}
+                  </Link>
+                  {copy.consentAfter}
+                </span>
+              </label>
+              {phase === "code" ? (
+                <div>
+                  <label htmlFor="reminders-code" className="text-sm">
+                    {locale === "en" ? "Code" : "验证码"}
+                  </label>
+                  <input
+                    id="reminders-code"
+                    name="code"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    pattern="[0-9]{6}"
+                    maxLength={6}
+                    required
+                    value={code}
+                    onChange={(event) => setCode(event.target.value)}
+                    className={fieldClass}
+                  />
+                </div>
+              ) : null}
+              <div className="flex flex-wrap gap-3">
+                <button type="submit" disabled={pending || !consent || email.trim() === ""} className={buttonClass}>
+                  {phase === "code" ? copy.verify : copy.send}
+                </button>
+                {phase === "code" ? (
+                  <button
+                    type="button"
+                    disabled={pending || !consent}
+                    className={buttonClass}
+                    onClick={() => {
+                      startTransition(async () => {
+                        try {
+                          const result = await post("/api/reminders/send-code", {
+                            email,
+                            locale: language,
+                            consent,
+                          });
+                          apply(result);
+                        } catch {
+                          setFeedback({ tone: "err", text: statusCopy(locale, "storage_unavailable") });
+                        }
+                      });
+                    }}
+                  >
+                    {copy.resend}
+                  </button>
+                ) : null}
+              </div>
+            </form>
+          )
+        ) : (
+          <p className="text-sm text-muted-foreground">{copy.closed}</p>
+        )}
+        <form onSubmit={unsubscribe} className="space-y-4 border-t border-border pt-6">
+          <h2 className="font-serif text-xl leading-snug">{copy.unsubTitle}</h2>
+          <p className="text-sm leading-6 text-muted-foreground">{copy.unsubBlurb}</p>
           <div>
-            <label htmlFor="reminder-email" className="text-sm">
-              {t.emailLabel}
+            <label htmlFor="reminders-unsub-email" className="text-sm">
+              {copy.emailLabel}
             </label>
             <input
-              id="reminder-email"
+              id="reminders-unsub-email"
               name="email"
               type="email"
               autoComplete="email"
+              autoCapitalize="none"
+              spellCheck={false}
               required
-              placeholder={t.emailPlaceholder}
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              placeholder={copy.emailPlaceholder}
+              value={unsubEmail}
+              onChange={(event) => setUnsubEmail(event.target.value)}
               className={fieldClass}
             />
           </div>
-          <div>
-            <label htmlFor="reminder-locale" className="text-sm">
-              {t.localeLabel}
-            </label>
-            <select
-              id="reminder-locale"
-              name="locale"
-              value={mailLocale}
-              onChange={(event) => setMailLocale(event.target.value === "en" ? "en" : "zh-CN")}
-              className={fieldClass}
-            >
-              <option value="zh-CN">{t.localeZh}</option>
-              <option value="en">{t.localeEn}</option>
-            </select>
-          </div>
-          <div className="flex items-start gap-3 text-sm leading-6">
-            <input
-              id="reminder-consent"
-              name="consent"
-              type="checkbox"
-              className="mt-1"
-              checked={consent}
-              onChange={(event) => setConsent(event.target.checked)}
-              aria-labelledby="reminder-consent-note"
-              required
-            />
-            <p id="reminder-consent-note">
-              {t.consentBefore}
-              <LocaleLink href="/privacy" className="text-accent underline-offset-4 hover:underline">
-                {t.consentLink}
-              </LocaleLink>
-              {t.consentAfter}
-            </p>
-          </div>
-          {phase === "code" ? (
-            <div>
-              <label htmlFor="reminder-code" className="text-sm">
-                {t.codeLabel}
-              </label>
-              <input
-                id="reminder-code"
-                name="code"
-                inputMode="numeric"
-                autoComplete="one-time-code"
-                pattern="[0-9]{6}"
-                minLength={6}
-                maxLength={6}
-                required
-                value={code}
-                onChange={(event) => setCode(event.target.value)}
-                className={fieldClass}
-              />
-            </div>
-          ) : null}
-          <div className="flex flex-wrap gap-3">
-            <button type="submit" className={primaryButtonClass} disabled={pending || !consent}>
-              {phase === "code" ? t.confirm : t.send}
-            </button>
-            {phase === "code" ? (
-              <button
-                type="button"
-                className={quietButtonClass}
-                disabled={pending || !consent}
-                onClick={() => {
-                  void requestCode();
-                }}
-              >
-                {t.resend}
-              </button>
-            ) : null}
-          </div>
-          {message ? (
-            <p className="text-sm leading-6" role="status">
-              {message}
-            </p>
-          ) : null}
+          <button type="submit" disabled={pending || unsubEmail.trim() === ""} className={buttonClass}>
+            {copy.unsubButton}
+          </button>
         </form>
-      )}
-
-      <form className="mt-10 space-y-4 border-t border-border pt-6" onSubmit={unsubscribe}>
-        <p className="text-sm leading-6 text-muted-foreground">{t.unsubscribeLead}</p>
-        <div>
-          <label htmlFor="reminder-unsubscribe-email" className="text-sm">
-            {t.emailLabel}
-          </label>
-          <input
-            id="reminder-unsubscribe-email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder={t.emailPlaceholder}
-            value={unsubEmail}
-            onChange={(event) => setUnsubEmail(event.target.value)}
-            className={fieldClass}
-          />
-        </div>
-        <button type="submit" className={quietButtonClass} disabled={unsubPending}>
-          {t.unsubscribe}
-        </button>
-        {unsubMessage ? (
-          <p className="text-sm leading-6" role="status">
-            {unsubMessage}
-          </p>
-        ) : null}
-      </form>
+      </div>
     </article>
   );
 }

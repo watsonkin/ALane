@@ -313,6 +313,25 @@ function writtenUtcDay(iso: string): number {
 }
 
 /**
+ * Open deadline whose written UTC day is within `days` calendar days of `asOfIso`.
+ * Inclusive of the last day. Mail uses 14; the homepage row uses 60.
+ */
+export function deadlineWithinDays(
+  contest: Pick<Contest, "deadline_at">,
+  asOfIso: string,
+  days: number,
+): boolean {
+  if (!contest.deadline_at || !Number.isFinite(days)) return false;
+  const asOfMs = Date.parse(asOfIso);
+  if (!Number.isFinite(asOfMs)) return false;
+  if (deadlineWindow(contest, asOfIso) !== "open") return false;
+  const today = writtenUtcDay(new Date(asOfMs).toISOString());
+  const deadlineDay = writtenUtcDay(contest.deadline_at);
+  if (!Number.isFinite(today) || !Number.isFinite(deadlineDay)) return false;
+  return deadlineDay <= today + days * DAY_MS;
+}
+
+/**
  * Open contests whose deadline falls within the next 60 calendar days, soonest first.
  * Closed and undated contests are never used to fill the row.
  */

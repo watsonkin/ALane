@@ -100,7 +100,7 @@ test("proxy still sends unprefixed English cookie traffic to /en", () => {
 
 test("proxy leaves reminder APIs on their own path", () => {
   for (const path of [
-    "/api/reminders/code",
+    "/api/reminders/send-code",
     "/api/reminders/verify",
     "/api/reminders/unsubscribe",
     "/api/internal/reminders/digest",

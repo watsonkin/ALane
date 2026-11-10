@@ -1,19 +1,19 @@
-import { errorStatus, json, readJson } from "@/lib/reminders/http";
-import { verifyBodySchema } from "@/lib/reminders/schema";
-import { openReminderDeps, verifyCode } from "@/lib/reminders/service";
+import { httpStatus } from "@/lib/reminders/codes";
+import { loadReminderDeps } from "@/lib/reminders/env";
+import { isSameOrigin, json, jsonCode, readJson, readString } from "@/lib/reminders/http";
+import { verifyCode } from "@/lib/reminders/service";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
-  const parsed = verifyBodySchema.safeParse(await readJson(request));
-  if (!parsed.success) return json({ ok: false, error: "invalid_email" }, 400);
-
-  const deps = await openReminderDeps();
-  if (!deps.store) return json({ ok: false, error: "disabled" }, 503);
-  const result = await verifyCode(
-    { ...deps, store: deps.store, now: () => new Date() },
-    parsed.data,
-  );
-  if (!result.ok) return json(result, errorStatus(result.error));
-  return json(result);
+  if (!isSameOrigin(request)) return jsonCode("forbidden", false);
+  const loaded = await loadReminderDeps();
+  if (!loaded.ok) return jsonCode("storage_unavailable", false);
+  const body = await readJson(request);
+  const outcome = await verifyCode(loaded.deps, {
+    email: readString(body, "email"),
+    code: readString(body, "code"),
+    locale: readString(body, "locale"),
+  });
+  return json({ ok: outcome.ok, code: outcome.code }, httpStatus(outcome.code));
 }

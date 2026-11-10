@@ -1,172 +1,146 @@
-import { deadlineWindow, displayEdition, displayName } from "@/lib/contest-labels";
+import { deadlineWindow, deadlineWithinDays, displayName } from "@/lib/contest-labels";
+import type { Contest } from "@/lib/contest-schema";
 import { DIGEST_CLOSING_DAYS, DIGEST_ITEM_CAP } from "@/lib/reminders/constants";
-import type { ReminderLocale } from "@/lib/reminders/schema";
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-export type DigestContest = {
-  id: string;
-  slug: string;
-  name: string;
-  name_zh?: string | null;
-  name_en?: string | null;
-  status: "draft" | "published" | "archived";
-  deadline_at: string | null;
-  edition: string | null;
-  edition_en?: string | null;
-  official_url: string;
-  gallery_urls: readonly { url: string }[];
+export type SeenSets = {
+  initialized: boolean;
+  open: Set<string>;
+  closing: Set<string>;
+  gallery: Set<string>;
 };
 
-export type DigestItem = {
-  kind: "open" | "closing" | "winners";
-  key: string;
-  id: string;
-  slug: string;
-  name: string;
-  nameZh: string;
-  nameEn: string;
-  edition: string | null;
-  editionEn: string | null;
-  deadlineAt: string | null;
-  officialUrl: string;
-  detailPath: string;
-  galleryUrl: string | null;
-};
+export type DigestItem =
+  | { kind: "open"; key: string; contest: Contest }
+  | { kind: "closing"; key: string; contest: Contest }
+  | { kind: "gallery"; key: string; contest: Contest; url: string };
 
-export type DigestCatalog = {
-  open: DigestItem[];
-  closing: DigestItem[];
-  winners: DigestItem[];
-};
+export type DigestPlan =
+  | { kind: "baseline"; seen: SeenSets }
+  | {
+      kind: "diff";
+      items: DigestItem[];
+      overflow: boolean;
+      nextSeen: SeenSets;
+      retainSeen: SeenSets;
+    };
 
-export type DigestSnapshot = {
-  openKeys: string[];
-  closingKeys: string[];
-  galleryKeys: string[];
-};
-
-export type DigestDiff = {
-  baseline: boolean;
-  items: DigestItem[];
-  truncated: boolean;
-  next: DigestSnapshot;
-};
-
-function utcDay(iso: string): number {
-  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
-  if (!match) return Number.NaN;
-  return Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
+export function emptySeen(): SeenSets {
+  return { initialized: false, open: new Set(), closing: new Set(), gallery: new Set() };
 }
 
-function toItem(
-  kind: DigestItem["kind"],
-  key: string,
-  contest: DigestContest,
-  galleryUrl: string | null,
-): DigestItem {
-  return {
-    kind,
-    key,
-    id: contest.id,
-    slug: contest.slug,
-    name: contest.name,
-    nameZh: displayName(contest, "zh-CN"),
-    nameEn: displayName(contest, "en"),
-    edition: displayEdition(contest, "zh-CN"),
-    editionEn: displayEdition(contest, "en"),
-    deadlineAt: contest.deadline_at,
-    officialUrl: contest.official_url,
-    detailPath: `/contests/${contest.slug}`,
-    galleryUrl,
-  };
+function openKey(contest: Contest): string {
+  return `${contest.id}|${contest.edition ?? ""}`;
+}
+
+function isOpenCall(contest: Contest, asOfIso: string): boolean {
+  if (contest.status !== "published") return false;
+  if (contest.open_at) {
+    const openMs = Date.parse(contest.open_at);
+    const asOfMs = Date.parse(asOfIso);
+    if (Number.isFinite(openMs) && Number.isFinite(asOfMs) && openMs > asOfMs) return false;
+  }
+  return deadlineWindow(contest, asOfIso) === "open";
+}
+
+function intersect(left: Set<string>, right: Set<string>): Set<string> {
+  const next = new Set<string>();
+  for (const key of left) {
+    if (right.has(key)) next.add(key);
+  }
+  return next;
+}
+
+function byName(left: Contest, right: Contest): number {
+  return displayName(left, "zh-CN").localeCompare(displayName(right, "zh-CN"), "zh");
 }
 
 /**
- * Published contests only. Open and closing follow the on-site deadline window.
- * Closing is the next 14 calendar days. Winner rows are gallery_urls, never work files.
+ * Diff published contests against the last snapshot.
+ * The first call baselines the current catalog and sends nothing.
  */
-export function catalogContests(contests: readonly DigestContest[], asOfIso: string): DigestCatalog {
-  const asOfMs = Date.parse(asOfIso);
-  const today = Number.isFinite(asOfMs) ? utcDay(new Date(asOfMs).toISOString()) : Number.NaN;
-  const lastClosingDay = today + DIGEST_CLOSING_DAYS * DAY_MS;
-  const open: DigestItem[] = [];
-  const closing: DigestItem[] = [];
-  const winners: DigestItem[] = [];
+export function planDigest(
+  contests: readonly Contest[],
+  seen: SeenSets,
+  asOfIso: string,
+): DigestPlan {
+  const currentOpen = new Set<string>();
+  const currentClosing = new Set<string>();
+  const currentGallery = new Set<string>();
+  const openItems: DigestItem[] = [];
+  const closingItems: DigestItem[] = [];
+  const galleryItems: DigestItem[] = [];
 
-  for (const contest of contests) {
-    if (contest.status !== "published") continue;
-    if (deadlineWindow(contest, asOfIso) === "open") {
-      const edition = contest.edition?.trim() || "";
-      open.push(toItem("open", `${contest.id}\t${edition}`, contest, null));
-      if (contest.deadline_at) {
-        const deadlineDay = utcDay(contest.deadline_at);
-        if (Number.isFinite(today) && Number.isFinite(deadlineDay) && deadlineDay <= lastClosingDay) {
-          closing.push(toItem("closing", contest.id, contest, null));
+  const ordered = [...contests].sort(byName);
+  for (const contest of ordered) {
+    if (isOpenCall(contest, asOfIso)) {
+      const key = openKey(contest);
+      currentOpen.add(key);
+      if (seen.initialized && !seen.open.has(key)) {
+        openItems.push({ kind: "open", key, contest });
+      }
+    }
+    if (
+      contest.status === "published" &&
+      deadlineWithinDays(contest, asOfIso, DIGEST_CLOSING_DAYS)
+    ) {
+      currentClosing.add(contest.id);
+      if (seen.initialized && !seen.closing.has(contest.id)) {
+        closingItems.push({ kind: "closing", key: contest.id, contest });
+      }
+    }
+    if (contest.status === "published" || contest.status === "archived") {
+      const urls = [...contest.gallery_urls].sort((a, b) => a.url.localeCompare(b.url));
+      for (const gallery of urls) {
+        const key = `${contest.id}|${gallery.url}`;
+        currentGallery.add(key);
+        if (seen.initialized && !seen.gallery.has(key)) {
+          galleryItems.push({ kind: "gallery", key, contest, url: gallery.url });
         }
       }
     }
-    for (const gallery of contest.gallery_urls) {
-      const url = gallery.url.trim();
-      if (!url) continue;
-      winners.push(toItem("winners", `${contest.id}\t${url}`, contest, url));
-    }
   }
 
-  const byKey = (a: DigestItem, b: DigestItem) => a.key.localeCompare(b.key);
-  open.sort(byKey);
-  closing.sort(byKey);
-  winners.sort(byKey);
-  return { open, closing, winners };
-}
+  closingItems.sort(
+    (a, b) => Date.parse(a.contest.deadline_at ?? "") - Date.parse(b.contest.deadline_at ?? ""),
+  );
 
-/** No previous snapshot is a baseline: record the catalog and send nothing. */
-export function diffCatalog(previous: DigestSnapshot | null, catalog: DigestCatalog): DigestDiff {
-  const next: DigestSnapshot = {
-    openKeys: catalog.open.map((item) => item.key),
-    closingKeys: catalog.closing.map((item) => item.key),
-    galleryKeys: catalog.winners.map((item) => item.key),
-  };
-  if (!previous) {
-    return { baseline: true, items: [], truncated: false, next };
-  }
-  const openKeys = new Set(previous.openKeys);
-  const closingKeys = new Set(previous.closingKeys);
-  const galleryKeys = new Set(previous.galleryKeys);
-  const fresh = [
-    ...catalog.open.filter((item) => !openKeys.has(item.key)),
-    ...catalog.closing.filter((item) => !closingKeys.has(item.key)),
-    ...catalog.winners.filter((item) => !galleryKeys.has(item.key)),
-  ];
-  return {
-    baseline: false,
-    items: fresh.slice(0, DIGEST_ITEM_CAP),
-    truncated: fresh.length > DIGEST_ITEM_CAP,
-    next,
-  };
-}
-
-export function parseSnapshot(raw: string | null): DigestSnapshot | null {
-  if (!raw) return null;
-  try {
-    const value: unknown = JSON.parse(raw);
-    if (!value || typeof value !== "object") return null;
-    const record = value as Partial<DigestSnapshot>;
-    if (!Array.isArray(record.openKeys) || !Array.isArray(record.closingKeys) || !Array.isArray(record.galleryKeys)) {
-      return null;
-    }
-    const strings = (items: unknown[]) => items.filter((item): item is string => typeof item === "string");
+  if (!seen.initialized) {
     return {
-      openKeys: strings(record.openKeys),
-      closingKeys: strings(record.closingKeys),
-      galleryKeys: strings(record.galleryKeys),
+      kind: "baseline",
+      seen: {
+        initialized: true,
+        open: currentOpen,
+        closing: currentClosing,
+        gallery: currentGallery,
+      },
     };
-  } catch {
-    return null;
   }
-}
 
-export function detailUrl(origin: string, item: DigestItem, locale: ReminderLocale): string {
-  const path = locale === "en" ? `/en${item.detailPath}` : item.detailPath;
-  return `${origin}${path}`;
+  const combined = [...openItems, ...closingItems, ...galleryItems];
+  const items = combined.slice(0, DIGEST_ITEM_CAP);
+  const retainSeen: SeenSets = {
+    initialized: true,
+    open: new Set(seen.open),
+    closing: intersect(seen.closing, currentClosing),
+    gallery: intersect(seen.gallery, currentGallery),
+  };
+  const nextSeen: SeenSets = {
+    initialized: true,
+    open: new Set(retainSeen.open),
+    closing: new Set(retainSeen.closing),
+    gallery: new Set(retainSeen.gallery),
+  };
+  for (const item of items) {
+    if (item.kind === "open") nextSeen.open.add(item.key);
+    if (item.kind === "closing") nextSeen.closing.add(item.key);
+    if (item.kind === "gallery") nextSeen.gallery.add(item.key);
+  }
+
+  return {
+    kind: "diff",
+    items,
+    overflow: combined.length > DIGEST_ITEM_CAP,
+    nextSeen,
+    retainSeen,
+  };
 }
