@@ -18,7 +18,7 @@
     }
   ],
   "vars": {
-    "REMINDERS_ENABLED": "0",
+    "REMINDERS_ENABLED": "1",
     "SITE_ORIGIN": "https://alane.photography"
   },
   "d1_databases": [
@@ -29,7 +29,7 @@
       "migrations_dir": "migrations"
     }
   ],
-  // 00:15 UTC = 08:15 Asia/Shanghai. Scan runs; digest mail stays off while REMINDERS_ENABLED is "0".
+  // 00:15 UTC = 08:15 Asia/Shanghai. Cron stays "15 0 * * *". Digest mail can go out on changes now that REMINDERS_ENABLED is "1".
   "triggers": {
     "crons": ["15 0 * * *"]
   }

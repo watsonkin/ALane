@@ -96,13 +96,13 @@ npm run dev
 
 验证码信、欢迎信和业务摘要的正文已按 PR-SUBSCRIBE-01 §7.4–§7.6 定稿。`DIGEST_COPY_CONFIRMED` 为 `true`。三封信都不放隐私链接。欢迎信和摘要信在正文之后附日历订阅链和勘误邮箱；摘要信页脚另有退订链接。验证码信不加这两行。
 
-`wrangler.jsonc` 里 `REMINDERS_ENABLED` 仍是 `"0"`，表单和发信都不打开。Worker `alane` 上的三个 secret 已经设置。设成 `"1"` 之前仍要等 DNS 生效。打开之后，日扫有变化才会发出已定稿的摘要。
+`wrangler.jsonc` 里生产闸门已经打开：`REMINDERS_ENABLED` 是 `"1"`。DNS 已就位（Resend 域名已验证，Email Routing 可收信），Worker `alane` 上的三个 secret 已经设置，远端 D1 也已就位（`0001_reminders.sql` 已应用）。日扫有变化才会发出已定稿的摘要。
 
 存储是 D1 绑定 `REMINDERS_DB`（库名 `alane-reminders`，区域 ENAM）。真实 `database_id` 已写在 `wrangler.jsonc`：`3de071af-8012-47c6-a460-d8189e5113a8`。远端库已经存在，`0001_reminders.sql` 已应用。不要重新创建数据库，也不要再次执行迁移。当初是用 `npx wrangler d1 create alane-reminders` 建的库，再用 `npx wrangler d1 migrations apply alane-reminders --remote` 套上迁移；这两步都已完成。
 
 Worker `alane` 已设置 `RESEND_API_KEY`、`REMINDERS_UNSUBSCRIBE_SECRET`、`REMINDERS_CRON_SECRET`。密钥值不在仓库里。
 
-`REMINDERS_UNSUBSCRIBE_SECRET` 用来哈希验证码和签名退订链接。`REMINDERS_CRON_SECRET` 保护 `POST /api/internal/reminders/digest`。Cron 为 `15 0 * * *`（UTC 00:15，上海 08:15），由 `cf:build` 在 OpenNext worker 上补上 `scheduled`，再经 `WORKER_SELF_REFERENCE` 调这个路由。无变化不发信。`REMINDERS_ENABLED` 为 `"0"` 时，日扫即使发现变化也不发摘要。
+`REMINDERS_UNSUBSCRIBE_SECRET` 用来哈希验证码和签名退订链接。`REMINDERS_CRON_SECRET` 保护 `POST /api/internal/reminders/digest`。Cron 为 `15 0 * * *`（UTC 00:15，上海 08:15），由 `cf:build` 在 OpenNext worker 上补上 `scheduled`，再经 `WORKER_SELF_REFERENCE` 调这个路由。无变化不发信。生产环境 `REMINDERS_ENABLED` 现为 `"1"`，日扫发现变化会发摘要。若把 `REMINDERS_ENABLED` 改回 `"0"`，日扫即使发现变化也不发摘要。
 
 `pending_verify` 超过 7 天删除。`unsubscribed` 保留 90 天后删除，不另留长期抑制哈希。
 
