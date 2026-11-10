@@ -25,7 +25,7 @@
     {
       "binding": "REMINDERS_DB",
       "database_name": "alane-reminders",
-      "database_id": "00000000-0000-0000-0000-000000000001",
+      "database_id": "3de071af-8012-47c6-a460-d8189e5113a8",
       "migrations_dir": "migrations"
     }
   ],
