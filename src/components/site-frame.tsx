@@ -55,7 +55,10 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
               <summary className="cursor-pointer list-none hover:text-ink [&::-webkit-details-marker]:hidden">
                 {t.menu}
               </summary>
-              <div className="absolute right-0 z-20 mt-2 border border-border bg-card px-3 py-2">
+              <div className="absolute right-0 z-20 mt-2 flex flex-col gap-2 border border-border bg-card px-3 py-2">
+                <LocaleLink href="/reminders" className="whitespace-nowrap hover:text-ink">
+                  {reminders.title}
+                </LocaleLink>
                 <a href="/calendar.ics" className="whitespace-nowrap hover:text-ink">
                   {t.calendar}
                 </a>
@@ -63,6 +66,9 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
             </details>
             <LocaleLink href="/about" className="hover:text-ink">
               {t.about}
+            </LocaleLink>
+            <LocaleLink href="/reminders" className="hidden hover:text-ink sm:inline">
+              {reminders.title}
             </LocaleLink>
             <a href="/calendar.ics" className="hidden hover:text-ink sm:inline">
               {t.calendar}
