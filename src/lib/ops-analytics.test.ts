@@ -138,11 +138,14 @@ test("the route accepts the exact event without a binding and rejects a query", 
 
 test("only the official-site control reports the count", () => {
   const html = renderToStaticMarkup(
-    createElement(OfficialSiteLink, {
-      href: "https://example.com/official",
-      className: "text-link",
-      children: "查看官网",
-    }),
+    createElement(
+      OfficialSiteLink,
+      {
+        href: "https://example.com/official",
+        className: "text-link",
+      } as Parameters<typeof OfficialSiteLink>[0],
+      "查看官网",
+    ),
   );
   assert.match(html, /href="https:\/\/example.com\/official"/);
   assert.match(html, /查看官网/);
