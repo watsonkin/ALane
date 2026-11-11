@@ -273,6 +273,7 @@ test("repo constraints stay put and no analytics token is committed", () => {
   assert.match(wrangler, /3de071af-8012-47c6-a460-d8189e5113a8/);
   assert.match(wrangler, /"binding": "OUTBOUND_CLICKS"/);
   assert.match(wrangler, /"dataset": "alane_official_outbound"/);
+  assert.match(wrangler, /"keep_vars": true/);
   assert.equal(/"CF_WEB_ANALYTICS_TOKEN"\s*:/.test(wrangler), false);
   assert.equal(/[0-9a-f]{32}/i.test(wrangler), false);
 

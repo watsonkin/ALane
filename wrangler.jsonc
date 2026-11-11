@@ -29,7 +29,8 @@
       "migrations_dir": "migrations"
     }
   ],
-  // CF_WEB_ANALYTICS_TOKEN is intentionally absent. It is a plain worker var, not a secret, and must not be stored in this repo. Set it on the production worker only. Dataset alane_official_outbound is created on the next deploy.
+  // CF_WEB_ANALYTICS_TOKEN must stay a dashboard-only plaintext Worker var: not a secret, not in vars, and not in git. keep_vars is required so wrangler deploy (the command opennextjs-cloudflare deploy and Workers Builds run) keeps that dashboard var instead of deleting it. Dataset alane_official_outbound is created on the next deploy.
+  "keep_vars": true,
   "analytics_engine_datasets": [
     {
       "binding": "OUTBOUND_CLICKS",
