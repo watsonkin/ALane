@@ -1,6 +1,7 @@
 import { Calendar, ExternalLink } from "lucide-react";
 import type { ReactNode } from "react";
 import { ContestDetailChips } from "@/components/contest-detail-chips";
+import { OfficialSiteLink } from "@/components/official-site-link";
 import { LocaleAnchor, LocaleLink } from "@/components/locale-link";
 import { ContestSocialLinks } from "@/components/contest-social-links";
 import { WinnerIndexRow } from "@/components/winner-index-card";
@@ -129,15 +130,10 @@ export function ContestDetail({
         {officialUrl || calendarHref ? (
           <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2">
             {officialUrl ? (
-              <a
-                href={officialUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={textLinkClass}
-              >
+              <OfficialSiteLink href={officialUrl} className={textLinkClass}>
                 {t.openOfficial}
                 <ExternalLink aria-hidden="true" className="size-3.5" />
-              </a>
+              </OfficialSiteLink>
             ) : null}
             {officialUrl && calendarHref ? (
               <span aria-hidden="true" className="text-line">

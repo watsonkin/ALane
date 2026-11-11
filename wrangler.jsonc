@@ -29,6 +29,13 @@
       "migrations_dir": "migrations"
     }
   ],
+  // CF_WEB_ANALYTICS_TOKEN is intentionally absent. It is a plain worker var, not a secret, and must not be stored in this repo. Set it on the production worker only. Dataset alane_official_outbound is created on the next deploy.
+  "analytics_engine_datasets": [
+    {
+      "binding": "OUTBOUND_CLICKS",
+      "dataset": "alane_official_outbound"
+    }
+  ],
   // 00:15 UTC = 08:15 Asia/Shanghai. Cron stays "15 0 * * *". Digest mail can go out on changes now that REMINDERS_ENABLED is "1".
   "triggers": {
     "crons": ["15 0 * * *"]

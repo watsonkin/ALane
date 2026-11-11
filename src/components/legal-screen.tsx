@@ -103,6 +103,12 @@ function ChinesePrivacy() {
             若您手动切换语言，浏览器可能保存 Cookie <strong><code className={codeText}>alane_locale</code></strong>（值为 <code className={codeText}>zh-CN</code> 或 <code className={codeText}>en</code>），仅用于记住界面语言；该 Cookie <strong>不</strong>决定邮件语言（邮件语言以订阅时选择为准）。
           </li>
           <li>
+            浏览统计：本站在网页中使用 Cloudflare Web Analytics 官方脚本，用于了解访问量、热门页面、来源、大致地区，以及设备/浏览器与页面性能。该脚本不设统计 Cookie，也不使用 localStorage 等浏览器存储做统计；不加在日历订阅文件（<code className={codeText}>/calendar.ics</code>）中。该统计不用于营销画像，不与订阅邮箱或可识别个人的信息打通。
+          </li>
+          <li>
+            官网外链点击：若您从赛事详情页点击前往主办方官网（例如查看报名或规则），我们可能做无身份计数，只记录事件类型与次数，不记录邮箱或其他可识别个人的信息，也不与订阅名单或浏览行为打通。
+          </li>
+          <li>
             您若主动发邮件至 <MailLink />（勘误、移出索引、权利主张、隐私询问等），邮件内容由该邮箱接收与处理。
           </li>
         </ul>
@@ -112,7 +118,7 @@ function ChinesePrivacy() {
         <ul className="list-disc space-y-3 pl-5">
           <li>本站部署于 <strong>Cloudflare Workers</strong>，内容经 Cloudflare 边缘网络分发。</li>
           <li>
-            Cloudflare 作为托管平台可能保留<strong>访问日志与边缘分析</strong>（例如请求时间、URL 路径、HTTP 状态、大致地理区域、User-Agent 等），用于服务运行、安全与故障排查。本站运营者不另建面向营销的用户档案。
+            Cloudflare 作为托管平台可能保留<strong>访问日志与边缘分析</strong>（例如请求时间、URL 路径、HTTP 状态、大致地理区域、User-Agent 等），用于服务运行、安全与故障排查。本站运营者不另建面向营销的用户档案。该平台日志有别于第 1 节所述的 Cloudflare Web Analytics 浏览统计。
           </li>
           <li>
             邮件发送经专业发信服务商 <strong>Resend</strong> 处理，限于投递验证码、欢迎信与上述三类摘要。
@@ -128,6 +134,9 @@ function ChinesePrivacy() {
           <li>
             <strong>不把订阅邮箱用于上述三类提醒以外的营销、广告或向第三方出售/租用名单。</strong>
           </li>
+          <li>不接 Google Analytics、广告像素、热力图或会话回放。</li>
+          <li>不在邮件中加入打开或点击追踪像素。</li>
+          <li>不把浏览统计或外链点击与订阅邮箱打通。</li>
         </ul>
       </section>
       <section className="space-y-3">
@@ -159,6 +168,12 @@ function EnglishPrivacy() {
             If you switch language manually, your browser may store the Cookie <strong><code className={codeText}>alane_locale</code></strong> (<code className={codeText}>zh-CN</code> or <code className={codeText}>en</code>) only to remember UI language; it does <strong>not</strong> set email language (that follows your subscription choice).
           </li>
           <li>
+            Site analytics: On web pages, we use the official Cloudflare Web Analytics script to understand visits, popular pages, referrers, coarse region, and device / browser and page performance. The script does not set analytics cookies and does not use localStorage or similar browser storage for analytics. It is not added to the calendar file (<code className={codeText}>/calendar.ics</code>). These analytics are not used for marketing profiles and are not linked to subscriber emails or other information that identifies you.
+          </li>
+          <li>
+            Official-site outbound clicks: If you click through from a contest detail page to an organizer{"\u2019"}s site (for example to enter or read the rules), we may keep a non-identifying count of the event type and how often it happens. We do not record email addresses or other information that identifies you, and we do not link these counts to the subscriber list or to your browsing.
+          </li>
+          <li>
             If you email <MailLink /> (corrections, removal, rights notices, privacy questions), that message is received in that mailbox.
           </li>
         </ul>
@@ -170,7 +185,7 @@ function EnglishPrivacy() {
             The site runs on <strong>Cloudflare Workers</strong> and is served via Cloudflare{"\u2019"}s edge network.
           </li>
           <li>
-            As the host, Cloudflare may keep <strong>access logs and edge analytics</strong> (e.g. request time, URL path, HTTP status, coarse region, User-Agent) for operations, security, and troubleshooting. The operator does not build a marketing profile database on top of this site.
+            As the host, Cloudflare may keep <strong>access logs and edge analytics</strong> (e.g. request time, URL path, HTTP status, coarse region, User-Agent) for operations, security, and troubleshooting. The operator does not build a marketing profile database on top of this site. Those platform logs are distinct from the Cloudflare Web Analytics described in section 1.
           </li>
           <li>
             Outbound mail is processed by <strong>Resend</strong>, limited to verification codes, the welcome message, and the three digest types above.
@@ -188,6 +203,9 @@ function EnglishPrivacy() {
           <li>
             <strong>We do not use subscriber emails for marketing or ads beyond the three alert types above, and we do not sell or rent the list.</strong>
           </li>
+          <li>We do not use Google Analytics, advertising pixels, heatmaps, or session replay.</li>
+          <li>We do not add open- or click-tracking pixels to email.</li>
+          <li>We do not link site analytics or outbound-click counts to subscriber emails.</li>
         </ul>
       </section>
       <section className="space-y-3">
